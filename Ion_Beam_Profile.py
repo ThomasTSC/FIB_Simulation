@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 16 23:40:03 2018
+
+@author: thoma
+"""
+
+import Parameters
+import numpy
+import Grid_Structure
+
+
+class Ion_Beam_Profile:
+    
+    def __init__(self):
+        self.Parameters = Parameters.Parameters()
+        self.Grid_X = Grid_Structure.Grid_Structure().initialGrid()['Grid_X']
+        self.Grid_Y = Grid_Structure.Grid_Structure().initialGrid()['Grid_Y']
+        self.Grid_Z = Grid_Structure.Grid_Structure().initialGrid()['Grid_Z']
+        
+    
+    
+    def Ion_Beam_Profile(self, Scanning_Path_X, Scanning_Path_Y):
+        
+        Ion_Beam_Profile = {}
+        
+        
+        Ion_Flux = self.Parameters['Beam_Diameter']*(self.Parameters['Beam_Current'])/self.Parameters['Unit_Charge']
+        
+        Ion_Beam_Profile['Ion_Beam_Profile'] = Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((self.Grid_X-Scanning_Path_X)**2+(self.Grid_Y-Scanning_Path_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+    
+    
+        #print (Ion_Beam_Profile)
+    
+        return Ion_Beam_Profile
+        
+            
+    
+    
+if __name__ == "__main__":
+    
+    import Scanning_Strategy
+
+    
+    Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
+
+
+    Ion_Beam_Profile= Ion_Beam_Profile().Ion_Beam_Profile(Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0])
+
+
+    
+    print ('done')
