@@ -24,7 +24,7 @@ class Grid_Structure:
     def initialGrid(self):
         
         
-        Grid_Point = 15*self.Parameters['Step']
+        Grid_Point = self.Parameters['Grid_Point']*self.Parameters['Step']
         
         Grid_xlim_max = self.Parameters['Full_Pixel_Length']*self.Parameters['Step']
         

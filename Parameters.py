@@ -41,6 +41,8 @@ def Parameters():
     Step = 5
     Scan_Line = 1
     
+    Grid_Point = 20
+    
     Dwell_Time = 1e-6
 
     #The properties of Si/Ga system#
@@ -71,6 +73,7 @@ def Parameters():
                   'Pass':Pass,
                   'Step':Step, 
                   'Scan_Line':Scan_Line,
+                  'Grid_Point':Grid_Point,
                   'Dwell_Time':Dwell_Time,
                   'Mass_Ion':Mass_Ion,
                   'Mass_Sub':Mass_Substrate,

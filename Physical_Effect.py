@@ -72,17 +72,24 @@ class Physical_Effect:
         Dwell_Time_Matrix = self.Dwell_Time*numpy.ones_like(Grid['Grid_X'])
       
         
+        
+        Sputtering_Depth_Total = 
+        
         Sputtering_Depth_X = []
         Sputtering_Depth_Z = []
+        
+        
         
         Sputtering_Depth = {'Sputtering_Depth_X':Sputtering_Depth_X, 'Sputtering_Depth_Z':Sputtering_Depth_Z}
       
         return Sputtering_Depth
     
+    
+    
     def Redeposition(self):
         
         
-        
+        Redeposition_Total = 
         
         Redeposition_X = []
         Redeposition_Z = []
