@@ -73,10 +73,10 @@ class Physical_Effect:
       
         
         
-        Sputtering_Depth_Total = 
+        Sputtering_Depth_Total = []
         
-        Sputtering_Depth_X = []
-        Sputtering_Depth_Z = []
+        Sputtering_Depth_X = Sputtering_Depth_Total*numpy.cos()
+        Sputtering_Depth_Z = Sputtering_Depth_Total*numpy.sin()
         
         
         
@@ -89,10 +89,11 @@ class Physical_Effect:
     def Redeposition(self):
         
         
-        Redeposition_Total = 
+        Redeposition_Total = []
         
-        Redeposition_X = []
-        Redeposition_Z = []
+        Redeposition_X = Redeposition_Total*numpy.cos()
+        
+        Redeposition_Z = Redeposition_Total*numpy.sin()
         
         
         Redeposition = {'Redeposition_X':Redeposition_X, 'Redeposition_Z':Redeposition_Z}
