@@ -42,6 +42,8 @@ def Parameters():
     Scan_Line = 1
     
     Grid_Point = 20
+    Grid_Space = 1e-8
+    
     
     Dwell_Time = 1e-6
 
@@ -74,6 +76,7 @@ def Parameters():
                   'Step':Step, 
                   'Scan_Line':Scan_Line,
                   'Grid_Point':Grid_Point,
+                  'Grid_Space':Grid_Space,
                   'Dwell_Time':Dwell_Time,
                   'Mass_Ion':Mass_Ion,
                   'Mass_Sub':Mass_Substrate,

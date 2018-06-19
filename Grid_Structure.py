@@ -12,6 +12,7 @@ import scipy
 
 
 import Simulator
+from openpyxl.chart import surface_chart
 
 
 class Grid_Structure:
@@ -47,9 +48,15 @@ class Grid_Structure:
         
         Grid = Simulator.FIB().Simulation()
         
-        Surface_Slope = Grid['Grid_Z']/Grid['Grid_X']
+        Surface_Slope = numpy.diff(Grid['Grid_Z'])/numpy.diff(Grid['Grid_X'])
+        
+        for element in range(len(Surface_Slope)):
+            if math.isnan(Surface_Slope[element]) is True:
+                Surface_Slope[element] = 0
         
         #Surface_Slope = {'Surface_Slope': Surface_Slope}
+        
+        print(Surface_Slope)
         
         return Surface_Slope 
     
@@ -59,11 +66,8 @@ class Grid_Structure:
         
         Grid = Simulator.FIB().Simulation()
         
-        Surface_Slope = Grid_Structure.surfaceSlope()
+        Surface_Slope = Grid_Structure.surfaceSlope(self)
         
-        for element in range(len(Surface_Slope)):
-            if math.isnan(Surface_Slope[element]) is True:
-                Surface_Slope[element] = 0
         
         Surface_Normal_Vector = [-Surface_Slope, numpy.ones_like(Surface_Slope)]
         
@@ -83,7 +87,7 @@ class Grid_Structure:
     
     def Incident_Vector(self):
         
-        Surface_Slope = Grid_Structure.surfaceSlope()
+        Surface_Slope = Grid_Structure.surfaceSlope(self)
         
         Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope)]
         
@@ -92,9 +96,9 @@ class Grid_Structure:
                 
     def Incident_Cos(self):
         
-        Incident_Vector = Grid_Structure.Incident_Vector()
+        Incident_Vector = Grid_Structure.Incident_Vector(self)
         
-        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector()
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
         
         
         Incident_Cos = (Incident_Vector[0]*Surface_Normal_Vector[0]+Incident_Vector[1]*Surface_Normal_Vector[1])/(numpy.sqrt(numpy.square(Incident_Vector[0])+numpy.square(Incident_Vector[1]))*numpy.sqrt(numpy.square(Surface_Normal_Vector[0])+numpy.square(Surface_Normal_Vector[1])))
@@ -121,17 +125,17 @@ class Grid_Structure:
         Grid = Simulator.FIB().Simulation()
         
 
-        Surface_Slope = Grid_Structure.surfaceSlope()
+        Surface_Slope = Grid_Structure.surfaceSlope(self)
 
-        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector()
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
         
-        Surface_Moving_Vector = Grid_Structure.surfaceMovingVector()
+        Surface_Moving_Vector = Grid_Structure.surfaceMovingVector(self)
 
-        Incident_Vector = Grid_Structure.Incident_Vector()
+        Incident_Vector = Grid_Structure.Incident_Vector(self)
         
-        Incident_Cos = Grid_Structure.Incident_Cos()
+        Incident_Cos = Grid_Structure.Incident_Cos(self)
         
-        Incident_Angle = Grid_Structure.Inciden_Angle()
+        Incident_Angle = Grid_Structure.Inciden_Angle(self)
         
     
         
@@ -147,16 +151,18 @@ class Grid_Structure:
     
     def gridArea(self):
         
+        Grid = Simulator.FIB().Simulation()
+        
+        Grid_Length = numpy.sqrt(numpy.power(numpy.diff(Grid['Grid_Z']),2)+numpy.power(numpy.diff(Grid['Grid_X']),2))
+        Grid_Width = self.Parameters['Grid_Space']
         
         
-        Grid_Area = []
+        Grid_Area = Grid_Length*Grid_Width
         
+        print(Grid_Area)
+
         
         return Grid_Area
-    
-    
-    
-    
     
     
            
@@ -176,22 +182,25 @@ class Grid_Structure:
 if __name__ == "__main__":
     
     
+    #Grid_Structure().surfaceSlope()
     
-    Surface_Structure = Grid_Structure().initialGrid()
+    Grid_Structure().gridArea()
+    
+    #Surface_Structure = Grid_Structure().initialGrid()
     
     
-    plt.figure()
-    plt.title('Surface')
-    plt.grid()
+    #plt.figure()
+    #plt.title('Surface')
+   # plt.grid()
     #plt.xticks(Grid_Structure['Grid_X'])
     #plt.yticks(Grid_Structure['Grid_Z'])
-    plt.scatter(Surface_Structure['Grid_X'], Surface_Structure['Grid_Z'], color="red", marker="x")
+    #plt.scatter(Surface_Structure['Grid_X'], Surface_Structure['Grid_Z'], color="red", marker="x")
     
-    plt.xlim(-3e-8,Surface_Structure['Grid_xlim_max']+3e-8)
+    #plt.xlim(-3e-8,Surface_Structure['Grid_xlim_max']+3e-8)
     
-    plt.show()
+    #plt.show()
              
-    Grid_Structure().surfaceCalculation()
+    #Grid_Structure().surfaceCalculation()
     
     
     
