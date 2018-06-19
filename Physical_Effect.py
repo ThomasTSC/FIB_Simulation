@@ -20,7 +20,6 @@ class Physical_Effect:
     def __init__(self):
         
         self.Parameters = Parameters.Parameters()
-        self.Dwell_Time = self.Parameters['Dwell_Time']
         
         
         #Primary sputtering yield
@@ -58,24 +57,43 @@ class Physical_Effect:
     
     
         
+    def sputteringYield(self):
+        
+        Surface = Grid_Structure.Grid_Structure().surfaceCalculation()
+        
+        Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Surface['Incident_Cos']),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Surface['Incident_Cos'])-1)))
+        
+        #Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
+        
+        return Sputtering_Yield
     
+    
+    
+    def dwellTimeMatrix(self, Grid):
+        
+        Dwell_Time_Matrix = self.Parameters['Dwell_Time']*numpy.ones_like(Grid)
+        
+        #Dwell_Time_Matrix = {'Dwell_Time_Matrix': Dwell_Time_Matrix}
+        
+        return Dwell_Time_Matrix
     
     
     def Sputtering(self):
         
-        Surface = Grid_Structure.Grid_Structure().surfaceCalculation()
+        
         Grid = Simulator.FIB().Simulation()
+        
         Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile()
         
-        Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Surface['Incident_Cos']),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Surface['Incident_Cos'])-1)))
+        Sputtering_Yield = Physical_Effect.sputteringYield()
                 
-        Dwell_Time_Matrix = self.Dwell_Time*numpy.ones_like(Grid['Grid_X'])
+        Dwell_Time_Matrix = Physical_Effect.dwellTimeMatrix(Grid['Grid_X'])
       
-        
         
         Sputtering_Depth_Total = []
         
         Sputtering_Depth_X = Sputtering_Depth_Total*numpy.cos()
+        
         Sputtering_Depth_Z = Sputtering_Depth_Total*numpy.sin()
         
         

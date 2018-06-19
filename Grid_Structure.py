@@ -4,8 +4,7 @@ Created on Tue Apr 17 22:32:27 2018
 
 @author: thoma
 """
-
-from Parameters import Parameters
+import Parameters
 import numpy
 import matplotlib.pyplot as plt
 import math
@@ -18,7 +17,7 @@ import Simulator
 class Grid_Structure:
     
     def __init__(self):
-        self.Parameters = Parameters()
+        self.Parameters = Parameters.Parameters()
 
     
     def initialGrid(self):
@@ -42,6 +41,78 @@ class Grid_Structure:
              
         return initialGrid_Structure     
                 
+    
+    
+    def surfaceSlope(self):
+        
+        Grid = Simulator.FIB().Simulation()
+        
+        Surface_Slope = Grid['Grid_Z']/Grid['Grid_X']
+        
+        #Surface_Slope = {'Surface_Slope': Surface_Slope}
+        
+        return Surface_Slope 
+    
+    
+    
+    def surfaceNormalVector(self):
+        
+        Grid = Simulator.FIB().Simulation()
+        
+        Surface_Slope = Grid_Structure.surfaceSlope()
+        
+        for element in range(len(Surface_Slope)):
+            if math.isnan(Surface_Slope[element]) is True:
+                Surface_Slope[element] = 0
+        
+        Surface_Normal_Vector = [-Surface_Slope, numpy.ones_like(Surface_Slope)]
+        
+        #Surface_Normal_Vector = {'Surface_Normal_Vector':Surface_Normal_Vector}
+        
+        return Surface_Normal_Vector
+                
+                
+    def surfaceMovingVector(self):
+        
+        Surface_Moving_Vector = [ -x for x in Surface_Normal_Vector]
+          
+        #Surface_Moving_Vector = {'Surface_Moving_Vector':Surface_Moving_Vector}
+        
+        return Surface_Moving_Vector            
+                
+    
+    def Incident_Vector(self):
+        
+        Surface_Slope = Grid_Structure.surfaceSlope()
+        
+        Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope)]
+        
+        return Incident_Vector
+        
+                
+    def Incident_Cos(self):
+        
+        Incident_Vector = Grid_Structure.Incident_Vector()
+        
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector()
+        
+        
+        Incident_Cos = (Incident_Vector[0]*Surface_Normal_Vector[0]+Incident_Vector[1]*Surface_Normal_Vector[1])/(numpy.sqrt(numpy.square(Incident_Vector[0])+numpy.square(Incident_Vector[1]))*numpy.sqrt(numpy.square(Surface_Normal_Vector[0])+numpy.square(Surface_Normal_Vector[1])))
+        
+        
+        return Incident_Cos
+    
+    
+    def Inciden_Angle(self):
+        
+        
+        Incident_Cos = Grid_Structure.Incident_Cos()
+        
+        Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos))
+        
+        
+        return Incident_Angle            
+                
                 
                 
                 
@@ -49,38 +120,45 @@ class Grid_Structure:
         
         Grid = Simulator.FIB().Simulation()
         
+
+        Surface_Slope = Grid_Structure.surfaceSlope()
+
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector()
         
-        Surface_Slope = Grid['Grid_Z']/Grid['Grid_X']
-        for element in range(len(Surface_Slope)):
-            if math.isnan(Surface_Slope[element]) is True:
-                Surface_Slope[element] = 0
+        Surface_Moving_Vector = Grid_Structure.surfaceMovingVector()
+
+        Incident_Vector = Grid_Structure.Incident_Vector()
         
-        Normal_Vector = [-Surface_Slope, numpy.ones_like(Surface_Slope)]
-       
-        #print (Normal_Vector)
+        Incident_Cos = Grid_Structure.Incident_Cos()
+        
+        Incident_Angle = Grid_Structure.Inciden_Angle()
+        
     
         
-        Moving_Vector = [ -x for x in Normal_Vector]
-
-        
-        
-        Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope)]
-        
-        Incident_Cos = (Incident_Vector[0]*Normal_Vector[0]+Incident_Vector[1]*Normal_Vector[1])/(numpy.sqrt(numpy.square(Incident_Vector[0])+numpy.square(Incident_Vector[1]))*numpy.sqrt(numpy.square(Normal_Vector[0])+numpy.square(Normal_Vector[1])))
-        
-        
-        Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos))
-        
-        print (Incident_Angle)
-        
-        
-        Surface = {'Normal_Vector':Normal_Vector,'Moving_Vector':Moving_Vector, 'Incident_Vector': Incident_Vector, 'Incident_Cos':Incident_Cos}
+        Surface = {'Surface_Normal_Vector':Surface_Normal_Vector,'Surface_Moving_Vector':Surface_Moving_Vector, 'Incident_Vector': Incident_Vector, 'Incident_Cos':Incident_Cos}
         
         
         #print (Surface)
         
         return Surface
                     
+    
+    
+    
+    def gridArea(self):
+        
+        
+        
+        Grid_Area = []
+        
+        
+        return Grid_Area
+    
+    
+    
+    
+    
+    
            
     
     def Surface_Smoothing(self):
