@@ -90,7 +90,7 @@ class Physical_Effect:
         Dwell_Time_Matrix = Physical_Effect.dwellTimeMatrix(Grid['Grid_X'])
       
         
-        Sputtering_Depth_Total = []
+        Sputtering_Depth_Total = 
         
         Sputtering_Depth_X = Sputtering_Depth_Total*numpy.cos()
         
