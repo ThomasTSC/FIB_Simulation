@@ -20,19 +20,27 @@ class Ion_Beam_Profile:
         self.Ion_Flux = self.Parameters['Beam_Diameter']*(self.Parameters['Beam_Current'])/self.Parameters['Unit_Charge']
     
     
-    def Ion_Beam_Profile(self, Scanning_Path_X, Scanning_Path_Y):
+    def Primary_Ion_Beam_Profile(self, Scanning_Path_X, Scanning_Path_Y):
         
-        Ion_Beam_Profile = {}
+        Primary_Ion_Beam_Profile = {}
 
         
-        Ion_Beam_Profile['Ion_Beam_Profile'] = self.Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((self.Grid_X-Scanning_Path_X)**2+(self.Grid_Y-Scanning_Path_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+        Primary_Ion_Beam_Profile['Primary_Ion_Beam_Profile'] = self.Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((self.Grid_X-Scanning_Path_X)**2+(self.Grid_Y-Scanning_Path_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
     
     
         #print (Ion_Beam_Profile)
     
-        return Ion_Beam_Profile
+        return Primary_Ion_Beam_Profile
         
-            
+    
+    def Secondary_Ion_Beam_Profile(self):
+        
+        
+        
+        
+        
+        return Secondary_Ion_Beam_Profile
+    
     
     
 if __name__ == "__main__":
@@ -42,7 +50,7 @@ if __name__ == "__main__":
     
     Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
 
-    Ion_Beam_Profile= Ion_Beam_Profile().Ion_Beam_Profile(Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0])
+    Primary_Ion_Beam_Profile= Ion_Beam_Profile().Primary_Ion_Beam_Profile(Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0])
 
 
     

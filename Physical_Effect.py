@@ -78,29 +78,29 @@ class Physical_Effect:
         return Dwell_Time_Matrix
     
     
-    def Sputtering(self):
+    def primarySputtering(self):
         
         
         Grid = Simulator.FIB().Simulation()
         
-        Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile()
+        Primary_Ion_Beam = Ion_Beam_Profile.Primary_Ion_Beam_Profile()
         
         Sputtering_Yield = Physical_Effect.sputteringYield()
                 
         Dwell_Time_Matrix = Physical_Effect.dwellTimeMatrix(Grid['Grid_X'])
       
         
-        Sputtering_Depth_Total = 
+        Primary_Sputtering_Depth_Total = []
         
-        Sputtering_Depth_X = Sputtering_Depth_Total*numpy.cos()
+        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.cos()
         
-        Sputtering_Depth_Z = Sputtering_Depth_Total*numpy.sin()
+        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*numpy.sin()
         
         
         
-        Sputtering_Depth = {'Sputtering_Depth_X':Sputtering_Depth_X, 'Sputtering_Depth_Z':Sputtering_Depth_Z}
+        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z}
       
-        return Sputtering_Depth
+        return Primary_Sputtering_Depth
     
     
     
@@ -119,14 +119,19 @@ class Physical_Effect:
         return  Redeposition
     
     
+    def surfaceMovement(self, MaterialAmount):
     
     
+    
+        Surface_Movement = []
+    
+        return Surface_Movement
     
     
     
 if __name__ == "__main__":
     
-    Physical_Effect().Sputtering()
+    Physical_Effect().primarySputtering()
     
     print ('done')
     
