@@ -32,11 +32,19 @@ class Grid_Structure:
         
         Grid_Y = self.Parameters['Beam_Radius']*numpy.ones_like(Grid_X)
         
-        
         Grid_Z = numpy.zeros_like(Grid_X)
 
         
-        initialGrid_Structure = {'Grid_X':Grid_X, 'Grid_Y':Grid_Y,'Grid_Z': Grid_Z, 'Grid_xlim_max':Grid_xlim_max}
+        
+        print (Grid_X, Grid_Y, Grid_Z)
+        
+    
+        
+        
+        
+        
+        initialGrid_Structure = {'Grid_X':Grid_X, 'Grid_Y':Grid_Y,'Grid_Z': Grid_Z, 'Grid_xlim_max':Grid_xlim_max,
+                                 }
         
              
              
@@ -56,7 +64,7 @@ class Grid_Structure:
         
         #Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        print(Surface_Slope)
+        #print(Surface_Slope)
         
         return Surface_Slope 
     
@@ -184,9 +192,9 @@ if __name__ == "__main__":
     
     #Grid_Structure().surfaceSlope()
     
-    Grid_Structure().gridArea()
+    #Grid_Structure().gridArea()
     
-    #Surface_Structure = Grid_Structure().initialGrid()
+    Surface_Structure = Grid_Structure().initialGrid()
     
     
     #plt.figure()

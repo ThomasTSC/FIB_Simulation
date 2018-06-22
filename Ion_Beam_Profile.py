@@ -17,6 +17,9 @@ class Ion_Beam_Profile:
         self.Grid_X = Grid_Structure.Grid_Structure().initialGrid()['Grid_X']
         self.Grid_Y = Grid_Structure.Grid_Structure().initialGrid()['Grid_Y']
         self.Grid_Z = Grid_Structure.Grid_Structure().initialGrid()['Grid_Z']
+        
+        
+        
         self.Ion_Flux = self.Parameters['Beam_Diameter']*(self.Parameters['Beam_Current'])/self.Parameters['Unit_Charge']
     
     
@@ -31,7 +34,15 @@ class Ion_Beam_Profile:
         #print (Ion_Beam_Profile)
     
         return Primary_Ion_Beam_Profile
+    
+    
+    def averagePrimeIonBeam_per_Grid(self):
         
+        
+        
+        
+        
+        return Average_Prime_Ion_Beam
     
     def Secondary_Ion_Beam_Profile(self):
         
@@ -42,6 +53,13 @@ class Ion_Beam_Profile:
         return Secondary_Ion_Beam_Profile
     
     
+    def averageSecondaryIonBeam_per_Grid(self):
+        
+        
+        
+        return Average_Secondary_Ion_Beam
+        
+        
     
 if __name__ == "__main__":
     

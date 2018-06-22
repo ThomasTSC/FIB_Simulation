@@ -24,6 +24,8 @@ class FIB:
         self.Grid_X = Grid_Structure.Grid_Structure().initialGrid()['Grid_X']
         self.Grid_Y = Grid_Structure.Grid_Structure().initialGrid()['Grid_Y']
         self.Grid_Z = Grid_Structure.Grid_Structure().initialGrid()['Grid_Z']
+        
+        
         self.Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
 
 

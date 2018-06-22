@@ -33,7 +33,7 @@ class Scanning_Strategy:
         Scanning_Path = {'Scanning_Path_X':Scanning_Path_X,'Scanning_Path_Y':Scanning_Path_Y}
         
         
-        #print (Scanning_Path)
+        print (Scanning_Path)
         
         return Scanning_Path
         
