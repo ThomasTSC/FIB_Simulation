@@ -36,7 +36,7 @@ class Grid_Structure:
 
         
         
-        print (Grid_X, Grid_Y, Grid_Z)
+        #print (Grid_X, Grid_Y, Grid_Z)
         
     
         
@@ -86,6 +86,8 @@ class Grid_Structure:
                 
     def surfaceMovingVector(self):
         
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
+        
         Surface_Moving_Vector = [ -x for x in Surface_Normal_Vector]
           
         #Surface_Moving_Vector = {'Surface_Moving_Vector':Surface_Moving_Vector}
@@ -115,10 +117,10 @@ class Grid_Structure:
         return Incident_Cos
     
     
-    def Inciden_Angle(self):
+    def Incident_Angle(self):
         
         
-        Incident_Cos = Grid_Structure.Incident_Cos()
+        Incident_Cos = Grid_Structure.Incident_Cos(self)
         
         Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos))
         
@@ -143,7 +145,7 @@ class Grid_Structure:
         
         Incident_Cos = Grid_Structure.Incident_Cos(self)
         
-        Incident_Angle = Grid_Structure.Inciden_Angle(self)
+        Incident_Angle = Grid_Structure.Incident_Angle(self)
         
     
         

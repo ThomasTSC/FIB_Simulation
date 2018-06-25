@@ -55,11 +55,9 @@ def Parameters():
     Mass_Substrate = 28.0855    
     AtomicNumber_Ion = 31 
     AtomicNumber_Substrate = 14
-    
+    AtomicDensity_Substrate = 5e28
     
 
-    
-    
     
     
     Parameters = {
@@ -84,7 +82,8 @@ def Parameters():
                   'Mass_Ion':Mass_Ion,
                   'Mass_Sub':Mass_Substrate,
                   'Atomic_number_Ion':AtomicNumber_Ion,
-                  'Atomic_number_Sub':AtomicNumber_Substrate
+                  'Atomic_number_Sub':AtomicNumber_Substrate,
+                  'Atomic_density_Sub':AtomicDensity_Substrate
                   }
     
     

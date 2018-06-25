@@ -39,7 +39,7 @@ class FIB:
             Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1])
             plt.figure()
             plt.plot(self.Grid_X,Primary_Ion_Beam['Primary_Ion_Beam_Profile'])
-            plt.show()
+            #plt.show()
             
             
         Result = {'Grid_X': self.Grid_X,'Grid_Y':self.Grid_Y,'Grid_Z': self.Grid_Z,'Beam_Position':Beam_Position}
