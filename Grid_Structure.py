@@ -9,9 +9,9 @@ import numpy
 import matplotlib.pyplot as plt
 import math
 import scipy
-
-
 import Simulator
+
+
 from openpyxl.chart import surface_chart
 
 
@@ -36,36 +36,54 @@ class Grid_Structure:
         
         #print (Grid_X, Grid_Y, Grid_Z)
         
-        initialGrid_Structure = {'Grid_X':Grid_X, 
-                                 'Grid_Y':Grid_Y,
+        initGrid_Structure = {'Grid_X': Grid_X, 
+                                 'Grid_Y': Grid_Y,
                                  'Grid_Z': Grid_Z, 
-                                 'Grid_xlim_max':Grid_xlim_max
+                                 'Grid_xlim_max': Grid_xlim_max
                                  }
         
-        return initialGrid_Structure     
+        return initGrid_Structure     
                 
     
     
-    def Segment(self):
-        
-        Grid = Simulator.FIB().Simulation()
+    def initSegment(self, Grid):
         
         
-        Segment_XCor =
-        Segment_YCor =
+        Segment_XCor_Front = Grid['Grid_X'][0:-1]
+        Segment_XCor_End = Grid['Grid_X'][1:]
         
-        Segment = {'Segment_XCor':Segment_XCor,
+        Segment_XCor = 0.5*(Segment_XCor_Front+Segment_XCor_End)
+        
+        
+        Segment_ZCor_Front = Grid['Grid_Z'][0:-1]
+        Segment_ZCor_End = Grid['Grid_Z'][1:]
+        
+        Segment_ZCor = 0.5*(Segment_ZCor_Front+Segment_ZCor_End)
+        
+        
+        Segment_YCor = Grid['Grid_Y'][0]*numpy.ones_like(Segment_XCor)
+        
+        
+        
+        initSegment = {'Segment_XCor_Front':Segment_XCor_Front,
+                   'Segment_XCor_End':Segment_XCor_End,
+                   'Segment_ZCor_Front':Segment_ZCor_Front,
+                   'Segment_ZCor_End':Segment_ZCor_End,
+                   'Segment_XCor':Segment_XCor,
+                   'Segment_ZCor':Segment_ZCor,
                    'Segment_YCor':Segment_YCor}
         
-        return Segment
-    
-    
-    
-    def surfaceSlope(self):
         
-        Grid = Simulator.FIB().Simulation()
+       
         
-        Surface_Slope = numpy.diff(Grid['Grid_Z'])/numpy.diff(Grid['Grid_X'])
+        return initSegment
+    
+    
+    
+    def surfaceSlope(self,Segment):
+        
+        
+        Surface_Slope = (Segment['Segment_ZCor_End']-Segment['Segment_ZCor_Front'])/(Segment['Segment_XCor_End']-Segment['Segment_XCor_Front'])
         
         for element in range(len(Surface_Slope)):
             if math.isnan(Surface_Slope[element]) is True:
@@ -79,11 +97,10 @@ class Grid_Structure:
     
     
     
-    def surfaceNormalVector(self):
+    def surfaceNormalVector(self, Segment):
         
-        Grid = Simulator.FIB().Simulation()
         
-        Surface_Slope = Grid_Structure.surfaceSlope(self)
+        Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
         
         
         Surface_Normal_Vector = [-Surface_Slope, numpy.ones_like(Surface_Slope)]
@@ -93,9 +110,9 @@ class Grid_Structure:
         return Surface_Normal_Vector
                 
                 
-    def surfaceMovingVector(self):
+    def surfaceMovingVector(self,Segment):
         
-        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self,Segment)
         
         Surface_Moving_Vector = [ -x for x in Surface_Normal_Vector]
           
@@ -104,20 +121,20 @@ class Grid_Structure:
         return Surface_Moving_Vector            
                 
     
-    def Incident_Vector(self):
+    def Incident_Vector(self,Segment):
         
-        Surface_Slope = Grid_Structure.surfaceSlope(self)
+        Surface_Slope = Grid_Structure.surfaceSlope(self,Segment)
         
         Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope)]
         
         return Incident_Vector
         
                 
-    def Incident_Cos(self):
+    def Incident_Cos(self,Segment):
         
-        Incident_Vector = Grid_Structure.Incident_Vector(self)
+        Incident_Vector = Grid_Structure.Incident_Vector(self,Segment)
         
-        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self,Segment)
         
         
         Incident_Cos = (Incident_Vector[0]*Surface_Normal_Vector[0]+Incident_Vector[1]*Surface_Normal_Vector[1])/(numpy.sqrt(numpy.square(Incident_Vector[0])+numpy.square(Incident_Vector[1]))*numpy.sqrt(numpy.square(Surface_Normal_Vector[0])+numpy.square(Surface_Normal_Vector[1])))
@@ -126,10 +143,10 @@ class Grid_Structure:
         return Incident_Cos
     
     
-    def Incident_Angle(self):
+    def Incident_Angle(self,Segment):
         
         
-        Incident_Cos = Grid_Structure.Incident_Cos(self)
+        Incident_Cos = Grid_Structure.Incident_Cos(self,Segment)
         
         Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos))
         
@@ -139,22 +156,21 @@ class Grid_Structure:
                 
                 
                 
-    def surfaceCalculation(self):
+    def surfaceCalculation(self,Segment):
         
-        Grid = Simulator.FIB().Simulation()
         
 
-        Surface_Slope = Grid_Structure.surfaceSlope(self)
+        Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
 
-        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
+        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self,Segment)
         
-        Surface_Moving_Vector = Grid_Structure.surfaceMovingVector(self)
+        Surface_Moving_Vector = Grid_Structure.surfaceMovingVector(self,Segment)
 
-        Incident_Vector = Grid_Structure.Incident_Vector(self)
+        Incident_Vector = Grid_Structure.Incident_Vector(self,Segment)
         
-        Incident_Cos = Grid_Structure.Incident_Cos(self)
+        Incident_Cos = Grid_Structure.Incident_Cos(self,Segment)
         
-        Incident_Angle = Grid_Structure.Incident_Angle(self)
+        Incident_Angle = Grid_Structure.Incident_Angle(self,Segment)
         
         
         
@@ -175,9 +191,9 @@ class Grid_Structure:
     
     def gridArea(self):
         
-        Grid = Simulator.FIB().Simulation()
+        Segment = Simulator.FIB().Simulation()
         
-        Grid_Length = numpy.sqrt(numpy.power(numpy.diff(Grid['Grid_Z']),2)+numpy.power(numpy.diff(Grid['Grid_X']),2))
+        Grid_Length = numpy.sqrt(numpy.power((Segment['Segment_ZCor_End']-Segment['Segment_ZCor_Front']),2)+numpy.power((Segment['Segment_XCor_End']-Segment['Segment_XCor_Front']),2))
         Grid_Width = self.Parameters['Grid_Space']
         
         
@@ -205,12 +221,20 @@ class Grid_Structure:
                 
 if __name__ == "__main__":
     
+    import Simulator
     
-    #Grid_Structure().surfaceSlope()
+    Segment = Simulator.FIB().Simulation()
     
-    Grid_Structure().gridArea()
+    Grid_Structure().surfaceSlope(Segment)
     
-    #Surface_Structure = Grid_Structure().initialGrid()
+    
+    
+    #Grid_Structure().gridArea()
+    
+    #Grid = Grid_Structure().initialGrid()
+    
+    #Grid_Structure().Segment(Grid)
+     
     
     
     #plt.figure()

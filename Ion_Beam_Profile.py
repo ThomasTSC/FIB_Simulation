@@ -8,27 +8,25 @@ Created on Mon Apr 16 23:40:03 2018
 import Parameters
 import numpy
 import Grid_Structure
+import Simulator
 
 
 class Ion_Beam_Profile:
     
     def __init__(self):
         self.Parameters = Parameters.Parameters()
-        self.Grid_X = Grid_Structure.Grid_Structure().initialGrid()['Grid_X']
-        self.Grid_Y = Grid_Structure.Grid_Structure().initialGrid()['Grid_Y']
-        self.Grid_Z = Grid_Structure.Grid_Structure().initialGrid()['Grid_Z']
-        
+        self.initGrid = Grid_Structure.Grid_Structure().initialGrid()
         
         
         self.Ion_Flux = self.Parameters['Beam_Diameter']*(self.Parameters['Beam_Current'])/self.Parameters['Unit_Charge']
     
     
-    def Primary_Ion_Beam_Profile(self, Scanning_Path_X, Scanning_Path_Y):
+    def Primary_Ion_Beam_Profile(self, Beam_Position_X, Beam_Position_Y, Segment):
         
         Primary_Ion_Beam_Profile = {}
 
         
-        Primary_Ion_Beam_Profile = self.Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((self.Grid_X-Scanning_Path_X)**2+(self.Grid_Y-Scanning_Path_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+        Primary_Ion_Beam_Profile = self.Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((Segment['Segment_XCor']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
     
     
         #print (len(Primary_Ion_Beam_Profile))
@@ -36,7 +34,7 @@ class Ion_Beam_Profile:
         return Primary_Ion_Beam_Profile
     
     
-    def averagePrimeIonBeam_per_Grid(self):
+    def averagePrimeIonBeam_per_Segment(self):
         
         
         
@@ -53,7 +51,7 @@ class Ion_Beam_Profile:
         return Secondary_Ion_Beam_Profile
     
     
-    def averageSecondaryIonBeam_per_Grid(self):
+    def averageSecondaryIonBeam_per_Segment(self):
         
         
         

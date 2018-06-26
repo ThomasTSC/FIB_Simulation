@@ -57,15 +57,15 @@ class Physical_Effect:
     
     
         
-    def sputteringYield(self):
+    def sputteringYield(self,Segment):
         
-        Surface = Grid_Structure.Grid_Structure().surfaceCalculation()
+        Surface = Grid_Structure.Grid_Structure().surfaceCalculation(Segment)
         
         Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Surface['Incident_Cos']),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Surface['Incident_Cos'])-1)))
         
         #Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
         
-        print (len(Sputtering_Yield))
+        #print (len(Sputtering_Yield))
         
         return Sputtering_Yield
     
@@ -82,36 +82,35 @@ class Physical_Effect:
         return Dwell_Time_Matrix
     
     
-    def primarySputtering(self):
+    def primarySputtering(self,Beam_Position_X,Beam_Position_Y,Segment):
         
+
         
-        Result = Simulator.FIB().Simulation()
+        Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Beam_Position_X,Beam_Position_Y,Segment)
         
-        Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Result['Beam_Position'][0],Result['Beam_Position'][1])
-        
-        Sputtering_Yield = Physical_Effect.sputteringYield(self)
+        Sputtering_Yield = Physical_Effect.sputteringYield(self,Segment)
                 
-        Dwell_Time_Matrix = Physical_Effect.dwellTimeMatrix(self, Result['Grid_X'])
+        Dwell_Time_Matrix = Physical_Effect.dwellTimeMatrix(self, Segment['Segment_YCor'])
       
-        Incident_Angle = Grid_Structure.Grid_Structure().Incident_Angle()
+        Incident_Angle = Grid_Structure.Grid_Structure().Incident_Angle(Segment)
       
         
         #Primary_Sputtering_Depth_Total = [1]
         
-        #Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam*(Sputtering_Yield)*Dwell_Time_Matrix
+        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam*(Sputtering_Yield)*Dwell_Time_Matrix
 
 
         
-        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.cos(numpy.deg2rad(Incident_Angle))
+        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.sin(numpy.deg2rad(Incident_Angle))
         
-        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*numpy.sin(numpy.deg2rad(Incident_Angle))
+        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*numpy.cos(numpy.deg2rad(Incident_Angle))
         
         
         
         Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 
                                     'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z}
       
-        print (Primary_Sputtering_Depth)
+        #print (Primary_Sputtering_Depth)
       
         return Primary_Sputtering_Depth
     
@@ -122,9 +121,9 @@ class Physical_Effect:
         
         Redeposition_Total = []
         
-        Redeposition_X = Redeposition_Total*numpy.cos()
+        Redeposition_X = Redeposition_Total*numpy.sin()
         
-        Redeposition_Z = Redeposition_Total*numpy.sin()
+        Redeposition_Z = Redeposition_Total*numpy.cos()
         
         
         Redeposition = {'Redeposition_X':Redeposition_X, 
@@ -132,22 +131,17 @@ class Physical_Effect:
         
         return  Redeposition
     
-    
-    def surfaceMovement(self, MaterialAmount):
-    
-    
-    
-        Surface_Movement = []
-    
-        return Surface_Movement
+
     
     
     
 if __name__ == "__main__":
     
+    import Simulator
     
+    Segment = Simulator.FIB().Simulation()
     
-    Physical_Effect().primarySputtering()
+    Physical_Effect().primarySputtering(Segment)
     
     print ('done')
     
