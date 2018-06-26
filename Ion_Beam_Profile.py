@@ -28,10 +28,10 @@ class Ion_Beam_Profile:
         Primary_Ion_Beam_Profile = {}
 
         
-        Primary_Ion_Beam_Profile['Primary_Ion_Beam_Profile'] = self.Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((self.Grid_X-Scanning_Path_X)**2+(self.Grid_Y-Scanning_Path_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+        Primary_Ion_Beam_Profile = self.Ion_Flux*(1/(2*(numpy.pi**2)*(self.Parameters['Beam_Standard_Deviation']**2)))*numpy.exp(-(((self.Grid_X-Scanning_Path_X)**2+(self.Grid_Y-Scanning_Path_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
     
     
-        #print (Ion_Beam_Profile)
+        #print (len(Primary_Ion_Beam_Profile))
     
         return Primary_Ion_Beam_Profile
     

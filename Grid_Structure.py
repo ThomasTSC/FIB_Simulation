@@ -33,23 +33,32 @@ class Grid_Structure:
         Grid_Y = self.Parameters['Beam_Radius']*numpy.ones_like(Grid_X)
         
         Grid_Z = numpy.zeros_like(Grid_X)
-
-        
         
         #print (Grid_X, Grid_Y, Grid_Z)
         
-    
-        
-        
-        
-        
-        initialGrid_Structure = {'Grid_X':Grid_X, 'Grid_Y':Grid_Y,'Grid_Z': Grid_Z, 'Grid_xlim_max':Grid_xlim_max,
+        initialGrid_Structure = {'Grid_X':Grid_X, 
+                                 'Grid_Y':Grid_Y,
+                                 'Grid_Z': Grid_Z, 
+                                 'Grid_xlim_max':Grid_xlim_max
                                  }
         
-             
-             
         return initialGrid_Structure     
                 
+    
+    
+    def Segment(self):
+        
+        Grid = Simulator.FIB().Simulation()
+        
+        
+        Segment_XCor =
+        Segment_YCor =
+        
+        Segment = {'Segment_XCor':Segment_XCor,
+                   'Segment_YCor':Segment_YCor}
+        
+        return Segment
+    
     
     
     def surfaceSlope(self):
@@ -147,15 +156,20 @@ class Grid_Structure:
         
         Incident_Angle = Grid_Structure.Incident_Angle(self)
         
-    
         
-        Surface = {'Surface_Normal_Vector':Surface_Normal_Vector,'Surface_Moving_Vector':Surface_Moving_Vector, 'Incident_Vector': Incident_Vector, 'Incident_Cos':Incident_Cos}
+        
+        Surface = {'Surface_Normal_Vector':Surface_Normal_Vector,
+                   'Surface_Moving_Vector':Surface_Moving_Vector, 
+                   'Incident_Vector': Incident_Vector, 
+                   'Incident_Cos':Incident_Cos}
         
         
         #print (Surface)
         
         return Surface
                     
+    
+    
     
     
     
@@ -169,7 +183,7 @@ class Grid_Structure:
         
         Grid_Area = Grid_Length*Grid_Width
         
-        #print(Grid_Area)
+        print(len(Grid_Area))
 
         
         return Grid_Area
@@ -194,9 +208,9 @@ if __name__ == "__main__":
     
     #Grid_Structure().surfaceSlope()
     
-    #Grid_Structure().gridArea()
+    Grid_Structure().gridArea()
     
-    Surface_Structure = Grid_Structure().initialGrid()
+    #Surface_Structure = Grid_Structure().initialGrid()
     
     
     #plt.figure()

@@ -16,7 +16,7 @@ def Parameters():
     #Instrument Parameters#
     Beam_Current = 30 
     Beam_Diameter = 30*nm_to_m #nm
-    print (Beam_Diameter)
+    #print (Beam_Diameter)
     Beam_Radius = 0.5*Beam_Diameter
     Beam_Energy = 30*keV_to_eV
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
@@ -37,7 +37,7 @@ def Parameters():
     Pixel_Area = (numpy.pi)*((0.5*Beam_Diameter)**2)
     Pixel_Distance = 1*Beam_Diameter   
     Full_Pixel_Length = 3*(Beam_Standard_Deviation)    
-    print (Full_Pixel_Length)
+    #print (Full_Pixel_Length)
     
     
     Pass = 1

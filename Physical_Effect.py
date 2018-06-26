@@ -65,6 +65,8 @@ class Physical_Effect:
         
         #Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
         
+        print (len(Sputtering_Yield))
+        
         return Sputtering_Yield
     
     
@@ -74,6 +76,8 @@ class Physical_Effect:
         Dwell_Time_Matrix = self.Parameters['Dwell_Time']*numpy.ones_like(Grid)
         
         #Dwell_Time_Matrix = {'Dwell_Time_Matrix': Dwell_Time_Matrix}
+        
+        #print(len(Dwell_Time_Matrix))
         
         return Dwell_Time_Matrix
     
@@ -94,7 +98,9 @@ class Physical_Effect:
         
         #Primary_Sputtering_Depth_Total = [1]
         
-        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])
+        #Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam*(Sputtering_Yield)*Dwell_Time_Matrix
+
+
         
         Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.cos(numpy.deg2rad(Incident_Angle))
         
@@ -102,7 +108,8 @@ class Physical_Effect:
         
         
         
-        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z}
+        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 
+                                    'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z}
       
         print (Primary_Sputtering_Depth)
       
@@ -120,7 +127,8 @@ class Physical_Effect:
         Redeposition_Z = Redeposition_Total*numpy.sin()
         
         
-        Redeposition = {'Redeposition_X':Redeposition_X, 'Redeposition_Z':Redeposition_Z}
+        Redeposition = {'Redeposition_X':Redeposition_X, 
+                        'Redeposition_Z':Redeposition_Z}
         
         return  Redeposition
     
@@ -136,6 +144,8 @@ class Physical_Effect:
     
     
 if __name__ == "__main__":
+    
+    
     
     Physical_Effect().primarySputtering()
     

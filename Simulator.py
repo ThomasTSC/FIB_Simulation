@@ -38,11 +38,14 @@ class FIB:
             Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
             Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1])
             plt.figure()
-            plt.plot(self.Grid_X,Primary_Ion_Beam['Primary_Ion_Beam_Profile'])
+            plt.plot(self.Grid_X,Primary_Ion_Beam)
             #plt.show()
             
             
-        Result = {'Grid_X': self.Grid_X,'Grid_Y':self.Grid_Y,'Grid_Z': self.Grid_Z,'Beam_Position':Beam_Position}
+        Result = {'Grid_X': self.Grid_X,
+                  'Grid_Y': self.Grid_Y,
+                  'Grid_Z': self.Grid_Z,
+                  'Beam_Position':Beam_Position}
         
         return Result
     
