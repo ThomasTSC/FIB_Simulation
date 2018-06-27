@@ -189,9 +189,9 @@ class Grid_Structure:
     
     
     
-    def gridArea(self):
+    def gridArea(self,Segment):
         
-        Segment = Simulator.FIB().Simulation()
+        
         
         Grid_Length = numpy.sqrt(numpy.power((Segment['Segment_ZCor_End']-Segment['Segment_ZCor_Front']),2)+numpy.power((Segment['Segment_XCor_End']-Segment['Segment_XCor_Front']),2))
         Grid_Width = self.Parameters['Grid_Space']

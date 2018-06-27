@@ -17,7 +17,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 
-class Plot:
+class Post_Process:
     '''
     classdocs
     '''
@@ -27,24 +27,38 @@ class Plot:
         self.Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
         self.Grid_Structure = Grid_Structure.Grid_Structure().Grid()
     
+    def trenchPlot(self):
+        
+        
+        
+        
+        
+        return None
+        
     
-    def Beam_Profile_Plot(self):
+    def countTotalPixel(self):
         
+        
+        Total_Pixel_Number = []
+        
+        return Total_Pixel_Number
+        
+    def ionDoseAmount(self):    
+    
 
-        
-        Ion_Beam_Distribution = Ion_Beam_Profile.Ion_Beam_Profile().Ion_Beam_Profile(self.Scanning_Path['Scanning_Path_X'][0], self.Scanning_Path['Scanning_Path_Y'][0],self.Grid_Structure['Grid_X'],self.Grid_Structure['Grid_Y'])
-        
-        
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        ax.scatter3D(self.Grid_Structure['Grid_X'], self.Grid_Structure['Grid_Y'], Ion_Beam_Distribution['Ion_Beam_Profile']);
-        plt.show()
-        
-        
-        
-        
-        
+        Ion_Dose_Amount = []
+
+        return Ion_Dose_Amount
+    
+    
+    
+    
+    
 if __name__ == "__main__":
     
-    Plot().Beam_Profile_Plot()
+    
+    
+    
+    Plot().countTotalPixel()
+    
     print ('done')

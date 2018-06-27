@@ -119,6 +119,10 @@ class Physical_Effect:
     def Redeposition(self):
         
         
+        
+        
+        
+        
         Redeposition_Total = []
         
         Redeposition_X = Redeposition_Total*numpy.sin()
