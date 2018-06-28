@@ -10,6 +10,7 @@ import Scanning_Strategy
 import Scanning_Strategy
 import Grid_Structure
 import numpy
+import Parameters
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -24,8 +25,10 @@ class Post_Process:
 
 
     def __init__(self):
-        self.Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
-        self.Grid_Structure = Grid_Structure.Grid_Structure().Grid()
+        
+        self.Parameters = Parameters.Parameters()
+    
+    
     
     def trenchPlot(self):
         
@@ -39,11 +42,18 @@ class Post_Process:
     def countTotalPixel(self):
         
         
-        Total_Pixel_Number = []
+        Total_Pixel_Number = self.Parameters['Pass']*self.Parameters['Step']
+        
+        print(Total_Pixel_Number)
         
         return Total_Pixel_Number
         
+        
+        
+        
     def ionDoseAmount(self):    
+    
+        
     
 
         Ion_Dose_Amount = []
@@ -59,6 +69,6 @@ if __name__ == "__main__":
     
     
     
-    Plot().countTotalPixel()
+    Post_Process().countTotalPixel()
     
     print ('done')

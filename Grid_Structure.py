@@ -199,9 +199,8 @@ class Grid_Structure:
         
         Grid_Area = Grid_Length*Grid_Width
         
-        print(len(Grid_Area))
+        #print(len(Grid_Area))
 
-        
         return Grid_Area
     
     
@@ -227,9 +226,9 @@ if __name__ == "__main__":
     
     Grid_Structure().surfaceSlope(Segment)
     
+
     
-    
-    #Grid_Structure().gridArea()
+    Grid_Structure().gridArea(Segment)
     
     #Grid = Grid_Structure().initialGrid()
     

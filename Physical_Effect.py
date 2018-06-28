@@ -97,7 +97,9 @@ class Physical_Effect:
         
         #Primary_Sputtering_Depth_Total = [1]
         
-        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam*(Sputtering_Yield)*Dwell_Time_Matrix
+        Grid_Area = Grid_Structure.Grid_Structure().gridArea(Segment)
+        
+        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield)*Grid_Area 
 
 
         
@@ -110,7 +112,7 @@ class Physical_Effect:
         Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 
                                     'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z}
       
-        #print (Primary_Sputtering_Depth)
+        print (Primary_Sputtering_Depth)
       
         return Primary_Sputtering_Depth
     
@@ -141,11 +143,15 @@ class Physical_Effect:
     
 if __name__ == "__main__":
     
+    import Scanning_Strategy
+
     import Simulator
     
     Segment = Simulator.FIB().Simulation()
+    Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
+    Beam_Position = [Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]]
     
-    Physical_Effect().primarySputtering(Segment)
+    Physical_Effect().primarySputtering(Beam_Position[0],Beam_Position[1],Segment)
     
     print ('done')
     

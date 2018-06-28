@@ -22,6 +22,9 @@ def Parameters():
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
     Pressure = 0 #Not yet decided
     
+    
+    
+    
     #Physical Parameters#
     
     """The property parameters and the physical constants"""
@@ -36,28 +39,30 @@ def Parameters():
     #Process Parameters
     Pixel_Area = (numpy.pi)*((0.5*Beam_Diameter)**2)
     Pixel_Distance = 0.5*Beam_Diameter   
-    Full_Pixel_Length = 5*(Beam_Standard_Deviation)    
+    Full_Pixel_Length = 6*(Beam_Standard_Deviation)    
     #print (Full_Pixel_Length)
     
     
-    Pass = 5
-    Step = 5
+    Pass = 1
+    Step = 2
     Scan_Line = 1
     
-    Grid_Point = 15
+    Grid_Point = 40
     Grid_Space = 1e-8
     
     
     Dwell_Time = 1e-6
+    Integration_Time = 1e-8
+
 
     #The properties of Si/Ga system#
     Mass_Ion = 69.723
     Mass_Substrate = 28.0855    
     AtomicNumber_Ion = 31 
     AtomicNumber_Substrate = 14
-    AtomicDensity_Substrate = 5e28
+    AtomicDensity_Substrate = 5e22
     
-
+    Ion_Flux = Integration_Time*(Beam_Current)/Unit_Charge
     
     
     Parameters = {
@@ -73,6 +78,7 @@ def Parameters():
                   'Pixel_Area':Pixel_Area,
                   'Pixel_Distance':Pixel_Distance, 
                   'Full_Pixel_Length':Full_Pixel_Length ,
+                  'Ion_Flux': Ion_Flux,
                   'Pass':Pass,
                   'Step':Step, 
                   'Scan_Line':Scan_Line,
