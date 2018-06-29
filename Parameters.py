@@ -12,13 +12,15 @@ def Parameters():
     #Global Constant#
     nm_to_m = 1e-9 
     keV_to_eV = 1000        
+    pA_to_A = 1e-12
+    
     
     #Instrument Parameters#
-    Beam_Current = 30 
-    Beam_Diameter = 30*nm_to_m #nm
+    Beam_Current = 45*pA_to_A 
+    Beam_Diameter = 30*nm_to_m #m
     #print (Beam_Diameter)
     Beam_Radius = 0.5*Beam_Diameter
-    Beam_Energy = 30*keV_to_eV
+    Beam_Energy = 50*keV_to_eV
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
     Pressure = 0 #Not yet decided
     
@@ -29,26 +31,27 @@ def Parameters():
     
     """The property parameters and the physical constants"""
     """The parameters below are currently only for Ga/Si system."""
-    Unit_Charge = 1.6*1e-19
-    Avogadro_Number = 6*1e23
+    Unit_Charge = 1.6e-19
+    Avogadro_Number = 6e23
     #Temperature = 293
     #Gas_Constant = 8.314    
     #Boltzman_Constant = 1.38*1e-23
     
     
     #Process Parameters
-    Pixel_Area = (numpy.pi)*((0.5*Beam_Diameter)**2)
-    Pixel_Distance = 0.5*Beam_Diameter   
-    Full_Pixel_Length = 6*(Beam_Standard_Deviation)    
-    #print (Full_Pixel_Length)
+    Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
+    print (Pixel_Area)
+    Pixel_Distance = 1*Beam_Diameter   
+    Full_Pixel_Length = 8*(Beam_Standard_Deviation)    
+  
     
     
-    Pass = 1
-    Step = 2
+    Pass = 2
+    Step = 1
     Scan_Line = 1
     
     Grid_Point = 40
-    Grid_Space = 1e-8
+    Grid_Space = 5e-8
     
     
     Dwell_Time = 1e-6
@@ -60,13 +63,12 @@ def Parameters():
     Mass_Substrate = 28.0855    
     AtomicNumber_Ion = 31 
     AtomicNumber_Substrate = 14
-    AtomicDensity_Substrate = 5e22
+    AtomicDensity_Substrate = 5e28
     
-    Ion_Flux = Integration_Time*(Beam_Current)/Unit_Charge
+    Ion_Flux = ((Beam_Current)/Unit_Charge)/Pixel_Area #per second
     
     
     Parameters = {
-        
                   'Beam_Current':Beam_Current, 
                   'Beam_Diameter':Beam_Diameter,
                   'Beam_Radius': Beam_Radius,

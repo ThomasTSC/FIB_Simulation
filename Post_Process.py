@@ -53,10 +53,16 @@ class Post_Process:
         
     def ionDoseAmount(self):    
     
+        m2_to_cm2 = 10000
         
+        Total_Pixel_Number = Post_Process.countTotalPixel(self)
+        
+        IonDose_per_Second = self.Parameters['Pixel_Area']*self.Parameters['Ion_Flux']*self.Parameters['Unit_Charge']/1e-12
     
 
-        Ion_Dose_Amount = []
+        Ion_Dose_Amount = IonDose_per_Second*Total_Pixel_Number*m2_to_cm2*1e-6
+        
+        print ('Ion Dose (ion/cm2):', Ion_Dose_Amount)
 
         return Ion_Dose_Amount
     
@@ -70,5 +76,6 @@ if __name__ == "__main__":
     
     
     Post_Process().countTotalPixel()
+    Post_Process().ionDoseAmount()
     
     print ('done')

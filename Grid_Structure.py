@@ -199,7 +199,7 @@ class Grid_Structure:
         
         Grid_Area = Grid_Length*Grid_Width
         
-        #print(len(Grid_Area))
+        #print((Grid_Area))
 
         return Grid_Area
     
