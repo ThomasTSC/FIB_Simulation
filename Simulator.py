@@ -44,8 +44,14 @@ class FIB:
                 #plt.show()
                 Primary_Sputtering = Physical_Effect.Physical_Effect().primarySputtering(Beam_Position[0], Beam_Position[1],Segment)
                 
-                Segment['Segment_XCor']= Segment['Segment_XCor']+ Primary_Sputtering['Primary_Sputtering_Depth_X']
-                Segment['Segment_ZCor']= Segment['Segment_ZCor']+ Primary_Sputtering['Primary_Sputtering_Depth_Z']
+                Segment['Segment_XCor']= Segment['Segment_XCor']+ Primary_Sputtering['Primary_Sputtering_Depth_X_Mid']
+                Segment['Segment_ZCor']= Segment['Segment_ZCor']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_Mid']
+                
+                Segment['Segment_XCor_Front']= Segment['Segment_XCor_Front']+ Primary_Sputtering['Primary_Sputtering_Depth_X_Front']
+                Segment['Segment_ZCor_Front']= Segment['Segment_ZCor_Front']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_Front']
+                
+                Segment['Segment_XCor_End']= Segment['Segment_XCor_End']+ Primary_Sputtering['Primary_Sputtering_Depth_X_End']
+                Segment['Segment_ZCor_End']= Segment['Segment_ZCor_End']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_End']
                 
         
                 
@@ -77,6 +83,8 @@ if __name__ == "__main__":
     #plt.xlim(0,1e-6)
     #plt.ylim(-1e-7,1e-7)
     plt.title('Simulated Trench')
+    plt.scatter(Result['Segment_XCor_Front']*m_to_nm,Result['Segment_ZCor_Front']*m_to_nm)
+    plt.scatter(Result['Segment_XCor_End']*m_to_nm,Result['Segment_ZCor_End']*m_to_nm)
     plt.scatter(Result['Segment_XCor']*m_to_nm,Result['Segment_ZCor']*m_to_nm)
     plt.show()
     

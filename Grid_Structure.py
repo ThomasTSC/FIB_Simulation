@@ -89,9 +89,9 @@ class Grid_Structure:
             if math.isnan(Surface_Slope[element]) is True:
                 Surface_Slope[element] = 0
         
-        #Surface_Slope = {'Surface_Slope': Surface_Slope}
+        Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        #print(Surface_Slope)
+        print(Surface_Slope)
         
         return Surface_Slope 
     
@@ -103,7 +103,7 @@ class Grid_Structure:
         Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
         
         
-        Surface_Normal_Vector = [-Surface_Slope, numpy.ones_like(Surface_Slope)]
+        Surface_Normal_Vector = [-Surface_Slope['Surface_Slope'], numpy.ones_like(Surface_Slope['Surface_Slope'])]
         
         #Surface_Normal_Vector = {'Surface_Normal_Vector':Surface_Normal_Vector}
         
@@ -125,7 +125,7 @@ class Grid_Structure:
         
         Surface_Slope = Grid_Structure.surfaceSlope(self,Segment)
         
-        Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope)]
+        Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope['Surface_Slope'])]
         
         return Incident_Vector
         
@@ -139,6 +139,9 @@ class Grid_Structure:
         
         Incident_Cos = (Incident_Vector[0]*Surface_Normal_Vector[0]+Incident_Vector[1]*Surface_Normal_Vector[1])/(numpy.sqrt(numpy.square(Incident_Vector[0])+numpy.square(Incident_Vector[1]))*numpy.sqrt(numpy.square(Surface_Normal_Vector[0])+numpy.square(Surface_Normal_Vector[1])))
         
+        Incident_Cos = {'Incident_Cos':Incident_Cos}
+        
+        print (Incident_Cos)
         
         return Incident_Cos
     
@@ -148,44 +151,19 @@ class Grid_Structure:
         
         Incident_Cos = Grid_Structure.Incident_Cos(self,Segment)
         
-        Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos))
+        print(Incident_Cos)
         
+        Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos['Incident_Cos'].astype(float)))
+        
+        
+        Incident_Angle ={'Incident_Angle':Incident_Angle}
         
         return Incident_Angle            
                 
                 
                 
-                
-    def surfaceCalculation(self,Segment):
-        
-        
-
-        Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
-
-        Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self,Segment)
-        
-        Surface_Moving_Vector = Grid_Structure.surfaceMovingVector(self,Segment)
-
-        Incident_Vector = Grid_Structure.Incident_Vector(self,Segment)
-        
-        Incident_Cos = Grid_Structure.Incident_Cos(self,Segment)
-        
-        Incident_Angle = Grid_Structure.Incident_Angle(self,Segment)
-        
-        
-        
-        Surface = {'Surface_Normal_Vector':Surface_Normal_Vector,
-                   'Surface_Moving_Vector':Surface_Moving_Vector, 
-                   'Incident_Vector': Incident_Vector, 
-                   'Incident_Cos':Incident_Cos}
-        
-        
-        #print (Surface)
-        
-        return Surface
-                    
-    
-    
+            
+            
     
     
     

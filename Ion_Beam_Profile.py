@@ -34,7 +34,7 @@ class Ion_Beam_Profile:
     
         Primary_Ion_Beam_Profile = {'Primary_Ion_Beam_Profile_Mid':Primary_Ion_Beam_Profile_Mid, 'Primary_Ion_Beam_Profile_Front':Primary_Ion_Beam_Profile_Front, 'Primary_Ion_Beam_Profile_End': Primary_Ion_Beam_Profile_End}
     
-        print (Primary_Ion_Beam_Profile)
+        #print (Primary_Ion_Beam_Profile)
     
         return Primary_Ion_Beam_Profile
     

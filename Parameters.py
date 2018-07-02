@@ -40,13 +40,13 @@ def Parameters():
     
     #Process Parameters
     Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
-    print (Pixel_Area)
+    #print (Pixel_Area)
     Pixel_Distance = 1*Beam_Diameter   
     Full_Pixel_Length = 8*(Beam_Standard_Deviation)    
   
     
     
-    Pass = 2
+    Pass = 5
     Step = 1
     Scan_Line = 1
     

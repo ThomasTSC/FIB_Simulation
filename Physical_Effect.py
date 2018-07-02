@@ -61,9 +61,10 @@ class Physical_Effect:
         
     def sputteringYield(self,Segment):
         
-        Surface = Grid_Structure.Grid_Structure().surfaceCalculation(Segment)
+       
+        Incident_Cos = Grid_Structure.Grid_Structure().Incident_Cos(Segment)
         
-        Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Surface['Incident_Cos']),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Surface['Incident_Cos'])-1)))
+        Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Incident_Cos['Incident_Cos'].astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Incident_Cos['Incident_Cos'].astype(float))-1)))
         
         Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
         
@@ -101,24 +102,34 @@ class Physical_Effect:
         
         Grid_Area = Grid_Structure.Grid_Structure().gridArea(Segment)
         
-        
         #print (Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Grid_Area) 
         
+        Primary_Sputtering_Depth_Total_Front = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Front']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
+        Primary_Sputtering_Depth_Total_End = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_End']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
         
-        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
-
+        Primary_Sputtering_Depth_Total_Mid = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
+        
+        
 
         #print (Primary_Sputtering_Depth_Total)
         
         
-        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.sin(numpy.deg2rad(Incident_Angle))
+        Primary_Sputtering_Depth_X_Mid = Primary_Sputtering_Depth_Total_Mid*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_Z_Mid = Primary_Sputtering_Depth_Total_Mid*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
         
-        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*numpy.cos(numpy.deg2rad(Incident_Angle))
+        Primary_Sputtering_Depth_X_Front = Primary_Sputtering_Depth_Total_Front*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_Z_Front = Primary_Sputtering_Depth_Total_Front*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_X_End = Primary_Sputtering_Depth_Total_End*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_Z_End = Primary_Sputtering_Depth_Total_End*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
         
         
         
-        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 
-                                    'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z}
+        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X_Mid':Primary_Sputtering_Depth_X_Mid, 
+                                    'Primary_Sputtering_Depth_Z_Mid':Primary_Sputtering_Depth_Z_Mid,
+                                    'Primary_Sputtering_Depth_X_Front':Primary_Sputtering_Depth_X_Front,
+                                    'Primary_Sputtering_Depth_Z_Front':Primary_Sputtering_Depth_Z_Front,
+                                    'Primary_Sputtering_Depth_X_End':Primary_Sputtering_Depth_X_End,
+                                    'Primary_Sputtering_Depth_Z_End':Primary_Sputtering_Depth_Z_End}
       
         #print (Primary_Sputtering_Depth)
       
