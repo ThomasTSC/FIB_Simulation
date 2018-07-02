@@ -11,8 +11,14 @@ import math
 import scipy
 import Simulator
 
+from scipy.interpolate import spline
+
 
 from openpyxl.chart import surface_chart
+
+
+import matplotlib.pyplot as plt
+
 
 
 class Grid_Structure:
@@ -158,7 +164,7 @@ class Grid_Structure:
         
         Incident_Angle ={'Incident_Angle':Incident_Angle}
         
-        print (Incident_Angle)
+        #print (Incident_Angle)
         
         return Incident_Angle            
                 
@@ -184,14 +190,27 @@ class Grid_Structure:
     
            
     
-    def Surface_Smoothing(self):
+    def Surface_Smoothing(self,Segment, Grid):
+    
+        
+        
+        Initial_Segment_X = Grid_Structure().initSegment(Grid)
+        
+        
+        Segment_Z_interp_Front = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=0)
+        Segment_Z_interp_End = spline(Segment['Segment_XCor_End'], Segment['Segment_ZCor_End'], Initial_Segment_X['Segment_XCor_End'], order=0)
+        Segment_Z_interp_Mid = 0.5*(Segment_Z_interp_Front+Segment_Z_interp_End)
+        
+        Segment_X_interp_Front = Initial_Segment_X['Segment_XCor_Front']
+        Segment_X_interp_End = Initial_Segment_X['Segment_XCor_End']
+        Segment_X_interp_Mid = 0.5*(Segment_X_interp_Front+Segment_X_interp_End)
+        
+        Surface_Smoothing ={}
         
         
         
-        Surface = {}
         
-        
-        return Surface
+        return Surface_Smoothing 
     
     
                 
@@ -208,7 +227,11 @@ if __name__ == "__main__":
     
     Grid_Structure().gridArea(Segment)
     
-    #Grid = Grid_Structure().initialGrid()
+    
+    
+    Grid = Grid_Structure().initialGrid()
+    
+    Grid_Structure().Surface_Smoothing(Segment, Grid)
     
     #Grid_Structure().Segment(Grid)
      
