@@ -91,7 +91,7 @@ class Grid_Structure:
         
         Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        print(Surface_Slope)
+        #print(Surface_Slope)
         
         return Surface_Slope 
     
@@ -141,7 +141,7 @@ class Grid_Structure:
         
         Incident_Cos = {'Incident_Cos':Incident_Cos}
         
-        print (Incident_Cos)
+        #print (Incident_Cos)
         
         return Incident_Cos
     
@@ -151,20 +151,18 @@ class Grid_Structure:
         
         Incident_Cos = Grid_Structure.Incident_Cos(self,Segment)
         
-        print(Incident_Cos)
+        #print(Incident_Cos)
         
         Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos['Incident_Cos'].astype(float)))
         
         
         Incident_Angle ={'Incident_Angle':Incident_Angle}
         
+        print (Incident_Angle)
+        
         return Incident_Angle            
                 
                 
-                
-            
-            
-    
     
     
     def gridArea(self,Segment):
@@ -176,6 +174,8 @@ class Grid_Structure:
         
         
         Grid_Area = Grid_Length*Grid_Width
+        
+        Grid_Area ={'Grid_Area': Grid_Area}
         
         #print((Grid_Area))
 

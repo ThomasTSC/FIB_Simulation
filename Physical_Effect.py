@@ -105,12 +105,10 @@ class Physical_Effect:
         #print (Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Grid_Area) 
         
         Primary_Sputtering_Depth_Total_Front = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Front']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
-        Primary_Sputtering_Depth_Total_End = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_End']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
-        
+        Primary_Sputtering_Depth_Total_End = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_End']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix    
         Primary_Sputtering_Depth_Total_Mid = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
         
-        
-
+    
         #print (Primary_Sputtering_Depth_Total)
         
         
@@ -144,15 +142,19 @@ class Physical_Effect:
         
         
         
-        Redeposition_Total = []
-        
-        Redeposition_X = Redeposition_Total*numpy.sin()
-        
-        Redeposition_Z = Redeposition_Total*numpy.cos()
+        Redeposition_Total_Mid = []
+        Redeposition_Total_Front = []
+        Redeposition_Total_End = []
         
         
-        Redeposition = {'Redeposition_X':Redeposition_X, 
-                        'Redeposition_Z':Redeposition_Z}
+        
+        Redeposition_X_Mid = Redeposition_Total_Mid*numpy.sin()
+        
+        Redeposition_Z_Mid = Redeposition_Total_Mid*numpy.cos()
+        
+        
+        Redeposition = {'Redeposition_X_Mid':Redeposition_X_Mid, 
+                        'Redeposition_Z_Mid':Redeposition_Z_Mid}
         
         return  Redeposition
     

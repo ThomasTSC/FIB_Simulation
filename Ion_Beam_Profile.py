@@ -47,6 +47,9 @@ class Ion_Beam_Profile:
         #print (Grid_Area)
         
         
+        
+        
+        
         Re_Deposition_Profile = []
     
         return Re_Deposition_Profile
