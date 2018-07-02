@@ -127,7 +127,10 @@ class Physical_Effect:
                                     'Primary_Sputtering_Depth_X_Front':Primary_Sputtering_Depth_X_Front,
                                     'Primary_Sputtering_Depth_Z_Front':Primary_Sputtering_Depth_Z_Front,
                                     'Primary_Sputtering_Depth_X_End':Primary_Sputtering_Depth_X_End,
-                                    'Primary_Sputtering_Depth_Z_End':Primary_Sputtering_Depth_Z_End}
+                                    'Primary_Sputtering_Depth_Z_End':Primary_Sputtering_Depth_Z_End,
+                                    'Primary_Sputtering_Depth_Total_Front':Primary_Sputtering_Depth_Total_Front,
+                                    'Primary_Sputtering_Depth_Total_End':Primary_Sputtering_Depth_Total_End,
+                                    'Primary_Sputtering_Depth_Total_Mid':Primary_Sputtering_Depth_Total_Mid}
       
         #print (Primary_Sputtering_Depth)
       
@@ -138,8 +141,7 @@ class Physical_Effect:
     def Redeposition(self):
         
         
-        
-        
+    
         
         
         Redeposition_Total_Mid = []
@@ -155,6 +157,8 @@ class Physical_Effect:
         
         Redeposition = {'Redeposition_X_Mid':Redeposition_X_Mid, 
                         'Redeposition_Z_Mid':Redeposition_Z_Mid}
+        
+        
         
         return  Redeposition
     

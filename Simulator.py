@@ -62,6 +62,7 @@ class FIB:
                       'Segment_ZCor': Segment['Segment_ZCor'],
                       'Segment_ZCor_Front': Segment['Segment_ZCor_Front'],
                       'Segment_ZCor_End': Segment['Segment_ZCor_End'],
+                      'Primary_Sputtering':Primary_Sputtering,
                       'Beam_Position':Beam_Position}
             
             

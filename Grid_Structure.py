@@ -177,7 +177,7 @@ class Grid_Structure:
         
         Grid_Area ={'Grid_Area': Grid_Area}
         
-        #print((Grid_Area))
+        print((Grid_Area))
 
         return Grid_Area
     
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     
     Segment = Simulator.FIB().Simulation()
     
-    Grid_Structure().surfaceSlope(Segment)
+    #Grid_Structure().surfaceSlope(Segment)
     
 
     
