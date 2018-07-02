@@ -122,6 +122,10 @@ class Physical_Effect:
         
         
         
+        
+        
+        
+        
         Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X_Mid':Primary_Sputtering_Depth_X_Mid, 
                                     'Primary_Sputtering_Depth_Z_Mid':Primary_Sputtering_Depth_Z_Mid,
                                     'Primary_Sputtering_Depth_X_Front':Primary_Sputtering_Depth_X_Front,

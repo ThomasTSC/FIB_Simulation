@@ -39,19 +39,7 @@ class Ion_Beam_Profile:
         #print (Primary_Ion_Beam_Profile)
     
         return Primary_Ion_Beam_Profile
-    
-    
-    def Integral_Over_Beam_Area(self):
         
-        
-        
-        Beam_Profile_Integral = []
-        
-        
-        return Beam_Profile_Integral
-    
-    
-    
     
     
     
@@ -62,14 +50,14 @@ class Ion_Beam_Profile:
         
         Primary_Sputtering = Simulator.FIB().Simulation()['Primary_Sputtering']
         
-        Sputtered_Material_Amount = Primary_Sputtering['Primary_Sputtering_Depth_Total_Mid']*Grid_Area['Grid_Area']
+        Sputtered_Material_Amount = numpy.abs((self.Parameters['Pixel_Area']/numpy.sum(Grid_Area['Grid_Area']))*numpy.sum(Primary_Sputtering['Primary_Sputtering_Depth_Total_Mid']*(Grid_Area['Grid_Area'])))
         
-        print (Sputtered_Material_Amount)
+        Sputtered_Atom_Amount = Sputtered_Material_Amount*self.Parameters['Atomic_density_Sub']
+        
         
         #We need an integration of 360 degree here to estimate the redeposition#
         
-        
-        Re_Deposition_Profile = []
+        Re_Deposition_Profile = Sputtered_Atom_Amount*numpy.exp(-(((Segment['Segment_XCor']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
     
         return Re_Deposition_Profile
     
