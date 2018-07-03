@@ -20,17 +20,13 @@ class Ion_Beam_Profile:
         self.Parameters = Parameters.Parameters()
         self.initGrid = Grid_Structure.Grid_Structure().initialGrid()
         
-        
-            
-    
+
     def Primary_Ion_Beam_Profile(self, Beam_Position_X, Beam_Position_Y, Segment):
         
         Primary_Ion_Beam_Profile = {}
         
         Primary_Ion_Beam_Profile_Mid = self.Parameters['Ion_Flux']*numpy.exp(-(((Segment['Segment_XCor']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
-        
         Primary_Ion_Beam_Profile_Front = self.Parameters['Ion_Flux']*numpy.exp(-(((Segment['Segment_XCor_Front']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
-    
         Primary_Ion_Beam_Profile_End = self.Parameters['Ion_Flux']*numpy.exp(-(((Segment['Segment_XCor_End']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
         #print (len(Primary_Ion_Beam_Profile))
     
@@ -54,16 +50,11 @@ class Ion_Beam_Profile:
         
         Sputtered_Atom_Amount = Sputtered_Material_Amount*self.Parameters['Atomic_density_Sub']
         
-        
         #We need an integration of 360 degree here to estimate the redeposition#
         
         Re_Deposition_Profile = Sputtered_Atom_Amount*numpy.exp(-(((Segment['Segment_XCor']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
     
         return Re_Deposition_Profile
-    
-    
-    
-    
     
     
     

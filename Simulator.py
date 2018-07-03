@@ -18,7 +18,6 @@ class FIB:
     classdocs
     '''
 
-
     def __init__(self):
         
         self.Parameters = Parameters.Parameters()
@@ -37,15 +36,8 @@ class FIB:
             for Step in range(len(self.Scanning_Path['Scanning_Path_X'])):
                 Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
                 Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1], Segment)
-                #plt.figure()
-                #plt.xlim(0,1e-6)
-                #plt.title('Ion_Distribution')
-                #plt.plot(Segment['Segment_XCor'],Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid'])
-                #plt.show()
                 Primary_Sputtering = Physical_Effect.Physical_Effect().primarySputtering(Beam_Position[0], Beam_Position[1],Segment)
                 
-                #Segment['Segment_XCor']= Segment['Segment_XCor']+ Primary_Sputtering['Primary_Sputtering_Depth_X_Mid']
-                #Segment['Segment_ZCor']= Segment['Segment_ZCor']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_Mid']
                 
                 Segment['Segment_XCor_Front']= Segment['Segment_XCor_Front']+ Primary_Sputtering['Primary_Sputtering_Depth_X_Front']
                 Segment['Segment_ZCor_Front']= Segment['Segment_ZCor_Front']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_Front']
@@ -56,10 +48,6 @@ class FIB:
                 Segment['Segment_XCor']= 0.5*(Segment['Segment_XCor_Front'] + Segment['Segment_XCor_End'])
                 Segment['Segment_ZCor']= 0.5*(Segment['Segment_ZCor_Front'] + Segment['Segment_ZCor_End'])
         
-
-
-                
-                
                 
                 Segment = {'Segment_XCor_Front': Segment['Segment_XCor_Front'],
                       'Segment_XCor_End': Segment['Segment_XCor_End'],

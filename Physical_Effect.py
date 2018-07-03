@@ -145,9 +145,6 @@ class Physical_Effect:
     def Redeposition(self):
         
         
-    
-        
-        
         Redeposition_Total_Mid = []
         Redeposition_Total_Front = []
         Redeposition_Total_End = []
@@ -167,7 +164,12 @@ class Physical_Effect:
         return  Redeposition
     
 
-    
+    def Mean_Free_Path_Effect(self):
+        
+        
+        
+        
+        return 0
     
     
 if __name__ == "__main__":
