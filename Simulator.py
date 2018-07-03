@@ -23,7 +23,7 @@ class FIB:
         
         self.Parameters = Parameters.Parameters()
         self.initGrid = Grid_Structure.Grid_Structure().initialGrid()
-        self.initSegment = Grid_Structure.Grid_Structure().initSegment(self.initGrid)
+        self.initSegment = Grid_Structure.Grid_Structure().initialSegment(self.initGrid)
         self.Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
 
 
@@ -52,10 +52,14 @@ class FIB:
                 
                 Segment['Segment_XCor_End']= Segment['Segment_XCor_End']+ Primary_Sputtering['Primary_Sputtering_Depth_X_End']
                 Segment['Segment_ZCor_End']= Segment['Segment_ZCor_End']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_End']
-                
+
                 Segment['Segment_XCor']= 0.5*(Segment['Segment_XCor_Front'] + Segment['Segment_XCor_End'])
                 Segment['Segment_ZCor']= 0.5*(Segment['Segment_ZCor_Front'] + Segment['Segment_ZCor_End'])
         
+
+
+                
+                
                 
                 Segment = {'Segment_XCor_Front': Segment['Segment_XCor_Front'],
                       'Segment_XCor_End': Segment['Segment_XCor_End'],
@@ -66,6 +70,15 @@ class FIB:
                       'Segment_ZCor_End': Segment['Segment_ZCor_End'],
                       'Primary_Sputtering':Primary_Sputtering,
                       'Beam_Position':Beam_Position}
+            
+            
+            
+                Segment['Segment_XCor_Front']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_XCor_Front']
+                Segment['Segment_XCor_End']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_XCor_End']
+                Segment['Segment_ZCor_Front']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_ZCor_Front']
+                Segment['Segment_ZCor_End']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_ZCor_End']
+            
+            
             
             
         
@@ -86,8 +99,8 @@ if __name__ == "__main__":
     #plt.xlim(0,1e-6)
     #plt.ylim(-1e-7,1e-7)
     plt.title('Simulated Trench')
-    plt.scatter(Result['Segment_XCor_Front']*m_to_nm,Result['Segment_ZCor_Front']*m_to_nm)
-    plt.scatter(Result['Segment_XCor_End']*m_to_nm,Result['Segment_ZCor_End']*m_to_nm)
+    #plt.scatter(Result['Segment_XCor_Front']*m_to_nm,Result['Segment_ZCor_Front']*m_to_nm)
+    #plt.scatter(Result['Segment_XCor_End']*m_to_nm,Result['Segment_ZCor_End']*m_to_nm)
     plt.scatter(Result['Segment_XCor']*m_to_nm,Result['Segment_ZCor']*m_to_nm)
     plt.show()
     

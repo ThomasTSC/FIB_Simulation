@@ -52,7 +52,7 @@ class Grid_Structure:
                 
     
     
-    def initSegment(self, Grid):
+    def initialSegment(self, Grid):
         
         
         Segment_XCor_Front = Grid['Grid_X'][0:-1]
@@ -188,13 +188,12 @@ class Grid_Structure:
         return Grid_Area
     
     
-           
     
-    def Surface_Smoothing(self,Segment, Grid):
+    def Surface_Smoothing(self,Segment):
     
+        Initial_Grid = Grid_Structure().initialGrid()
         
-        
-        Initial_Segment_X = Grid_Structure().initSegment(Grid)
+        Initial_Segment_X = Grid_Structure().initialSegment(Initial_Grid)
         
         
         Segment_Z_interp_Front = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=0)
@@ -205,12 +204,31 @@ class Grid_Structure:
         Segment_X_interp_End = Initial_Segment_X['Segment_XCor_End']
         Segment_X_interp_Mid = 0.5*(Segment_X_interp_Front+Segment_X_interp_End)
         
-        Surface_Smoothing ={}
         
+        
+        Surface_Smoothing = {'Segment_XCor_Front': Segment_X_interp_Front,
+                      'Segment_XCor_End': Segment_X_interp_End,
+                      'Segment_XCor': Segment_X_interp_Mid,
+                      'Segment_ZCor': Segment_Z_interp_Mid,
+                      'Segment_ZCor_Front': Segment_Z_interp_Front,
+                      'Segment_ZCor_End': Segment_Z_interp_End ,
+                    }
         
         
         
         return Surface_Smoothing 
+    
+    
+    
+    def Singular_Point(self):
+        
+        
+        
+        
+        
+        return 0
+    
+    
     
     
                 
