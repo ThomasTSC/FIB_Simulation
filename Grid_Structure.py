@@ -226,6 +226,14 @@ class Grid_Structure:
     
     
     
+    def convolution_Smoothing(self):
+        
+        
+        
+        
+        return 0
+    
+    
     
                 
                 
