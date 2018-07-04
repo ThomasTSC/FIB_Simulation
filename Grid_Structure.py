@@ -10,12 +10,9 @@ import matplotlib.pyplot as plt
 import math
 import scipy
 import Simulator
-
 from scipy.interpolate import spline
 
-
-from openpyxl.chart import surface_chart
-
+import re
 
 import matplotlib.pyplot as plt
 
@@ -220,10 +217,9 @@ class Grid_Structure:
     
     
     
-    def Singular_Point(self):
+    def findSingular_Point(self, Segment):
         
-        
-        
+        Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
         
         
         return 0
@@ -248,8 +244,9 @@ if __name__ == "__main__":
     
     
     Grid = Grid_Structure().initialGrid()
+
     
-    Grid_Structure().Surface_Smoothing(Segment, Grid)
+    Grid_Structure().findSingular_Point(Segment)
     
     #Grid_Structure().Segment(Grid)
      
