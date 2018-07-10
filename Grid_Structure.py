@@ -222,11 +222,27 @@ class Grid_Structure:
         Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
         
         
-        return 0
+        Singular_Point = []
+    
+        for i in range(1,len(Surface_Slope['Surface_Slope'])-1):
+            
+            
+            if Surface_Slope['Surface_Slope'][i]*Surface_Slope['Surface_Slope'][i-1]<0 or Surface_Slope['Surface_Slope'][i]*Surface_Slope['Surface_Slope'][i+1]<0:
+                
+                Singular_Point.append(i-1)
+        
+        
+        Singular_Point = {'Singular_Point':Singular_Point}
+        
+        print (Singular_Point)
+    
+        return Singular_Point
     
     
     
-    def convolution_Smoothing(self):
+    def convolution_Smoothing(self,Segment):
+        
+        Singular_Point = Grid_Structure.findSingular_Point(self, Segment)
         
         
         
@@ -247,11 +263,11 @@ if __name__ == "__main__":
     
 
     
-    Grid_Structure().gridArea(Segment)
+    #Grid_Structure().gridArea(Segment)
     
     
     
-    Grid = Grid_Structure().initialGrid()
+    #Grid = Grid_Structure().initialGrid()
 
     
     Grid_Structure().findSingular_Point(Segment)
