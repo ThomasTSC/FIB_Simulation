@@ -221,6 +221,7 @@ class Grid_Structure:
         
         Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
         
+        print (len(Surface_Slope['Surface_Slope']))
         
         Singular_Point = []
     
@@ -245,6 +246,13 @@ class Grid_Structure:
         Singular_Point = Grid_Structure.findSingular_Point(self, Segment)
         
         
+        
+        for i in range(len(Singular_Point['Singular_Point'])):
+            Adjacent_Point = [Singular_Point['Singular_Point'][i]-1,Singular_Point['Singular_Point'][i],Singular_Point['Singular_Point'][i]+1]
+            print (Adjacent_Point)
+            
+            
+            #numpy.convolve(a, v, 'valid')
         
         
         return 0
@@ -271,7 +279,7 @@ if __name__ == "__main__":
 
     
     Grid_Structure().findSingular_Point(Segment)
-    
+    Grid_Structure().convolution_Smoothing(Segment)
     #Grid_Structure().Segment(Grid)
      
     
