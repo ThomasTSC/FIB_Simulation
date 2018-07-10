@@ -48,6 +48,7 @@ class FIB:
                 Segment['Segment_XCor']= 0.5*(Segment['Segment_XCor_Front'] + Segment['Segment_XCor_End'])
                 Segment['Segment_ZCor']= 0.5*(Segment['Segment_ZCor_Front'] + Segment['Segment_ZCor_End'])
         
+
                 
                 Segment = {'Segment_XCor_Front': Segment['Segment_XCor_Front'],
                       'Segment_XCor_End': Segment['Segment_XCor_End'],
@@ -60,12 +61,18 @@ class FIB:
                       'Beam_Position':Beam_Position}
             
             
-            
+                #Resampling Smoothing#
                 Segment['Segment_XCor_Front']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_XCor_Front']
                 Segment['Segment_XCor_End']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_XCor_End']
                 Segment['Segment_ZCor_Front']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_ZCor_Front']
                 Segment['Segment_ZCor_End']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_ZCor_End']
             
+            
+                #Convolution Smoothing#
+                #Segment['Segment_XCor_Front']= Grid_Structure.Grid_Structure().convolution_Smoothing(Segment)['Segment_XCor_Front']
+                #Segment['Segment_XCor_End']= Grid_Structure.Grid_Structure().convolution_Smoothing(Segment)['Segment_XCor_End']
+                #Segment['Segment_ZCor_Front']= Grid_Structure.Grid_Structure().convolution_Smoothing(Segment)['Segment_ZCor_Front']
+                #Segment['Segment_ZCor_End']= Grid_Structure.Grid_Structure().convolution_Smoothing(Segment)['Segment_ZCor_End']
             
             
             

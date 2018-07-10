@@ -215,14 +215,13 @@ class Grid_Structure:
         
         return Surface_Smoothing 
     
-    
+
     
     def findSingular_Point(self, Segment):
         
         Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
-        
-        print (len(Surface_Slope['Surface_Slope']))
-        
+    
+  
         Singular_Point = []
     
         for i in range(1,len(Surface_Slope['Surface_Slope'])-1):
@@ -235,8 +234,6 @@ class Grid_Structure:
         
         Singular_Point = {'Singular_Point':Singular_Point}
         
-        print (Singular_Point)
-    
         return Singular_Point
     
     
@@ -245,17 +242,47 @@ class Grid_Structure:
         
         Singular_Point = Grid_Structure.findSingular_Point(self, Segment)
         
+        Surface_Smoothing = Grid_Structure.Surface_Smoothing(self, Segment)
         
         
         for i in range(len(Singular_Point['Singular_Point'])):
             Adjacent_Point = [Singular_Point['Singular_Point'][i]-1,Singular_Point['Singular_Point'][i],Singular_Point['Singular_Point'][i]+1]
-            print (Adjacent_Point)
+
+            #print (Adjacent_Point)
+            
+            Convolution_Smoothing_X_Front = numpy.convolve(Surface_Smoothing['Segment_XCor_Front'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
+            Convolution_Smoothing_X_End = numpy.convolve(Surface_Smoothing['Segment_XCor_End'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
+            Convolution_Smoothing_Z_Front = numpy.convolve(Surface_Smoothing['Segment_ZCor_Front'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
+            Convolution_Smoothing_Z_End = numpy.convolve(Surface_Smoothing['Segment_ZCor_End'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
             
             
-            #numpy.convolve(a, v, 'valid')
+
+            
+            #print(Convolution_Smoothing_X_Front)
+            
+            Surface_Smoothing['Segment_XCor_Front'][Adjacent_Point]= 3*[Convolution_Smoothing_X_Front]
+            Surface_Smoothing['Segment_XCor_End'][Adjacent_Point]= 3*[Convolution_Smoothing_X_End]
+            Surface_Smoothing['Segment_ZCor_Front'][Adjacent_Point]= 3*[Convolution_Smoothing_Z_Front]
+            Surface_Smoothing['Segment_ZCor_End'][Adjacent_Point]= 3*[Convolution_Smoothing_Z_Front]
+            
+            
+            
+ 
+            
         
         
-        return 0
+        Convolution_Smoothing = {'Segment_XCor_Front': Surface_Smoothing['Segment_XCor_Front'],
+                      'Segment_XCor_End': Surface_Smoothing['Segment_XCor_End'],
+                      'Segment_XCor': 0.5*(Surface_Smoothing['Segment_XCor_Front']+Surface_Smoothing['Segment_XCor_End']),
+                      'Segment_ZCor': 0.5*(Surface_Smoothing['Segment_ZCor_Front']+Surface_Smoothing['Segment_ZCor_End']),
+                      'Segment_ZCor_Front': Surface_Smoothing['Segment_ZCor_Front'],
+                      'Segment_ZCor_End': Surface_Smoothing['Segment_ZCor_End'] ,
+                    }
+        
+        
+        print (Convolution_Smoothing)
+        
+        return Convolution_Smoothing
     
     
     
@@ -278,7 +305,7 @@ if __name__ == "__main__":
     #Grid = Grid_Structure().initialGrid()
 
     
-    Grid_Structure().findSingular_Point(Segment)
+    #Grid_Structure().findSingular_Point(Segment)
     Grid_Structure().convolution_Smoothing(Segment)
     #Grid_Structure().Segment(Grid)
      
