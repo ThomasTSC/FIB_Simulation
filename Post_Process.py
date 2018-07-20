@@ -30,13 +30,14 @@ class Post_Process:
     
     
     
-    def trenchPlot(self):
+    def sputteringYieldPlot(self):
         
         
         
         
-        
-        return None
+        return 0 
+
+
         
     
     def countTotalPixel(self):
@@ -67,6 +68,20 @@ class Post_Process:
         return Ion_Dose_Amount
     
     
+    def plotTrench(self,Segment):
+    
+    
+        m_to_nm = 1e9
+    
+        plt.figure()
+        #plt.xlim(0,1e-6)
+        #plt.ylim(-1e-7,1e-7)
+        plt.title('Simulated Trench')
+        plt.scatter(Segment['Segment_XCor_Front']*m_to_nm,Segment['Segment_ZCor_Front']*m_to_nm)
+        plt.scatter(Segment['Segment_XCor_End']*m_to_nm,Segment['Segment_ZCor_End']*m_to_nm)
+        plt.scatter(Segment['Segment_XCor']*m_to_nm,Segment['Segment_ZCor']*m_to_nm)
+        plt.show()
+    
     
     
     
@@ -77,5 +92,6 @@ if __name__ == "__main__":
     
     Post_Process().countTotalPixel()
     Post_Process().ionDoseAmount()
+    Post_Process().plotTrench(Segment)
     
     print ('done')

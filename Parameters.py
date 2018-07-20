@@ -19,8 +19,8 @@ def Parameters():
     Beam_Current = 45*pA_to_A 
     Beam_Diameter = 30*nm_to_m #m
     #print (Beam_Diameter)
-    Beam_Radius = 0.5*Beam_Diameter
-    Beam_Energy = 50*keV_to_eV
+    Beam_Radius = 0.4*Beam_Diameter
+    Beam_Energy = 30*keV_to_eV
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
     Pressure = 0 #Not yet decided
     
@@ -46,16 +46,16 @@ def Parameters():
   
     
     
-    Pass = 20
-    Step = 3
+    Pass = 1
+    Step = 1
     Scan_Line = 1
     
     Grid_Point = 40
     Grid_Space = 5e-8
     
     
-    Dwell_Time = 1e-6
-    Integration_Time = 1e-8
+    Dwell_Time = 5e-5
+    Integration_Time = 1e-6
 
 
     #The properties of Si/Ga system#
@@ -87,6 +87,7 @@ def Parameters():
                   'Grid_Point':Grid_Point,
                   'Grid_Space':Grid_Space,
                   'Dwell_Time':Dwell_Time,
+                  'Integration_Time': Integration_Time,
                   'Mass_Ion':Mass_Ion,
                   'Mass_Sub':Mass_Substrate,
                   'Atomic_number_Ion':AtomicNumber_Ion,

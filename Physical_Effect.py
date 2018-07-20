@@ -58,13 +58,42 @@ class Physical_Effect:
         self.Sputtering_Yield_3 = self.Sputtering_Yield_2*numpy.cos(self.Coefficient_AngMax)
     
     
+    
+    
+    def maxSputteringYield(self):
+        
+        Max_Sputtering_Yield = []
+        
+        for deg in range(0,90):
+        
+            MaxAngel_to_Rad = numpy.deg2rad(deg)
+        
+            Max_Cos = numpy.cos(MaxAngel_to_Rad) 
+        
+            Max_Sputtering_Yield.append(self.Sputtering_Yield_1*(numpy.power((1/Max_Cos.astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Max_Cos.astype(float))-1))))
+        
+        
+        Max_Sputtering_Yield = numpy.max(Max_Sputtering_Yield)
+        
+        #print (Max_Sputtering_Yield)
+        
+        return Max_Sputtering_Yield
+    
         
     def sputteringYield(self,Segment):
         
-       
+        
+        Max_Sputtering_Yield = Physical_Effect().maxSputteringYield()
+        
+        Singular_Point = Grid_Structure.Grid_Structure().findSingular_Point(Segment)
+        
+        #print (Singular_Point)
+        
         Incident_Cos = Grid_Structure.Grid_Structure().Incident_Cos(Segment)
         
         Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Incident_Cos['Incident_Cos'].astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Incident_Cos['Incident_Cos'].astype(float))-1)))
+        
+        #Sputtering_Yield[Singular_Point['Singular_Point']] = Max_Sputtering_Yield
         
         Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
         
@@ -73,10 +102,12 @@ class Physical_Effect:
         return Sputtering_Yield
     
     
+
+    
     
     def dwellTimeMatrix(self, Grid):
         
-        Dwell_Time_Matrix = self.Parameters['Dwell_Time']*numpy.ones_like(Grid)
+        Dwell_Time_Matrix = self.Parameters['Integration_Time']*numpy.ones_like(Grid)
         
         #Dwell_Time_Matrix = {'Dwell_Time_Matrix': Dwell_Time_Matrix}
         
@@ -164,7 +195,7 @@ class Physical_Effect:
         return  Redeposition
     
 
-    def Mean_Free_Path_Effect(self):
+    def meanFreePathEffect(self):
         
         
         
@@ -178,11 +209,15 @@ if __name__ == "__main__":
 
     import Simulator
     
-    Segment = Simulator.FIB().Simulation()
-    Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
-    Beam_Position = [Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]]
+    #Segment = Simulator.FIB().Simulation()
     
-    Physical_Effect().primarySputtering(Beam_Position[0],Beam_Position[1],Segment)
+    Physical_Effect().maxSputteringYield()
+    
+    
+    
+    
+    
+    
     
     print ('done')
     

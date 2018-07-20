@@ -86,7 +86,11 @@ class Grid_Structure:
     def surfaceSlope(self,Segment):
         
         
-        Surface_Slope = (Segment['Segment_ZCor_End']-Segment['Segment_ZCor_Front'])/(Segment['Segment_XCor_End']-Segment['Segment_XCor_Front'])
+        Surface_Slope = numpy.diff(Segment['Segment_ZCor'])/numpy.diff(Segment['Segment_XCor'])
+        
+        
+        
+        Surface_Slope = numpy.append(Surface_Slope,[0])
         
         for element in range(len(Surface_Slope)):
             if math.isnan(Surface_Slope[element]) is True:
@@ -193,8 +197,8 @@ class Grid_Structure:
         Initial_Segment_X = Grid_Structure().initialSegment(Initial_Grid)
         
         
-        Segment_Z_interp_Front = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=0)
-        Segment_Z_interp_End = spline(Segment['Segment_XCor_End'], Segment['Segment_ZCor_End'], Initial_Segment_X['Segment_XCor_End'], order=0)
+        Segment_Z_interp_Front = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=2)
+        Segment_Z_interp_End = spline(Segment['Segment_XCor_End'], Segment['Segment_ZCor_End'], Initial_Segment_X['Segment_XCor_End'], order=2)
         Segment_Z_interp_Mid = 0.5*(Segment_Z_interp_Front+Segment_Z_interp_End)
         
         Segment_X_interp_Front = Initial_Segment_X['Segment_XCor_Front']
@@ -221,15 +225,16 @@ class Grid_Structure:
         
         Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
     
+        
   
         Singular_Point = []
     
         for i in range(1,len(Surface_Slope['Surface_Slope'])-1):
             
             
-            if Surface_Slope['Surface_Slope'][i]*Surface_Slope['Surface_Slope'][i-1]<0 or Surface_Slope['Surface_Slope'][i]*Surface_Slope['Surface_Slope'][i+1]<0:
+            if Surface_Slope['Surface_Slope'][i]>0 and Surface_Slope['Surface_Slope'][i+1]<0:
                 
-                Singular_Point.append(i-1)
+                Singular_Point.append(i)
         
         
         Singular_Point = {'Singular_Point':Singular_Point}
@@ -238,51 +243,51 @@ class Grid_Structure:
     
     
     
-    def convolution_Smoothing(self,Segment):
+    def averageSmoothing(self,Segment,Segment_ZCor_Front, Segment_ZCor_End,Segment_XCor_Front, Segment_XCor_End):
         
         Singular_Point = Grid_Structure.findSingular_Point(self, Segment)
         
-        Surface_Smoothing = Grid_Structure.Surface_Smoothing(self, Segment)
         
-        
-        for i in range(len(Singular_Point['Singular_Point'])):
-            Adjacent_Point = [Singular_Point['Singular_Point'][i]-1,Singular_Point['Singular_Point'][i],Singular_Point['Singular_Point'][i]+1]
 
-            #print (Adjacent_Point)
+        for point in Singular_Point['Singular_Point']:
             
-            Convolution_Smoothing_X_Front = numpy.convolve(Surface_Smoothing['Segment_XCor_Front'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
-            Convolution_Smoothing_X_End = numpy.convolve(Surface_Smoothing['Segment_XCor_End'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
-            Convolution_Smoothing_Z_Front = numpy.convolve(Surface_Smoothing['Segment_ZCor_Front'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
-            Convolution_Smoothing_Z_End = numpy.convolve(Surface_Smoothing['Segment_ZCor_End'][Adjacent_Point], numpy.ones(len(Adjacent_Point))*(1/len(Adjacent_Point)), 'valid')
+            Near_points = [point-2,point-1 ,point , point+1,point+2]
             
+            Average_Surface_ZCor_Front = (1/5)*numpy.sum(Segment_ZCor_Front[Near_points])*numpy.ones(5) 
             
-
-            
-            #print(Convolution_Smoothing_X_Front)
-            
-            Surface_Smoothing['Segment_XCor_Front'][Adjacent_Point]= 3*[Convolution_Smoothing_X_Front]
-            Surface_Smoothing['Segment_XCor_End'][Adjacent_Point]= 3*[Convolution_Smoothing_X_End]
-            Surface_Smoothing['Segment_ZCor_Front'][Adjacent_Point]= 3*[Convolution_Smoothing_Z_Front]
-            Surface_Smoothing['Segment_ZCor_End'][Adjacent_Point]= 3*[Convolution_Smoothing_Z_Front]
+            Segment_ZCor_Front[Near_points] = Average_Surface_ZCor_Front[0]
             
             
+            Average_Surface_ZCor_End = (1/5)*numpy.sum(Segment_ZCor_End[Near_points])*numpy.ones(5) 
             
- 
+            Segment_ZCor_End[Near_points] = Average_Surface_ZCor_End[0]
             
+            
+            Average_Surface_XCor_Front = (1/5)*numpy.sum(Segment_XCor_Front[Near_points])*numpy.ones(5) 
+            
+            Segment_XCor_Front[Near_points] = Average_Surface_XCor_Front[0]
+            
+            
+            Average_Surface_XCor_End = (1/5)*numpy.sum(Segment_XCor_End[Near_points])*numpy.ones(5) 
+            
+            Segment_XCor_End[Near_points] = Average_Surface_XCor_End[0]            
+            
+                
         
-        
-        Convolution_Smoothing = {'Segment_XCor_Front': Surface_Smoothing['Segment_XCor_Front'],
-                      'Segment_XCor_End': Surface_Smoothing['Segment_XCor_End'],
-                      'Segment_XCor': 0.5*(Surface_Smoothing['Segment_XCor_Front']+Surface_Smoothing['Segment_XCor_End']),
-                      'Segment_ZCor': 0.5*(Surface_Smoothing['Segment_ZCor_Front']+Surface_Smoothing['Segment_ZCor_End']),
-                      'Segment_ZCor_Front': Surface_Smoothing['Segment_ZCor_Front'],
-                      'Segment_ZCor_End': Surface_Smoothing['Segment_ZCor_End'] ,
+        Average_Smoothing = {
+                      
+                      'Segment_ZCor_Front': Segment_ZCor_Front,
+                      'Segment_ZCor_End': Segment_ZCor_End ,
+                      'Segment_XCor_Front': Segment_XCor_Front,
+                      'Segment_XCor_End': Segment_XCor_End
                     }
         
+
         
-        print (Convolution_Smoothing)
         
-        return Convolution_Smoothing
+        #print (Average_Smoothing)
+        
+        return Average_Smoothing
     
     
     
@@ -294,35 +299,16 @@ if __name__ == "__main__":
     
     Segment = Simulator.FIB().Simulation()
     
-    #Grid_Structure().surfaceSlope(Segment)
+    Grid = Grid_Structure().initialGrid()
+    
+    print (len(Grid['Grid_X']))
+    
+    
+    print ((Segment['Segment_ZCor'])
+    
+    print (len(Grid_Structure().surfaceSlope(Segment)['Surface_Slope']))
     
 
-    
-    #Grid_Structure().gridArea(Segment)
-    
-    
-    
-    #Grid = Grid_Structure().initialGrid()
-
-    
-    #Grid_Structure().findSingular_Point(Segment)
-    Grid_Structure().convolution_Smoothing(Segment)
-    #Grid_Structure().Segment(Grid)
-     
-    
-    
-    #plt.figure()
-    #plt.title('Surface')
-   # plt.grid()
-    #plt.xticks(Grid_Structure['Grid_X'])
-    #plt.yticks(Grid_Structure['Grid_Z'])
-    #plt.scatter(Surface_Structure['Grid_X'], Surface_Structure['Grid_Z'], color="red", marker="x")
-    
-    #plt.xlim(-3e-8,Surface_Structure['Grid_xlim_max']+3e-8)
-    
-    #plt.show()
-             
-    #Grid_Structure().surfaceCalculation()
     
     
     
