@@ -8,7 +8,7 @@ import Parameters
 import numpy
 import matplotlib.pyplot as plt
 import math
-import scipy
+
 import Simulator
 from scipy.interpolate import spline
 
@@ -22,68 +22,10 @@ class Grid_Structure:
     
     def __init__(self):
         self.Parameters = Parameters.Parameters()
-
-    
-    def initialGrid(self):
-        
-        
-        Grid_Point = self.Parameters['Grid_Point']*self.Parameters['Step']
-        
-        Grid_xlim_max = self.Parameters['Full_Pixel_Length']*self.Parameters['Step']
-        
-        Grid_X = numpy.linspace(0,self.Parameters['Full_Pixel_Length']*self.Parameters['Step'],Grid_Point)
-        
-        Grid_Y = self.Parameters['Beam_Radius']*numpy.ones_like(Grid_X)
-        
-        Grid_Z = numpy.zeros_like(Grid_X)
-        
-        #print (Grid_X, Grid_Y, Grid_Z)
-        
-        initGrid_Structure = {'Grid_X': Grid_X, 
-                                 'Grid_Y': Grid_Y,
-                                 'Grid_Z': Grid_Z, 
-                                 'Grid_xlim_max': Grid_xlim_max
-                                 }
-        
-        return initGrid_Structure     
-                
+        self.Profile = Simulator.FIB().Simulation()
     
     
-    def initialSegment(self, Grid):
-        
-        
-        Segment_XCor_Front = Grid['Grid_X'][0:-1]
-        Segment_XCor_End = Grid['Grid_X'][1:]
-        
-        Segment_XCor = 0.5*(Segment_XCor_Front+Segment_XCor_End)
-        
-        
-        Segment_ZCor_Front = Grid['Grid_Z'][0:-1]
-        Segment_ZCor_End = Grid['Grid_Z'][1:]
-        
-        Segment_ZCor = 0.5*(Segment_ZCor_Front+Segment_ZCor_End)
-        
-        
-        Segment_YCor = Grid['Grid_Y'][0]*numpy.ones_like(Segment_XCor)
-        
-        
-        
-        initSegment = {'Segment_XCor_Front':Segment_XCor_Front,
-                   'Segment_XCor_End':Segment_XCor_End,
-                   'Segment_ZCor_Front':Segment_ZCor_Front,
-                   'Segment_ZCor_End':Segment_ZCor_End,
-                   'Segment_XCor':Segment_XCor,
-                   'Segment_ZCor':Segment_ZCor,
-                   'Segment_YCor':Segment_YCor}
-        
-        
-       
-        
-        return initSegment
-    
-    
-    
-    def surfaceSlope(self,Segment):
+    def surfaceSlope(self):
         
         
         Surface_Slope = numpy.diff(Segment['Segment_ZCor'])/numpy.diff(Segment['Segment_XCor'])
@@ -295,22 +237,9 @@ class Grid_Structure:
                 
 if __name__ == "__main__":
     
-    import Simulator
-    
-    Segment = Simulator.FIB().Simulation()
-    
-    Grid = Grid_Structure().initialGrid()
-    
-    print (len(Grid['Grid_X']))
-    
-    
-    print ((Segment['Segment_ZCor'])
-    
-    print (len(Grid_Structure().surfaceSlope(Segment)['Surface_Slope']))
     
 
-    
-    
+
     
     print ('done')
     

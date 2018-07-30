@@ -12,6 +12,7 @@ import Scanning_Strategy
 import matplotlib.pyplot as plt
 import Parameters
 import Post_Process
+import numpy
 
 
 
@@ -23,16 +24,37 @@ class FIB:
     def __init__(self):
         
         self.Parameters = Parameters.Parameters()
-        self.initGrid = Grid_Structure.Grid_Structure().initialGrid()
-        self.initSegment = Grid_Structure.Grid_Structure().initialSegment(self.initGrid)
+        
         self.Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
+        
+        
 
+    def __init__Grid(self):
+        
+        Grid_Point = self.Parameters['Grid_Point']*self.Parameters['Step']
+        
+        Grid_xlim_max = self.Parameters['Full_Pixel_Length']*self.Parameters['Step']
+        
+        Grid_X = numpy.linspace(0,self.Parameters['Full_Pixel_Length']*self.Parameters['Step'],Grid_Point)
+        
+        Grid_Y = self.Parameters['Beam_Radius']*numpy.ones_like(Grid_X)
+        
+        Grid_Z = numpy.zeros_like(Grid_X)
+        
+        #print (Grid_X, Grid_Y, Grid_Z)
+        
+        initGrid_Structure = {'Grid_X': Grid_X, 
+                                 'Grid_Y': Grid_Y,
+                                 'Grid_Z': Grid_Z, 
+                                 'Grid_xlim_max': Grid_xlim_max
+                                 }
+        
+        return initGrid_Structure     
 
 
     def Simulation(self):
         
-        Segment = self.initSegment
-        
+        Profile = FIB().__init__Grid()
         
         
         for Pass in range(self.Parameters['Pass']):
@@ -61,53 +83,23 @@ class FIB:
                     Primary_Sputtering = Physical_Effect.Physical_Effect().primarySputtering(Beam_Position[0], Beam_Position[1],Segment)
                 
                 
-                    Segment['Segment_XCor_Front']= Segment['Segment_XCor_Front']+ Primary_Sputtering['Primary_Sputtering_Depth_X_Front']
-                    Segment['Segment_ZCor_Front']= Segment['Segment_ZCor_Front']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_Front']
                 
-                    Segment['Segment_XCor_End']= Segment['Segment_XCor_End']+ Primary_Sputtering['Primary_Sputtering_Depth_X_End']
-                    Segment['Segment_ZCor_End']= Segment['Segment_ZCor_End']+ Primary_Sputtering['Primary_Sputtering_Depth_Z_End']
-
-                    Segment['Segment_XCor']= 0.5*(Segment['Segment_XCor_Front'] + Segment['Segment_XCor_End'])
-                    Segment['Segment_ZCor']= 0.5*(Segment['Segment_ZCor_Front'] + Segment['Segment_ZCor_End'])
-        
-
-                
-                    Segment = {'Segment_XCor_Front': Segment['Segment_XCor_Front'],
-                      'Segment_XCor_End': Segment['Segment_XCor_End'],
-                      'Segment_XCor': Segment['Segment_XCor'],
-                      'Segment_YCor': Segment['Segment_YCor'],
-                      'Segment_ZCor': Segment['Segment_ZCor'],
-                      'Segment_ZCor_Front': Segment['Segment_ZCor_Front'],
-                      'Segment_ZCor_End': Segment['Segment_ZCor_End'],
-                      'Primary_Sputtering':Primary_Sputtering,
-                      'Beam_Position':Beam_Position}
-            
+                    Profile = {} 
             
             
                     
                 
          
-            
-            
-                    #Resampling Smoothing#
-                    Segment['Segment_XCor_Front']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_XCor_Front']
-                    Segment['Segment_XCor_End']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_XCor_End']
-                    Segment['Segment_ZCor_Front']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_ZCor_Front']
-                    Segment['Segment_ZCor_End']= Grid_Structure.Grid_Structure().Surface_Smoothing(Segment)['Segment_ZCor_End']
-                    Segment['Segment_XCor']= 0.5*(Segment['Segment_XCor_Front']+Segment['Segment_XCor_End'])
-                    Segment['Segment_ZCor'] = 0.5*(Segment['Segment_ZCor_Front']+Segment['Segment_ZCor_End'])
-            
-
                 
                     Time_Interval = Time_Interval + self.Parameters['Integration_Time']
             
             
         
                     
-            Post_Process.Post_Process().plotTrench(Segment)       
+            Post_Process.Post_Process().plotTrench(Profile)       
         
         
-        return Segment
+        return Profile
     
     
     
