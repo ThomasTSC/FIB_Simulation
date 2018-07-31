@@ -1,16 +1,11 @@
-    
-v0 = [0,0]
-v1 = [2,0]
-v2 = [0,2] 
-p = [1,1]   
-    
-def B(v0,v1,v2,p):    
-    s=(v1[0]-v0[0])*(v2[1]-v0[1])-(v1[1]-v0[1])*(v2[0]-v0[0])
-    a=((v1[0]-p[0])*(v2[1]-p[1])-(v1[1]-p[1])*(v2[0]-p[0]))/s
-    b=((v1[0]-p[0])*(v0[1]-p[1])-(v1[1]-p[1])*(v0[0]-p[0]))/s
-    c =1-a-b
-    
-    print (a,b,c)
-    return (a,b,c)
+import numpy as np
+import pylab as plt
+import statsmodels.api as sm
 
-B(v0,v1,v2,p)
+x = np.linspace(0,2*np.pi,100)
+y = np.sin(x) + np.random.random(100) * 0.2
+lowess = sm.nonparametric.lowess(y, x, frac=0.1)
+
+plt.plot(x, y, '+')
+plt.plot(lowess[:, 0], lowess[:, 1])
+plt.show()

@@ -11,6 +11,7 @@ import math
 
 import Simulator
 from scipy.interpolate import interp1d
+from scipy import interpolate
 
 import re
 
@@ -38,10 +39,10 @@ class Grid_Structure:
         #print (Surface_Slope_Backward)
         
         Surface_Slope = 0.5*(Surface_Slope[0:-1]+Surface_Slope[1:])
-        print (len(Surface_Slope))
+        
         
         Surface_Slope = numpy.append(Surface_Slope,[0])
-        print (len(Surface_Slope))
+       
         Surface_Slope = numpy.insert(Surface_Slope,0,0)
         
 
@@ -50,9 +51,22 @@ class Grid_Structure:
             if math.isnan(Surface_Slope[element]) is True:
                 Surface_Slope[element] = 0
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
         Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        print(Surface_Slope)
+        #print(Surface_Slope)
+        
+        
+        
+
         
         return Surface_Slope 
     
@@ -145,6 +159,8 @@ class Grid_Structure:
 
         return Grid_Area
     
+
+    
     
     
     def surfaceResampling(self, Profile_X, Profile_Z):
@@ -153,18 +169,21 @@ class Grid_Structure:
         
         
         
-        Grid_Z_Resampling = interp1d(Profile_X, Profile_Z)
+        Grid_Z_Resampling = numpy.interp(Initial_Grid['Grid_X'],Profile_X, Profile_Z)
         
         Grid_X_Resampling = Initial_Grid['Grid_X']
-
+   
         
         
-        
-        Surface_Resampling = {'Grid_Z_Resampling': Grid_Z_Resampling(Grid_X_Resampling),
+        Surface_Resampling = {'Grid_Z_Resampling': Grid_Z_Resampling,
                               'Grid_X_Resampling': Grid_X_Resampling,
                               
-                    }
+                 }
+  
+                              
+                   
         
+   
         
         
         return Surface_Resampling
@@ -189,7 +208,17 @@ class Grid_Structure:
         
         Singular_Point = {'Singular_Point':Singular_Point}
         
+        
+        
+        print (Singular_Point)
+        
         return Singular_Point
+    
+    
+    
+    
+    
+
     
     
     

@@ -83,6 +83,13 @@ class FIB:
                     
                     Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_Z_Resampling']
                     
+                    
+                    
+                    Singular_Point = Grid_Structure.Grid_Structure(Profile).findSingularPoint()
+                    
+                    
+                    
+                    
                     Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
             
             
