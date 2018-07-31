@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import math
 
 import Simulator
-from scipy.interpolate import spline
+from scipy.interpolate import interp1d
 
 import re
 
@@ -31,11 +31,20 @@ class Grid_Structure:
         
         Surface_Slope = numpy.diff(self.Profile['Grid_Z'])/numpy.diff(self.Profile['Grid_X'])
         
+
         
+        #print (Surface_Slope_Forward)
+        
+        #print (Surface_Slope_Backward)
+        
+        Surface_Slope = 0.5*(Surface_Slope[0:-1]+Surface_Slope[1:])
+        print (len(Surface_Slope))
         
         Surface_Slope = numpy.append(Surface_Slope,[0])
+        print (len(Surface_Slope))
+        Surface_Slope = numpy.insert(Surface_Slope,0,0)
         
-        Surface_Slope[0] = 0
+
         
         for element in range(len(Surface_Slope)):
             if math.isnan(Surface_Slope[element]) is True:
@@ -43,7 +52,7 @@ class Grid_Structure:
         
         Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        #print(Surface_Slope)
+        print(Surface_Slope)
         
         return Surface_Slope 
     
@@ -138,21 +147,22 @@ class Grid_Structure:
     
     
     
-    def surfaceResampling(self):
+    def surfaceResampling(self, Profile_X, Profile_Z):
     
-        Initial_Grid = Grid_Structure().initialGrid()
+        Initial_Grid = Simulator.FIB().initGrid()
         
         
         
-        Segment_Z_Resampling = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=2)
+        Grid_Z_Resampling = interp1d(Profile_X, Profile_Z)
         
-    
-        Segment_X_Resampling= Initial_Segment_X['Segment_XCor_End']
+        Grid_X_Resampling = Initial_Grid['Grid_X']
 
         
         
         
-        Surface_Resampling = {'Segment_Z_Resampling': Segment_Z_Resampling,
+        Surface_Resampling = {'Grid_Z_Resampling': Grid_Z_Resampling(Grid_X_Resampling),
+                              'Grid_X_Resampling': Grid_X_Resampling,
+                              
                     }
         
         
@@ -242,10 +252,7 @@ if __name__ == "__main__":
     
     Surface_Slope = Grid_Structure(Profile).surfaceSlope()
     
-    Surface_NormalVector = Grid_Structure(Profile).surfaceNormalVector()
 
-    Incident_Angle = Grid_Structure(Profile).incidentAngle()
-    
     print ('done')
     
     

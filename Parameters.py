@@ -46,7 +46,7 @@ def Parameters():
   
     
     
-    Pass = 1
+    Pass = 5
     Step = 1
     Scan_Line = 1
     
@@ -54,7 +54,7 @@ def Parameters():
     Grid_Space = 5e-8
     
     
-    Dwell_Time = 5e-5
+    Dwell_Time = 1e-5
     Integration_Time = 1e-6
 
 

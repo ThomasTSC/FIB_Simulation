@@ -29,7 +29,7 @@ class FIB:
         
         
 
-    def __init__Grid(self):
+    def initGrid(self):
         
         Grid_Point = self.Parameters['Grid_Point']*self.Parameters['Step']
         
@@ -54,7 +54,7 @@ class FIB:
 
     def Simulation(self):
         
-        Profile = FIB().__init__Grid()
+        Profile = FIB().initGrid()
 
         
         
@@ -76,9 +76,13 @@ class FIB:
                 
                 
                     Profile['Grid_X'] = Profile['Grid_X'] + Primary_Sputtering['Primary_Sputtering_Depth_X']
-                    
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
-                
+                    
+                    
+                    Profile['Grid_X'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_X_Resampling']
+                    
+                    Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_Z_Resampling']
+                    
                     Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
             
             
@@ -103,7 +107,7 @@ if __name__ == "__main__":
     
     Profile = FIB().Simulation()
     
-    print (Profile)
+    #print (Profile)
     
     m_to_nm = 1e9
     
