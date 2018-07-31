@@ -72,9 +72,12 @@ class FIB:
                 
                     Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
                     Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(Profile).Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1])
-                    #Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
+                    Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                 
                 
+                    Profile['Grid_X'] = Profile['Grid_X'] + Primary_Sputtering['Primary_Sputtering_Depth_X']
+                    
+                    Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                 
                     Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
             
@@ -90,7 +93,7 @@ class FIB:
                     
             #Post_Process.Post_Process().plotTrench(Profile)       
         
-        
+                    
         return Profile
     
     
@@ -100,18 +103,16 @@ if __name__ == "__main__":
     
     Profile = FIB().Simulation()
     
-    #print (Result)
+    print (Profile)
     
-    #m_to_nm = 1e9
+    m_to_nm = 1e9
     
-    #plt.figure()
+    plt.figure()
     #plt.xlim(0,1e-6)
     #plt.ylim(-1e-7,1e-7)
-    #plt.title('Simulated Trench')
-    #plt.scatter(Result['Segment_XCor_Front']*m_to_nm,Result['Segment_ZCor_Front']*m_to_nm)
-    #plt.scatter(Result['Segment_XCor_End']*m_to_nm,Result['Segment_ZCor_End']*m_to_nm)
-    #plt.scatter(Result['Segment_XCor']*m_to_nm,Result['Segment_ZCor']*m_to_nm)
-    #plt.show()
+    plt.title('Simulated Trench')
+    plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
+    plt.show()
     
     print ('done')
     

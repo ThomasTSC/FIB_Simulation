@@ -138,40 +138,32 @@ class Grid_Structure:
     
     
     
-    def Surface_Smoothing(self,Segment):
+    def surfaceResampling(self):
     
         Initial_Grid = Grid_Structure().initialGrid()
         
-        Initial_Segment_X = Grid_Structure().initialSegment(Initial_Grid)
         
         
-        Segment_Z_interp_Front = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=2)
-        Segment_Z_interp_End = spline(Segment['Segment_XCor_End'], Segment['Segment_ZCor_End'], Initial_Segment_X['Segment_XCor_End'], order=2)
-        Segment_Z_interp_Mid = 0.5*(Segment_Z_interp_Front+Segment_Z_interp_End)
+        Segment_Z_Resampling = spline(Segment['Segment_XCor_Front'], Segment['Segment_ZCor_Front'], Initial_Segment_X['Segment_XCor_Front'], order=2)
         
-        Segment_X_interp_Front = Initial_Segment_X['Segment_XCor_Front']
-        Segment_X_interp_End = Initial_Segment_X['Segment_XCor_End']
-        Segment_X_interp_Mid = 0.5*(Segment_X_interp_Front+Segment_X_interp_End)
+    
+        Segment_X_Resampling= Initial_Segment_X['Segment_XCor_End']
+
         
         
         
-        Surface_Smoothing = {'Segment_XCor_Front': Segment_X_interp_Front,
-                      'Segment_XCor_End': Segment_X_interp_End,
-                      'Segment_XCor': Segment_X_interp_Mid,
-                      'Segment_ZCor': Segment_Z_interp_Mid,
-                      'Segment_ZCor_Front': Segment_Z_interp_Front,
-                      'Segment_ZCor_End': Segment_Z_interp_End ,
+        Surface_Resampling = {'Segment_Z_Resampling': Segment_Z_Resampling,
                     }
         
         
         
-        return Surface_Smoothing 
+        return Surface_Resampling
     
 
     
-    def findSingularPoint(self, Segment):
+    def findSingularPoint(self):
         
-        Surface_Slope = Grid_Structure.surfaceSlope(self, Segment)
+        Surface_Slope = Grid_Structure.surfaceSlope(self)
     
         
   

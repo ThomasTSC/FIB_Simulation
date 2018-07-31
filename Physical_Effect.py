@@ -22,6 +22,7 @@ class Physical_Effect:
     def __init__(self, Profile):
         
         self.Parameters = Parameters.Parameters()
+        
         self.Profile = Profile
         
         
@@ -84,13 +85,13 @@ class Physical_Effect:
     def sputteringYield(self):
         
         
-        Max_Sputtering_Yield = Physical_Effect().maxSputteringYield()
+        Max_Sputtering_Yield = Physical_Effect(self.Profile).maxSputteringYield()
         
-        Singular_Point = Grid_Structure.Grid_Structure().findSingular_Point(Segment)
+        Singular_Point = Grid_Structure.Grid_Structure(self.Profile).findSingularPoint()
         
         #print (Singular_Point)
         
-        Incident_Cos = Grid_Structure.Grid_Structure().Incident_Cos(Segment)
+        Incident_Cos = Grid_Structure.Grid_Structure(self.Profile).incidentCosine()
         
         Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Incident_Cos['Incident_Cos'].astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Incident_Cos['Incident_Cos'].astype(float))-1)))
         
@@ -106,67 +107,53 @@ class Physical_Effect:
 
     
     
-    def dwellTimeMatrix(self, Grid):
+    def dwellTimeMatrix(self):
         
-        Dwell_Time_Matrix = self.Parameters['Integration_Time']*numpy.ones_like(Grid)
+
         
-        #Dwell_Time_Matrix = {'Dwell_Time_Matrix': Dwell_Time_Matrix}
+        Dwell_Time_Matrix = self.Parameters['Integration_Time']*numpy.ones_like(self.Profile['Grid_X'])
         
-        #print(len(Dwell_Time_Matrix))
+        Dwell_Time_Matrix = {'Dwell_Time_Matrix': Dwell_Time_Matrix}
+    
         
         return Dwell_Time_Matrix
     
     
-    def primarySputtering(self,Beam_Position_X,Beam_Position_Y,Segment):
+    def primarySputtering(self,Beam_Position_X,Beam_Position_Y):
         
 
         
-        Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Beam_Position_X,Beam_Position_Y,Segment)
+        Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile).Primary_Ion_Beam_Profile(Beam_Position_X,Beam_Position_Y)
         
-        Sputtering_Yield = Physical_Effect.sputteringYield(self,Segment)
+        Sputtering_Yield = Physical_Effect(self.Profile).sputteringYield()
                 
-        Dwell_Time_Matrix = Physical_Effect.dwellTimeMatrix(self, Segment['Segment_YCor'])
+        Dwell_Time_Matrix = Physical_Effect(self.Profile).dwellTimeMatrix()
       
-        Incident_Angle = Grid_Structure.Grid_Structure().Incident_Angle(Segment)
+        Incident_Angle = Grid_Structure.Grid_Structure(self.Profile).incidentAngle()
       
         
         #Primary_Sputtering_Depth_Total = [1]
         
-        Grid_Area = Grid_Structure.Grid_Structure().gridArea(Segment)
         
         #print (Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Grid_Area) 
         
-        Primary_Sputtering_Depth_Total_Front = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Front']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
-        Primary_Sputtering_Depth_Total_End = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_End']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix    
-        Primary_Sputtering_Depth_Total_Mid = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix
+        
+        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix['Dwell_Time_Matrix']
         
     
         #print (Primary_Sputtering_Depth_Total)
         
         
-        Primary_Sputtering_Depth_X_Mid = Primary_Sputtering_Depth_Total_Mid*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
-        Primary_Sputtering_Depth_Z_Mid = Primary_Sputtering_Depth_Total_Mid*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
-        
-        Primary_Sputtering_Depth_X_Front = Primary_Sputtering_Depth_Total_Front*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
-        Primary_Sputtering_Depth_Z_Front = Primary_Sputtering_Depth_Total_Front*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
-        Primary_Sputtering_Depth_X_End = Primary_Sputtering_Depth_Total_End*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
-        Primary_Sputtering_Depth_Z_End = Primary_Sputtering_Depth_Total_End*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
         
         
         
         
-        
-        
-        
-        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X_Mid':Primary_Sputtering_Depth_X_Mid, 
-                                    'Primary_Sputtering_Depth_Z_Mid':Primary_Sputtering_Depth_Z_Mid,
-                                    'Primary_Sputtering_Depth_X_Front':Primary_Sputtering_Depth_X_Front,
-                                    'Primary_Sputtering_Depth_Z_Front':Primary_Sputtering_Depth_Z_Front,
-                                    'Primary_Sputtering_Depth_X_End':Primary_Sputtering_Depth_X_End,
-                                    'Primary_Sputtering_Depth_Z_End':Primary_Sputtering_Depth_Z_End,
-                                    'Primary_Sputtering_Depth_Total_Front':Primary_Sputtering_Depth_Total_Front,
-                                    'Primary_Sputtering_Depth_Total_End':Primary_Sputtering_Depth_Total_End,
-                                    'Primary_Sputtering_Depth_Total_Mid':Primary_Sputtering_Depth_Total_Mid}
+        Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 
+                                    'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z,
+   
+                                    'Primary_Sputtering_Depth_Total':Primary_Sputtering_Depth_Total}
       
         #print (Primary_Sputtering_Depth)
       
@@ -210,12 +197,13 @@ if __name__ == "__main__":
 
     import Simulator
     
-    #Segment = Simulator.FIB().Simulation()
-    
-    Physical_Effect().maxSputteringYield()
+    Profile = Simulator.FIB().Simulation()
     
     
+    Physical_Effect(Profile).dwellTimeMatrix()
     
+    
+
     
     
     
