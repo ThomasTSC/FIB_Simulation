@@ -19,9 +19,10 @@ class Physical_Effect:
     '''
 
 
-    def __init__(self):
+    def __init__(self, Profile):
         
         self.Parameters = Parameters.Parameters()
+        self.Profile = Profile
         
         
         #Primary sputtering yield
@@ -80,7 +81,7 @@ class Physical_Effect:
         return Max_Sputtering_Yield
     
         
-    def sputteringYield(self,Segment):
+    def sputteringYield(self):
         
         
         Max_Sputtering_Yield = Physical_Effect().maxSputteringYield()

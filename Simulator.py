@@ -55,6 +55,8 @@ class FIB:
     def Simulation(self):
         
         Profile = FIB().__init__Grid()
+
+        
         
         
         for Pass in range(self.Parameters['Pass']):
@@ -63,28 +65,18 @@ class FIB:
                 
                 Time_Interval = 0
                 
-                
-                #Average Smoothing#
-                
-                #Segment['Segment_ZCor_Front']= Grid_Structure.Grid_Structure().averageSmoothing(Segment,Segment['Segment_ZCor_Front'],Segment['Segment_ZCor_End'],Segment['Segment_XCor_Front'],Segment['Segment_XCor_End'])['Segment_ZCor_Front']
-                #Segment['Segment_ZCor_End']= Grid_Structure.Grid_Structure().averageSmoothing(Segment, Segment['Segment_ZCor_Front'],Segment['Segment_ZCor_End'],Segment['Segment_XCor_Front'],Segment['Segment_XCor_End'])['Segment_ZCor_End']
-                #Segment['Segment_XCor_Front']= Grid_Structure.Grid_Structure().averageSmoothing(Segment,Segment['Segment_ZCor_Front'],Segment['Segment_ZCor_End'],Segment['Segment_XCor_Front'],Segment['Segment_XCor_End'])['Segment_XCor_Front']
-                #Segment['Segment_XCor_End']= Grid_Structure.Grid_Structure().averageSmoothing(Segment, Segment['Segment_ZCor_Front'],Segment['Segment_ZCor_End'],Segment['Segment_XCor_Front'],Segment['Segment_XCor_End'])['Segment_XCor_End']
-                #Segment['Segment_ZCor']= 0.5*(Segment['Segment_ZCor_Front']+Segment['Segment_ZCor_End'])
-                #Segment['Segment_XCor']= 0.5*(Segment['Segment_XCor_Front']+Segment['Segment_XCor_End'])
-                
-                
+
                 
                 
                 while Time_Interval <= self.Parameters['Dwell_Time']:
                 
                     Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
-                    Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile().Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1], Segment)
-                    Primary_Sputtering = Physical_Effect.Physical_Effect().primarySputtering(Beam_Position[0], Beam_Position[1],Segment)
+                    Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(Profile).Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1],Profile_X,Profile_Y, Profile_Z)
+                    #Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                 
                 
                 
-                    Profile = {} 
+                    Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
             
             
                     
@@ -96,7 +88,7 @@ class FIB:
             
         
                     
-            Post_Process.Post_Process().plotTrench(Profile)       
+            #Post_Process.Post_Process().plotTrench(Profile)       
         
         
         return Profile
@@ -106,7 +98,7 @@ class FIB:
     
 if __name__ == "__main__":
     
-    Result = FIB().Simulation()
+    Profile = FIB().Simulation()
     
     #print (Result)
     

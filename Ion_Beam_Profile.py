@@ -16,16 +16,16 @@ import Physical_Effect
 
 class Ion_Beam_Profile:
     
-    def __init__(self):
+    def __init__(self, Profile):
         self.Parameters = Parameters.Parameters()
-        self.Profile = Simulator.FIB().Simulation()
+        self.Profile = Profile
         
 
     def Primary_Ion_Beam_Profile(self, Beam_Position_X, Beam_Position_Y):
         
         Primary_Ion_Beam_Profile = {}
         
-        Primary_Ion_Beam_Profile = self.Parameters['Ion_Flux']*numpy.exp(-(((Segment['Segment_XCor']-Beam_Position_X)**2+(Segment['Segment_YCor']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+        Primary_Ion_Beam_Profile = self.Parameters['Ion_Flux']*numpy.exp(-(((self.Profile['Grid_X']-Beam_Position_X)**2+(self.Profile['Grid_Y']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
         
     
         Primary_Ion_Beam_Profile = {'Primary_Ion_Beam_Profile':Primary_Ion_Beam_Profile}
