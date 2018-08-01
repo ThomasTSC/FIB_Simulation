@@ -205,11 +205,7 @@ if __name__ == "__main__":
     
     Physical_Effect(Profile).dwellTimeMatrix()
     
-    
 
-    
-    
-    
     
     print ('done')
     
