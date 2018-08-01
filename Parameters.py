@@ -24,9 +24,6 @@ def Parameters():
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
     Pressure = 0 #Not yet decided
     
-    
-    
-    
     #Physical Parameters#
     
     """The property parameters and the physical constants"""
@@ -44,11 +41,11 @@ def Parameters():
     Pixel_Distance = 1*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    Pass = 80
+    Pass = 8
     Step = 1
     Scan_Line = 1
     
-    Grid_Point = 50
+    Grid_Point = 25
     Grid_Space = 5e-8
     
     

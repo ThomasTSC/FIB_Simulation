@@ -149,7 +149,7 @@ class Physical_Effect:
     
     
     
-    def Redeposition(self,Beam_Position_X,Beam_Position_Y):
+    def redeposition(self,Beam_Position_X,Beam_Position_Y):
         
         
         
@@ -170,13 +170,13 @@ class Physical_Effect:
         
         
         
-        return  Redeposition
+        return  None
     
     
     
     
     
-    def secondarySputtering(self):
+    def secondarySputtering(self,Beam_Position_X,Beam_Position_Y):
         
         
         Secondary_Sputtering_Depth = {}

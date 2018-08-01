@@ -80,8 +80,11 @@ class FIB:
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                     
                     
+                    Redeposition = Physical_Effect.Physical_Effect(Profile).redeposition(Beam_Position[0], Beam_Position[1])
                     
                     
+                    
+                    Secondary_Sputtering = Physical_Effect.Physical_Effect(Profile).secondarySputtering(Beam_Position[0], Beam_Position[1])
                     
                     
                 
@@ -123,6 +126,8 @@ if __name__ == "__main__":
     #plt.xlim(0,1e-6)
     #plt.ylim(-1e-7,1e-7)
     plt.title('Simulated Trench')
+    plt.xlabel('X-Cor (nm)')
+    plt.ylabel('Z-Cor (nm)')
     plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
     
     Surface_Slope = Grid_Structure.Grid_Structure(Profile).surfaceSlope()
