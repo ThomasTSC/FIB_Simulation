@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import Parameters
 import Post_Process
 import numpy
-from scipy.signal import savgol_filter
+
 
 
 class FIB:

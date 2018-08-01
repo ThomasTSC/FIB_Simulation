@@ -7,10 +7,7 @@ Created on Tue Apr 17 22:32:27 2018
 import Parameters
 import numpy
 import matplotlib.pyplot as plt
-import math
-
 import Simulator
-from scipy.interpolate import interp1d
 from scipy import interpolate
 
 
@@ -167,21 +164,16 @@ class Grid_Structure:
     def surfaceResampling(self, Profile_X, Profile_Z):
     
         Initial_Grid = Simulator.FIB().initGrid()
-        
-        
+    
         
         Grid_Z_Resampling = numpy.interp(Initial_Grid['Grid_X'],Profile_X, Profile_Z)
         Grid_X_Resampling = Initial_Grid['Grid_X']
    
-   
-        
     
         Surface_Resampling = {'Grid_Z_Resampling': Grid_Z_Resampling,
                               'Grid_X_Resampling': Grid_X_Resampling,
                               
-                 }
-  
-                    
+                 }  
         
         return Surface_Resampling
     

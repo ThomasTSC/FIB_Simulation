@@ -46,7 +46,7 @@ def Parameters():
   
     
     
-    Pass = 10
+    Pass = 20
     Step = 1
     Scan_Line = 1
     
@@ -55,7 +55,7 @@ def Parameters():
     
     
     Dwell_Time = 1e-5
-    Integration_Time = 1e-6
+    Integration_Time = 1e-7
 
 
     #The properties of Si/Ga system#
