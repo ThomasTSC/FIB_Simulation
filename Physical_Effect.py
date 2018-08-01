@@ -100,7 +100,6 @@ class Physical_Effect:
         Grid_Length = numpy.insert(Grid_Length,0,self.Profile['Grid_Space_X'])
         
         
-        
         Initial_Grid_Length = self.Profile['Grid_Space_X']
         
         Diluted_Ion_Beam_Effect = Initial_Grid_Length/Grid_Length
@@ -154,7 +153,7 @@ class Physical_Effect:
     
     
     
-    def redeposition(self,Beam_Position_X,Beam_Position_Y):
+    def reDeposition(self,Beam_Position_X,Beam_Position_Y):
         
         
         Redeposition_Total = []

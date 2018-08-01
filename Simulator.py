@@ -83,7 +83,7 @@ class FIB:
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                     
                     
-                    Redeposition = Physical_Effect.Physical_Effect(Profile).redeposition(Beam_Position[0], Beam_Position[1])
+                    Redeposition = Physical_Effect.Physical_Effect(Profile).reDeposition(Beam_Position[0], Beam_Position[1], Primary_Sputtering)
                     
                     
                     
