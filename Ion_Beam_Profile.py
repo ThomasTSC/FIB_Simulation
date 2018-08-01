@@ -21,7 +21,7 @@ class Ion_Beam_Profile:
         self.Profile = Profile
         
 
-    def Primary_Ion_Beam_Profile(self, Beam_Position_X, Beam_Position_Y):
+    def primaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
         
         Primary_Ion_Beam_Profile = {}
         
@@ -37,14 +37,14 @@ class Ion_Beam_Profile:
     
     
     
-    def Re_Deposition_Profile(self):
+    def reDepositionProfile(self):
         
 
         return Re_Deposition_Profile
     
     
     
-    def Secondary_Ion_Beam_Profile(self):
+    def secondaryIonBeamProfile(self):
         
         
         
@@ -53,7 +53,14 @@ class Ion_Beam_Profile:
         return Secondary_Ion_Beam_Profile
     
     
-
+    
+    def dilutedIonBeamEffect(self):
+        
+        
+        return Diluted_Ion_Beam_Effect
+    
+    
+    
         
         
     

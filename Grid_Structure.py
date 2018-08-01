@@ -9,7 +9,7 @@ import numpy
 import matplotlib.pyplot as plt
 import Simulator
 from scipy import interpolate
-
+import math
 
 import re
 

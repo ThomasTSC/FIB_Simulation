@@ -74,7 +74,7 @@ class FIB:
                 while Time_Interval <= self.Parameters['Dwell_Time']:
                 
                     Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
-                    Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(Profile).Primary_Ion_Beam_Profile(Beam_Position[0], Beam_Position[1])
+                    Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(Profile).primaryIonBeamProfile(Beam_Position[0], Beam_Position[1])
                     Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                 
                 

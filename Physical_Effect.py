@@ -123,7 +123,7 @@ class Physical_Effect:
         
 
         
-        Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile).Primary_Ion_Beam_Profile(Beam_Position_X,Beam_Position_Y)
+        Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile).primaryIonBeamProfile(Beam_Position_X,Beam_Position_Y)
         
         Sputtering_Yield = Physical_Effect(self.Profile).sputteringYield()
                 
