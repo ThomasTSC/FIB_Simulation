@@ -57,13 +57,8 @@ class FIB:
         Profile = FIB().initGrid()
 
         
-        
-        
         for Pass in range(self.Parameters['Pass']):
             
-            
-            Profile['Grid_X'] = Profile['Grid_X']
-            Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
             
             for Step in range(len(self.Scanning_Path['Scanning_Path_X'])):
                 
@@ -101,9 +96,10 @@ class FIB:
             #Post_Process.Post_Process().plotTrench(Profile)       
         
   
+        Profile['Grid_X'] = Profile['Grid_X']
+        Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
         
-        
-        Profile['Grid_Z'][0] = 0            
+           
         return Profile
     
     

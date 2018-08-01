@@ -33,24 +33,22 @@ def Parameters():
     """The parameters below are currently only for Ga/Si system."""
     Unit_Charge = 1.6e-19
     Avogadro_Number = 6e23
-    #Temperature = 293
-    #Gas_Constant = 8.314    
-    #Boltzman_Constant = 1.38*1e-23
+    Temperature = 293
+    Gas_Constant = 8.314    
+    Boltzman_Constant = 1.38*1e-23
     
     
     #Process Parameters
     Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
     #print (Pixel_Area)
-    Pixel_Distance = 0.5*Beam_Diameter   
-    Full_Pixel_Length = 8*(Beam_Standard_Deviation)    
+    Pixel_Distance = 1*Beam_Diameter   
+    Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    
-    
-    Pass = 1
-    Step = 10
+    Pass = 80
+    Step = 1
     Scan_Line = 1
     
-    Grid_Point = 40
+    Grid_Point = 50
     Grid_Space = 5e-8
     
     
@@ -77,6 +75,9 @@ def Parameters():
                   'Pressure':Pressure, 
                   'Unit_Charge': Unit_Charge,
                   'Avogadro_Number':Avogadro_Number,
+                  'Temperature': Temperature,
+                  'Gas_Constant': Gas_Constant,
+                  'Boltzman_Constant':Boltzman_Constant,
                   'Pixel_Area':Pixel_Area,
                   'Pixel_Distance':Pixel_Distance, 
                   'Full_Pixel_Length':Full_Pixel_Length ,
