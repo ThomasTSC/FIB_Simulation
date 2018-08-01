@@ -29,12 +29,7 @@ class Grid_Structure:
         
         
         Surface_Slope = numpy.diff(self.Profile['Grid_Z'])/numpy.diff(self.Profile['Grid_X'])
-        
-
-        
-        #print (Surface_Slope_Forward)
-        
-        #print (Surface_Slope_Backward)
+    
         
         Surface_Slope = 0.5*(Surface_Slope[0:-1]+Surface_Slope[1:])
         
@@ -53,11 +48,8 @@ class Grid_Structure:
         
         Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        print(Surface_Slope)
+        #print(Surface_Slope)
         
-        
-        
-
         
         return Surface_Slope 
     
@@ -136,9 +128,9 @@ class Grid_Structure:
     def gridArea(self):
         
         
-        Grid_Length = numpy.sqrt(numpy.power((zCOR),2)+numpy.power((xCOR),2))
+        Grid_Length = numpy.squrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
         
-        Grid_Width = self.Parameters['Grid_Space']
+        Grid_Width = self.Parameters['Grid_Space_Y']
         
         
         Grid_Area = Grid_Length*Grid_Width

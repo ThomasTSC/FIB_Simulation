@@ -37,16 +37,19 @@ class FIB:
         
         Grid_X = numpy.linspace(0,self.Parameters['Full_Pixel_Length']*self.Parameters['Step'],Grid_Point)
         
+        Grid_Space_X = numpy.diff(Grid_X)[0]
+        
         Grid_Y = self.Parameters['Beam_Radius']*numpy.ones_like(Grid_X)
         
         Grid_Z = numpy.zeros_like(Grid_X)
         
-        #print (Grid_X, Grid_Y, Grid_Z)
+
         
         initGrid_Structure = {'Grid_X': Grid_X, 
                                  'Grid_Y': Grid_Y,
                                  'Grid_Z': Grid_Z, 
-                                 'Grid_xlim_max': Grid_xlim_max
+                                 'Grid_xlim_max': Grid_xlim_max,
+                                 'Grid_Space_X':Grid_Space_X                                
                                  }
         
         return initGrid_Structure     

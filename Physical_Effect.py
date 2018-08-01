@@ -112,6 +112,23 @@ class Physical_Effect:
         return Dwell_Time_Matrix
     
     
+    def dilutedIonBeamEffect(self):
+        
+        
+        Grid_Length = numpy.squrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
+        
+        Initial_Grid_Length = self.Profile['Grid_Space_X']
+        
+        Diluted_Ion_Beam_Effect = Grid_Length/Initial_Grid_Length
+        
+        Diluted_Ion_Beam_Effect = {'Diluted_Ion_Beam_Effect': Diluted_Ion_Beam_Effect}
+        
+        #print (Diluted_Ion_Beam_Effect)
+        
+        return Diluted_Ion_Beam_Effect
+    
+    
+    
     def primarySputtering(self,Beam_Position_X,Beam_Position_Y):
     
         Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile).primaryIonBeamProfile(Beam_Position_X,Beam_Position_Y)
@@ -152,9 +169,6 @@ class Physical_Effect:
     def redeposition(self,Beam_Position_X,Beam_Position_Y):
         
         
-        
-        
-        #
         Redeposition_Total = []
 
         

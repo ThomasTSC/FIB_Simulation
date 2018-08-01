@@ -54,10 +54,7 @@ class Ion_Beam_Profile:
     
     
     
-    def dilutedIonBeamEffect(self):
-        
-        
-        return Diluted_Ion_Beam_Effect
+
     
     
     
