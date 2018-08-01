@@ -131,9 +131,11 @@ class Physical_Effect:
       
         Incident_Angle = Grid_Structure.Grid_Structure(self.Profile).incidentAngle()
       
+        Surface_Moving_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceMovingVector()
         
-        #Primary_Sputtering_Depth_Total = [1]
         
+        Surface_Moving_Vector_X = -(Surface_Moving_Vector['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
+        Surface_Moving_Vector_Z = -(Surface_Moving_Vector['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
         
         #print (Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Grid_Area) 
         
@@ -144,8 +146,8 @@ class Physical_Effect:
         #print (Primary_Sputtering_Depth_Total)
         
         
-        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*numpy.sin(numpy.deg2rad(Incident_Angle['Incident_Angle']))
-        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*numpy.cos(numpy.deg2rad(Incident_Angle['Incident_Angle']))
+        Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*Surface_Moving_Vector_X
+        Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*Surface_Moving_Vector_Z
         
         
         

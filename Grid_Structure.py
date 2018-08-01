@@ -13,6 +13,7 @@ import Simulator
 from scipy.interpolate import interp1d
 from scipy import interpolate
 
+
 import re
 
 import matplotlib.pyplot as plt
@@ -62,7 +63,7 @@ class Grid_Structure:
         
         Surface_Slope = {'Surface_Slope': Surface_Slope}
         
-        #print(Surface_Slope)
+        print(Surface_Slope)
         
         
         
@@ -170,21 +171,17 @@ class Grid_Structure:
         
         
         Grid_Z_Resampling = numpy.interp(Initial_Grid['Grid_X'],Profile_X, Profile_Z)
-        
         Grid_X_Resampling = Initial_Grid['Grid_X']
    
+   
         
-        
+    
         Surface_Resampling = {'Grid_Z_Resampling': Grid_Z_Resampling,
                               'Grid_X_Resampling': Grid_X_Resampling,
                               
                  }
   
-                              
-                   
-        
-   
-        
+                    
         
         return Surface_Resampling
     
@@ -216,62 +213,7 @@ class Grid_Structure:
     
     
     
-    
-    
-
-    
-    
-    
-    def averageSmoothing(self,Segment,Segment_ZCor_Front, Segment_ZCor_End,Segment_XCor_Front, Segment_XCor_End):
-        
-        Singular_Point = Grid_Structure.findSingularPoint(self, Segment)
-        
-        
-
-        for point in Singular_Point['Singular_Point']:
-            
-            Near_points = [point-2,point-1 ,point , point+1,point+2]
-            
-            Average_Surface_ZCor_Front = (1/5)*numpy.sum(Segment_ZCor_Front[Near_points])*numpy.ones(5) 
-            
-            Segment_ZCor_Front[Near_points] = Average_Surface_ZCor_Front[0]
-            
-            
-            Average_Surface_ZCor_End = (1/5)*numpy.sum(Segment_ZCor_End[Near_points])*numpy.ones(5) 
-            
-            Segment_ZCor_End[Near_points] = Average_Surface_ZCor_End[0]
-            
-            
-            Average_Surface_XCor_Front = (1/5)*numpy.sum(Segment_XCor_Front[Near_points])*numpy.ones(5) 
-            
-            Segment_XCor_Front[Near_points] = Average_Surface_XCor_Front[0]
-            
-            
-            Average_Surface_XCor_End = (1/5)*numpy.sum(Segment_XCor_End[Near_points])*numpy.ones(5) 
-            
-            Segment_XCor_End[Near_points] = Average_Surface_XCor_End[0]            
-            
-                
-        
-        Average_Smoothing = {
-                      
-                      'Segment_ZCor_Front': Segment_ZCor_Front,
-                      'Segment_ZCor_End': Segment_ZCor_End ,
-                      'Segment_XCor_Front': Segment_XCor_Front,
-                      'Segment_XCor_End': Segment_XCor_End
-                    }
-        
-
-        
-        
-        #print (Average_Smoothing)
-        
-        return Average_Smoothing
-    
-    
-    
-                
-                
+     
 if __name__ == "__main__":
     
     import Simulator

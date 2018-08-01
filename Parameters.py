@@ -46,8 +46,8 @@ def Parameters():
   
     
     
-    Pass = 1
-    Step = 5
+    Pass = 10
+    Step = 1
     Scan_Line = 1
     
     Grid_Point = 40
