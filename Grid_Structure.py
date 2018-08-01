@@ -130,6 +130,12 @@ class Grid_Structure:
         
         Grid_Length = numpy.sqrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
         
+        Grid_Length = 0.5*(Grid_Length[0:-1]+Grid_Length[1:])
+        
+        Grid_Length = numpy.append(Grid_Length,[self.Profile['Grid_Space_X']])
+       
+        Grid_Length = numpy.insert(Grid_Length,0,self.Profile['Grid_Space_X'])
+        
         Grid_Width = self.Parameters['Grid_Space_Y']
         
         
@@ -142,8 +148,6 @@ class Grid_Structure:
         return Grid_Area
     
 
-    
-    
     
     def surfaceResampling(self, Profile_X, Profile_Z):
     
