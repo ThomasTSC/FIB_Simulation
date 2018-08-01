@@ -61,7 +61,6 @@ class Physical_Effect:
     
     
     
-    
     def maxSputteringYield(self):
         
         Max_Sputtering_Yield = []
@@ -89,13 +88,11 @@ class Physical_Effect:
         
         Singular_Point = Grid_Structure.Grid_Structure(self.Profile).findSingularPoint()
         
-        #print (Singular_Point)
-        
+
         Incident_Cos = Grid_Structure.Grid_Structure(self.Profile).incidentCosine()
         
         Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Incident_Cos['Incident_Cos'].astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Incident_Cos['Incident_Cos'].astype(float))-1)))
         
-        #Sputtering_Yield[Singular_Point['Singular_Point']] = Max_Sputtering_Yield
         
         Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
         
@@ -103,13 +100,9 @@ class Physical_Effect:
         
         return Sputtering_Yield
     
-    
 
-    
     
     def dwellTimeMatrix(self):
-        
-
         
         Dwell_Time_Matrix = self.Parameters['Integration_Time']*numpy.ones_like(self.Profile['Grid_X'])
         
@@ -120,9 +113,7 @@ class Physical_Effect:
     
     
     def primarySputtering(self,Beam_Position_X,Beam_Position_Y):
-        
-
-        
+    
         Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile).primaryIonBeamProfile(Beam_Position_X,Beam_Position_Y)
         
         Sputtering_Yield = Physical_Effect(self.Profile).sputteringYield()
@@ -141,17 +132,12 @@ class Physical_Effect:
         
         
         Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix['Dwell_Time_Matrix']
-        
-    
-        #print (Primary_Sputtering_Depth_Total)
-        
+     
         
         Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*Surface_Moving_Vector_X
         Primary_Sputtering_Depth_Z = Primary_Sputtering_Depth_Total*Surface_Moving_Vector_Z
         
-        
-        
-        
+
         Primary_Sputtering_Depth = {'Primary_Sputtering_Depth_X':Primary_Sputtering_Depth_X, 
                                     'Primary_Sputtering_Depth_Z':Primary_Sputtering_Depth_Z,
    
@@ -166,23 +152,36 @@ class Physical_Effect:
     def Redeposition(self):
         
         
-        Redeposition_Total_Mid = []
-        Redeposition_Total_Front = []
-        Redeposition_Total_End = []
+        Redeposition_Total = []
+
         
         
+        Redeposition_X = Redeposition_Total
         
-        Redeposition_X_Mid = Redeposition_Total_Mid*numpy.sin()
-        
-        Redeposition_Z_Mid = Redeposition_Total_Mid*numpy.cos()
+        Redeposition_Z = Redeposition_Total
         
         
-        Redeposition = {'Redeposition_X_Mid':Redeposition_X_Mid, 
-                        'Redeposition_Z_Mid':Redeposition_Z_Mid}
+        Redeposition = {'Redeposition_X':Redeposition_X, 
+                        'Redeposition_Z':Redeposition_Z,
+                        'Redeposition_Total':Redeposition_Total
+                        }
         
         
         
         return  Redeposition
+    
+    
+    
+    
+    
+    def secondarySputtering(self):
+        
+        
+        Secondary_Sputtering_Depth = {}
+        
+        return Secondary_Sputtering_Depth
+    
+    
     
 
     def meanFreePathEffect(self):

@@ -49,14 +49,7 @@ class Grid_Structure:
             if math.isnan(Surface_Slope[element]) is True:
                 Surface_Slope[element] = 0
         
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         Surface_Slope = {'Surface_Slope': Surface_Slope}
         
@@ -203,6 +196,16 @@ class Grid_Structure:
         
         return Singular_Point
     
+    
+    
+    def smoothingTrench(self, Profile_Z, box_pts= 10 ):
+        
+        box = numpy.ones(box_pts)/box_pts
+        Smoothing_Grid_Z = numpy.convolve(Profile_Z, box, mode='same')
+  
+        Smoothing_Trench = {'Smoothing_Grid_Z':Smoothing_Grid_Z}
+        
+        return Smoothing_Trench
     
     
      

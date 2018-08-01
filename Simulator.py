@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import Parameters
 import Post_Process
 import numpy
-
+import json
 
 
 class FIB:
@@ -62,6 +62,8 @@ class FIB:
         for Pass in range(self.Parameters['Pass']):
             
             
+            Profile['Grid_X'] = Profile['Grid_X']
+            Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
             
             for Step in range(len(self.Scanning_Path['Scanning_Path_X'])):
                 
@@ -70,6 +72,7 @@ class FIB:
 
                 Profile['Grid_X'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_X_Resampling']
                 Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_Z_Resampling']
+                                
                 
                 while Time_Interval <= self.Parameters['Dwell_Time']:
                 
@@ -84,12 +87,11 @@ class FIB:
                     
                     
                     
-                    Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
-            
-            
+                    
                     
                 
-         
+                    Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
+        
                 
                     Time_Interval = Time_Interval + self.Parameters['Integration_Time']
             
@@ -98,9 +100,10 @@ class FIB:
                     
             #Post_Process.Post_Process().plotTrench(Profile)       
         
+  
         
         
-                    
+        Profile['Grid_Z'][0] = 0            
         return Profile
     
     
@@ -111,6 +114,10 @@ if __name__ == "__main__":
     import Grid_Structure
     
     Profile = FIB().Simulation()
+    
+    
+    #with open('Profile.txt', 'w') as file:
+     #file.write(json.dumps(Profile))
     
     print (Profile)
     
