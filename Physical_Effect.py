@@ -149,7 +149,7 @@ class Physical_Effect:
     
     
     
-    def Redeposition(self):
+    def Redeposition(self,Beam_Position_X,Beam_Position_Y):
         
         
         Redeposition_Total = []
