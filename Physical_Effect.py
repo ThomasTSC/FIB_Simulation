@@ -61,32 +61,8 @@ class Physical_Effect:
     
     
     
-    def maxSputteringYield(self):
-        
-        Max_Sputtering_Yield = []
-        
-        for deg in range(0,90):
-        
-            MaxAngel_to_Rad = numpy.deg2rad(deg)
-        
-            Max_Cos = numpy.cos(MaxAngel_to_Rad) 
-        
-            Max_Sputtering_Yield.append(self.Sputtering_Yield_1*(numpy.power((1/Max_Cos.astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Max_Cos.astype(float))-1))))
-        
-        
-        Max_Sputtering_Yield = numpy.max(Max_Sputtering_Yield)
-        
-        #print (Max_Sputtering_Yield)
-        
-        return Max_Sputtering_Yield
-    
         
     def sputteringYield(self):
-        
-        
-        Max_Sputtering_Yield = Physical_Effect(self.Profile).maxSputteringYield()
-        
-        Singular_Point = Grid_Structure.Grid_Structure(self.Profile).findSingularPoint()
         
 
         Incident_Cos = Grid_Structure.Grid_Structure(self.Profile).incidentCosine()

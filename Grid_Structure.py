@@ -166,8 +166,6 @@ class Grid_Structure:
     def findSingularPoint(self):
         
         Surface_Slope = Grid_Structure.surfaceSlope(self)
-    
-        
   
         Singular_Point = []
     
@@ -180,11 +178,7 @@ class Grid_Structure:
         
         
         Singular_Point = {'Singular_Point':Singular_Point}
-        
-        
-        
-        #print (Singular_Point)
-        
+
         return Singular_Point
     
     
@@ -206,7 +200,6 @@ if __name__ == "__main__":
     
     Profile = Simulator.FIB().Simulation()
 
-    
     Surface_Slope = Grid_Structure(Profile).surfaceSlope()
     
 
