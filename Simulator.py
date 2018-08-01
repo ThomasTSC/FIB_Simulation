@@ -75,7 +75,7 @@ class FIB:
                 while Time_Interval <= self.Parameters['Dwell_Time']:
                 
                     Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
-                    Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(Profile).primaryIonBeamProfile(Beam_Position[0], Beam_Position[1])
+                    
                     Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                 
                 
@@ -83,12 +83,10 @@ class FIB:
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                     
                     
-                    Redeposition = Physical_Effect.Physical_Effect(Profile).reDeposition(Beam_Position[0], Beam_Position[1], Primary_Sputtering)
                     
-                    
+                    Redeposition = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                     
                     Secondary_Sputtering = Physical_Effect.Physical_Effect(Profile).secondarySputtering(Beam_Position[0], Beam_Position[1])
-                    
                     
                 
                     Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z'], 'Grid_Space_X':Profile['Grid_Space_X'] } 

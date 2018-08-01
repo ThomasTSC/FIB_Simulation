@@ -37,13 +37,13 @@ class Ion_Beam_Profile:
     
     
     
-    def reDepositionProfile(self, Beam_Position_X, Beam_Position_Y, Primary_Sputtering):
+    def reDepositionProfile(self, Beam_Position_X, Beam_Position_Y):
         
         Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
         
         Primary_Sputtering_Depth = Primary_Sputtering['Primary_Sputtering_Depth_Total']
         
-        Redeposition_Amout = Primary_Sputtering_Depth*Grid_Area
+        Redeposition_Amout = Primary_Sputtering_Depth*Grid_Area['Grid_Area']
         
         Re_Deposition_Profile = Redeposition_Amout*numpy.exp(-(((self.Profile['Grid_X']-Beam_Position_X)**2+(self.Profile['Grid_Y']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
 
@@ -52,11 +52,13 @@ class Ion_Beam_Profile:
         return Re_Deposition_Profile
     
     
-    
-    def secondaryIonBeamProfile(self):
+    def secondaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
         
         
+        Primary_Sputtering_Depth = Primary_Sputtering['Primary_Sputtering_Depth_Total']
         
+        
+        Secondary_Ion_Beam_Profile = {}
         
         
         return Secondary_Ion_Beam_Profile
