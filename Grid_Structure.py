@@ -119,7 +119,6 @@ class Grid_Structure:
     
     def incidentAngle(self):
         
-        
         Incident_Cos = Grid_Structure.incidentCosine(self)
         
         Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos['Incident_Cos'].astype(float)))
@@ -137,8 +136,8 @@ class Grid_Structure:
     def gridArea(self):
         
         
+        Grid_Length = numpy.sqrt(numpy.power((zCOR),2)+numpy.power((xCOR),2))
         
-        Grid_Length = numpy.sqrt(numpy.power((Segment['Segment_ZCor_End']-Segment['Segment_ZCor_Front']),2)+numpy.power((Segment['Segment_XCor_End']-Segment['Segment_XCor_Front']),2))
         Grid_Width = self.Parameters['Grid_Space']
         
         
