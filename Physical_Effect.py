@@ -115,15 +115,24 @@ class Physical_Effect:
     def dilutedIonBeamEffect(self):
         
         
-        Grid_Length = numpy.squrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
+        Grid_Length = numpy.sqrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
+        
+        Grid_Length = 0.5*(Grid_Length[0:-1]+Grid_Length[1:])
+        
+        
+        Grid_Length = numpy.append(Grid_Length,[self.Profile['Grid_Space_X']])
+       
+        Grid_Length = numpy.insert(Grid_Length,0,self.Profile['Grid_Space_X'])
+        
+        
         
         Initial_Grid_Length = self.Profile['Grid_Space_X']
         
-        Diluted_Ion_Beam_Effect = Grid_Length/Initial_Grid_Length
+        Diluted_Ion_Beam_Effect = Initial_Grid_Length/Grid_Length
         
         Diluted_Ion_Beam_Effect = {'Diluted_Ion_Beam_Effect': Diluted_Ion_Beam_Effect}
         
-        #print (Diluted_Ion_Beam_Effect)
+        print (Diluted_Ion_Beam_Effect)
         
         return Diluted_Ion_Beam_Effect
     
@@ -132,6 +141,8 @@ class Physical_Effect:
     def primarySputtering(self,Beam_Position_X,Beam_Position_Y):
     
         Primary_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile).primaryIonBeamProfile(Beam_Position_X,Beam_Position_Y)
+        
+        Diluted_Ion_Beam_Effect = Physical_Effect(self.Profile).dilutedIonBeamEffect()
         
         Sputtering_Yield = Physical_Effect(self.Profile).sputteringYield()
                 
@@ -147,6 +158,8 @@ class Physical_Effect:
         
         #print (Primary_Ion_Beam['Primary_Ion_Beam_Profile_Mid']*(Sputtering_Yield['Sputtering_Yield'])*Grid_Area) 
         
+        
+        #Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix['Dwell_Time_Matrix']*Diluted_Ion_Beam_Effect['Diluted_Ion_Beam_Effect']
         
         Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix['Dwell_Time_Matrix']
      
@@ -217,8 +230,8 @@ if __name__ == "__main__":
     Profile = Simulator.FIB().Simulation()
     
     
-    Physical_Effect(Profile).dwellTimeMatrix()
-    
+    #Physical_Effect(Profile).dwellTimeMatrix()
+    Physical_Effect(Profile).dilutedIonBeamEffect()
 
     
     print ('done')

@@ -128,7 +128,7 @@ class Grid_Structure:
     def gridArea(self):
         
         
-        Grid_Length = numpy.squrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
+        Grid_Length = numpy.sqrt(numpy.power(numpy.diff(self.Profile['Grid_Z']),2) + numpy.power(numpy.diff(self.Profile['Grid_X']),2))
         
         Grid_Width = self.Parameters['Grid_Space_Y']
         
@@ -183,7 +183,7 @@ class Grid_Structure:
         
         
         
-        print (Singular_Point)
+        #print (Singular_Point)
         
         return Singular_Point
     

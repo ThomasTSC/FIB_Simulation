@@ -91,7 +91,7 @@ class FIB:
                     
                     
                 
-                    Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z']} 
+                    Profile = {'Grid_X': Profile['Grid_X'], 'Grid_Y':Profile['Grid_Y'], 'Grid_Z':Profile['Grid_Z'], 'Grid_Space_X':Profile['Grid_Space_X'] } 
         
                 
                     Time_Interval = Time_Interval + self.Parameters['Integration_Time']
