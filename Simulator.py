@@ -82,8 +82,7 @@ class FIB:
                     Profile['Grid_X'] = Profile['Grid_X'] + Primary_Sputtering['Primary_Sputtering_Depth_X']
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                     
-                    
-                    
+                
                     Redeposition = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                     
                     Secondary_Sputtering = Physical_Effect.Physical_Effect(Profile).secondarySputtering(Beam_Position[0], Beam_Position[1])
@@ -96,11 +95,13 @@ class FIB:
             
             
         
-            Profile['Grid_X'] = Profile['Grid_X']
-            Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
+        #Profile['Grid_X'] = Profile['Grid_X']
+        #Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
         
         
         Post_Process.Post_Process().plotTrench(Profile) 
+        Post_Process.Post_Process().ionDoseAmount()
+        
         
         return Profile
     
