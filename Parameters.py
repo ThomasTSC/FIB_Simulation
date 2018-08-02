@@ -18,7 +18,7 @@ def Parameters():
     #Instrument Parameters#
     Beam_Current = 45*pA_to_A 
     Beam_Diameter = 30*nm_to_m #m
-    #print (Beam_Diameter)
+
     Beam_Radius = 0.4*Beam_Diameter
     Beam_Energy = 30*keV_to_eV
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
@@ -37,7 +37,7 @@ def Parameters():
     
     #Process Parameters
     Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
-    #print (Pixel_Area)
+
     Pixel_Distance = 0.2*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
@@ -60,8 +60,9 @@ def Parameters():
     AtomicNumber_Substrate = 14
     AtomicDensity_Substrate = 5e28
     
-    Ion_Flux = ((Beam_Current)/Unit_Charge)/Pixel_Area #per second
+    Ion_Flux = ((Beam_Current)/Unit_Charge)/Pixel_Area #Ion/(m2 per second)
     
+    print (Ion_Flux)
     
     Parameters = {
                   'Beam_Current':Beam_Current, 
