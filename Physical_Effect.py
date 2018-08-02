@@ -106,7 +106,7 @@ class Physical_Effect:
         
         Diluted_Ion_Beam_Effect = {'Diluted_Ion_Beam_Effect': Diluted_Ion_Beam_Effect}
         
-        print (Diluted_Ion_Beam_Effect)
+        #print (Diluted_Ion_Beam_Effect)
         
         return Diluted_Ion_Beam_Effect
     

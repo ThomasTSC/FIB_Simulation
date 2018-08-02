@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 import Parameters
 import Post_Process
 import numpy
+import pandas
 import json
-
 
 class FIB:
     '''
@@ -97,13 +97,15 @@ class FIB:
             
         
                     
-            #Post_Process.Post_Process().plotTrench(Profile)       
+              
         
   
         Profile['Grid_X'] = Profile['Grid_X']
         Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
         
-           
+        
+        Post_Process.Post_Process().plotTrench(Profile) 
+        
         return Profile
     
     
@@ -114,26 +116,10 @@ if __name__ == "__main__":
     import Grid_Structure
     
     Profile = FIB().Simulation()
-    
-    
-    #with open('Profile.txt', 'w') as file:
-     #file.write(json.dumps(Profile))
-    
+
+
     print (Profile)
-    
-    m_to_nm = 1e9
-    
-    plt.figure()
-    #plt.xlim(0,1e-6)
-    #plt.ylim(-1e-7,1e-7)
-    plt.title('Simulated Trench')
-    plt.xlabel('X-Cor (nm)')
-    plt.ylabel('Z-Cor (nm)')
-    plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
-    
-    Surface_Slope = Grid_Structure.Grid_Structure(Profile).surfaceSlope()
-    plt.scatter(Profile['Grid_X']*m_to_nm,Surface_Slope['Surface_Slope'])
-    plt.show()
+
     
     print ('done')
     

@@ -68,27 +68,29 @@ class Post_Process:
         return Ion_Dose_Amount
     
     
-    def plotTrench(self,Segment):
-    
+    def plotTrench(self,Profile):
     
         m_to_nm = 1e9
     
         plt.figure()
-        #plt.xlim(0,1e-6)
-        #plt.ylim(-1e-7,1e-7)
         plt.title('Simulated Trench')
-        plt.scatter(Segment['Segment_XCor_Front']*m_to_nm,Segment['Segment_ZCor_Front']*m_to_nm)
-        plt.scatter(Segment['Segment_XCor_End']*m_to_nm,Segment['Segment_ZCor_End']*m_to_nm)
-        plt.scatter(Segment['Segment_XCor']*m_to_nm,Segment['Segment_ZCor']*m_to_nm)
+        plt.xlabel('X-Cor (nm)')
+        plt.ylabel('Z-Cor (nm)')
+        plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
+        
+        Surface_Slope = Grid_Structure.Grid_Structure(Profile).surfaceSlope()
+        plt.scatter(Profile['Grid_X']*m_to_nm,Surface_Slope['Surface_Slope'])
         plt.show()
-    
+        
+        
+        
+    def saveProfile(self):
+        
+        return None
     
     
     
 if __name__ == "__main__":
-    
-    
-    
     
     Post_Process().countTotalPixel()
     Post_Process().ionDoseAmount()
