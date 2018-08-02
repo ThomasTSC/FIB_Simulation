@@ -14,12 +14,11 @@ def Parameters():
     keV_to_eV = 1000        
     pA_to_A = 1e-12
     
-    
     #Instrument Parameters#
-    Beam_Current = 45*pA_to_A 
-    Beam_Diameter = 30*nm_to_m #m
+    Beam_Current = 70*pA_to_A 
+    Beam_Diameter = 70*nm_to_m #m
 
-    Beam_Radius = 0.4*Beam_Diameter
+    Beam_Radius = 0.5*Beam_Diameter
     Beam_Energy = 30*keV_to_eV
     Beam_Standard_Deviation = Beam_Diameter/numpy.sqrt(8*numpy.log(2))
     Pressure = 0 #Not yet decided
@@ -38,19 +37,19 @@ def Parameters():
     #Process Parameters
     Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
 
-    Pixel_Distance = 0.2*Beam_Diameter   
+    Pixel_Distance = 0.25*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
     Pass = 1
-    Step = 30
+    Step = 50
     Scan_Line = 1
     
     Grid_Point = 25
     Grid_Space_Y = 5e-8
     
     
-    Dwell_Time = 1e-3
-    Integration_Time = 1e-6
+    Dwell_Time = 1e-6
+    Integration_Time = 1e-7
 
 
     #The properties of Si/Ga system#
@@ -62,7 +61,6 @@ def Parameters():
     
     Ion_Flux = ((Beam_Current)/Unit_Charge)/Pixel_Area #Ion/(m2 per second)
     
-    print (Ion_Flux)
     
     Parameters = {
                   'Beam_Current':Beam_Current, 

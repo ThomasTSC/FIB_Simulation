@@ -99,8 +99,11 @@ class FIB:
             Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
         
         
-        Post_Process.Post_Process().plotTrench(Profile) 
+        
+        
+        
         Post_Process.Post_Process().ionDoseAmount()
+        Post_Process.Post_Process().plotTrench(Profile) 
         
         
         return Profile

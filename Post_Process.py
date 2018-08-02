@@ -55,14 +55,19 @@ class Post_Process:
     def ionDoseAmount(self):    
     
         m2_to_cm2 = 10000
-        
-        Total_Pixel_Number = Post_Process.countTotalPixel(self)
-        
-        IonDose_per_Second = self.Parameters['Pixel_Area']*self.Parameters['Ion_Flux']
 
-        Ion_Dose_Amount = IonDose_per_Second*Total_Pixel_Number*m2_to_cm2
+        Square_to_Circle = 1.27
+
+        Dosed_Area = (1/m2_to_cm2)*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+self.Parameters['Beam_Diameter'])*self.Parameters['Beam_Diameter']
+
+        Ion_Dose_per_Beam_Area =  self.Parameters['Ion_Flux'] #per second
         
-        print ('Ion Dose (ion/cm2):', Ion_Dose_Amount)
+        Dosed_Time = self.Parameters['Dwell_Time']*self.Parameters['Step']
+        
+        Ion_Dose_Accumulated = Ion_Dose_per_Beam_Area*Dosed_Area*Dosed_Time
+        
+        
+        print ('Accumulated Ion dose (Ions/cm2):', Ion_Dose_Accumulated)
 
         return Ion_Dose_Amount
     
@@ -74,7 +79,7 @@ class Post_Process:
         plt.figure()
         plt.title('Simulated Trench')
         plt.xlabel('X-Cor (nm)')
-        plt.xlim(0,1000)
+        plt.xlim(0,1500)
         plt.ylabel('Z-Cor (nm)')
         plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
         
