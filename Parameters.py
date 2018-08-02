@@ -35,12 +35,14 @@ def Parameters():
     
     
     #Process Parameters
-    Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
-
+    #Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
+    
+    Pixel_Area = (numpy.pi)*((8*(Beam_Standard_Deviation))**2)
+    
     Pixel_Distance = 0.25*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    Pass = 1
+    Pass = 5
     Step = 50
     Scan_Line = 1
     
@@ -60,6 +62,7 @@ def Parameters():
     AtomicDensity_Substrate = 5e28
     
     Ion_Flux = ((Beam_Current)/Unit_Charge)/Pixel_Area #Ion/(m2 per second)
+    
     
     
     Parameters = {

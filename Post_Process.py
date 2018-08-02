@@ -37,18 +37,6 @@ class Post_Process:
         
         return 0 
 
-
-        
-    
-    def countTotalPixel(self):
-        
-        
-        Total_Pixel_Number = self.Parameters['Pass']*self.Parameters['Step']
-        
-        print(Total_Pixel_Number)
-        
-        return Total_Pixel_Number
-        
         
         
         
@@ -58,18 +46,18 @@ class Post_Process:
 
         Square_to_Circle = 1.27
 
-        Dosed_Area = (1/m2_to_cm2)*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+self.Parameters['Beam_Diameter'])*self.Parameters['Beam_Diameter']
+        Dosed_Area = m2_to_cm2*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+(self.Parameters['Full_Pixel_Length']))*self.Parameters['Full_Pixel_Length']
 
-        Ion_Dose_per_Beam_Area =  self.Parameters['Ion_Flux'] #per second
+        Ion_per_Beam =  self.Parameters['Ion_Flux']*self.Parameters['Dwell_Time']*self.Parameters['Pixel_Area'] #per second
         
-        Dosed_Time = self.Parameters['Dwell_Time']*self.Parameters['Step']
         
-        Ion_Dose_Accumulated = Ion_Dose_per_Beam_Area*Dosed_Area*Dosed_Time
+        Ion_Dose_Accumulated = Ion_per_Beam*self.Parameters['Step']*self.Parameters['Pass']/(Dosed_Area)
         
+       
         
         print ('Accumulated Ion dose (Ions/cm2):', Ion_Dose_Accumulated)
 
-        return Ion_Dose_Amount
+        return Ion_Dose_Accumulated
     
     
     def plotTrench(self,Profile):
