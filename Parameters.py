@@ -38,18 +38,18 @@ def Parameters():
     #Process Parameters
     Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
     #print (Pixel_Area)
-    Pixel_Distance = 1*Beam_Diameter   
+    Pixel_Distance = 0.5*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    Pass = 10
-    Step = 1
+    Pass = 1
+    Step = 10
     Scan_Line = 1
     
     Grid_Point = 25
     Grid_Space_Y = 5e-8
     
     
-    Dwell_Time = 1e-5
+    Dwell_Time = 1e-3
     Integration_Time = 1e-6
 
 

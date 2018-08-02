@@ -75,6 +75,7 @@ class Post_Process:
         plt.figure()
         plt.title('Simulated Trench')
         plt.xlabel('X-Cor (nm)')
+        plt.xlim(0,1e-7)
         plt.ylabel('Z-Cor (nm)')
         plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
         
