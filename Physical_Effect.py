@@ -111,6 +111,15 @@ class Physical_Effect:
         return Diluted_Ion_Beam_Effect
     
     
+    def ionBeamConservation(self):
+        
+        
+        
+        Ion_Beam_Conservation = {}
+        
+        return Ion_Beam_Conservation
+    
+    
     
     def primarySputtering(self,Beam_Position_X,Beam_Position_Y):
     
