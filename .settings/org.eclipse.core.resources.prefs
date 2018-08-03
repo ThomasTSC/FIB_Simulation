@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding/Grid_Structure.py=utf-8
-encoding/Ion_Beam_Profile.py=utf-8
-encoding/Parameters.py=utf-8
-encoding/Scanning_Strategy.py=utf-8
+encoding//Simulation/Grid_Structure.py=utf-8
+encoding//Simulation/Ion_Beam_Profile.py=utf-8
+encoding//Simulation/Parameters.py=utf-8
+encoding//Simulation/Scanning_Strategy.py=utf-8

@@ -52,8 +52,7 @@ class Post_Process:
         
         
         Ion_Dose_Accumulated = Ion_per_Beam*self.Parameters['Step']*self.Parameters['Pass']/(Dosed_Area)
-        
-       
+    
         
         print ('Accumulated Ion dose (Ions/cm2):', Ion_Dose_Accumulated)
 
