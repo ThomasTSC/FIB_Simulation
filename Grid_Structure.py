@@ -186,8 +186,7 @@ class Grid_Structure:
         return Singular_Point
     
     
-    
-    def smoothingTrench(self, Profile_Z, box_pts= 10 ):
+    def smoothingTrench(self, Profile_Z, box_pts= 7 ):
         
         box = numpy.ones(box_pts)/box_pts
         Smoothing_Grid_Z = numpy.convolve(Profile_Z, box, mode='same')

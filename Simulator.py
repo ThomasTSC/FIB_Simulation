@@ -14,7 +14,12 @@ import Parameters
 import Post_Process
 import numpy
 import pandas
-import json
+import timeit
+
+
+
+
+
 
 class FIB:
     '''
@@ -59,6 +64,9 @@ class FIB:
         
         Profile = FIB().initGrid()
 
+        start = timeit.default_timer()
+        
+        
         
         for Pass in range(self.Parameters['Pass']):
             
@@ -95,8 +103,14 @@ class FIB:
             
             
         
-            Profile['Grid_X'] = Profile['Grid_X']
-            Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
+        Profile['Grid_X'] = Profile['Grid_X']
+        Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
+        
+        
+        
+        stop = timeit.default_timer()
+
+        print (stop - start) 
         
         
         

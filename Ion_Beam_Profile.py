@@ -65,13 +65,6 @@ class Ion_Beam_Profile:
     
     
     
-
-    
-    
-    
-        
-        
-    
 if __name__ == "__main__":
     
 
