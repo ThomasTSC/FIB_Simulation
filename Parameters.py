@@ -42,13 +42,12 @@ def Parameters():
     Pixel_Distance = 0.25*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    Pass = 5
-    Step = 50
+    Pass = 1000
+    Step = 60
     Scan_Line = 1
     
     Grid_Point = 25
     Grid_Space_Y = 5e-8
-    
     
     Dwell_Time = 1e-6
     Integration_Time = 1e-7
