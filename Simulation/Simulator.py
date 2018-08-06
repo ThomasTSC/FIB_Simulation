@@ -4,12 +4,10 @@ Created on 15.05.2018
 @author: chou
 '''
 
-
-import Ion_Beam_Profile
 import Grid_Structure
 import Physical_Effect
 import Scanning_Strategy
-import matplotlib.pyplot as plt
+
 import Parameters
 import Post_Process
 import numpy
@@ -66,7 +64,6 @@ class FIB:
         start = timeit.default_timer()
         
         
-        
         for Pass in range(self.Parameters['Pass']):
             
             
@@ -110,9 +107,6 @@ class FIB:
         stop = timeit.default_timer()
 
         print (stop - start) 
-        
-        
-        
         
         
         Post_Process.Post_Process().ionDoseAmount()
