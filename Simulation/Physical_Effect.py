@@ -130,16 +130,12 @@ class Physical_Effect:
         Sputtering_Yield = Physical_Effect(self.Profile).sputteringYield()
                 
         Dwell_Time_Matrix = Physical_Effect(self.Profile).dwellTimeMatrix()
-      
-        Incident_Angle = Grid_Structure.Grid_Structure(self.Profile).incidentAngle()
-      
+
         Surface_Moving_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceMovingVector()
         
         
         Surface_Moving_Vector_X = -(Surface_Moving_Vector['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
         Surface_Moving_Vector_Z = -(Surface_Moving_Vector['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
-        
-    
         
         
         Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix['Dwell_Time_Matrix']*Diluted_Ion_Beam_Effect['Diluted_Ion_Beam_Effect']
@@ -180,7 +176,7 @@ class Physical_Effect:
         
         
         
-        return  None
+        return  Redeposition
     
     
     
@@ -199,9 +195,9 @@ class Physical_Effect:
     def meanFreePathEffect(self):
         
         
+        Mean_Free_Path_Effect = {}
         
-        
-        return 0
+        return Mean_Free_Path_Effect
     
     
 if __name__ == "__main__":
