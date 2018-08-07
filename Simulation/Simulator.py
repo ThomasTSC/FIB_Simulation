@@ -14,10 +14,6 @@ import numpy
 import timeit
 
 
-
-
-
-
 class FIB:
     '''
     classdocs
@@ -62,7 +58,6 @@ class FIB:
         Profile = FIB().initGrid()
 
         start = timeit.default_timer()
-        
         
         for Pass in range(self.Parameters['Pass']):
             

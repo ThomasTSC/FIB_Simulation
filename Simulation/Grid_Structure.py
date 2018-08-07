@@ -191,6 +191,20 @@ class Grid_Structure:
         return Smoothing_Trench
     
     
+    
+    def reDepositionTrajectury(self):
+        
+        
+        
+        
+        
+        return None
+    
+    
+    
+    
+    
+    
      
 if __name__ == "__main__":
     

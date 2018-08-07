@@ -4,15 +4,11 @@ Created on May 7, 2018
 @author: thoma
 '''
 
-
-import Ion_Beam_Profile
-import Scanning_Strategy
-import Scanning_Strategy
 import Grid_Structure
 import numpy
 import Parameters
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+
 
 
 
@@ -46,7 +42,7 @@ class Post_Process:
 
         Square_to_Circle = 1.27
 
-        Dosed_Area = m2_to_cm2*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+(self.Parameters['Full_Pixel_Length']))*self.Parameters['Full_Pixel_Length']
+        Dosed_Area = m2_to_cm2*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+(self.Parameters['Beam_Diameter']))*self.Parameters['Beam_Diameter']
 
         Ion_per_Beam =  self.Parameters['Ion_Flux']*self.Parameters['Dwell_Time']*self.Parameters['Pixel_Area'] #per second
         
