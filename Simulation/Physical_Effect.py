@@ -10,8 +10,6 @@ import Grid_Structure
 import Ion_Beam_Profile
 
 
-
-
 class Physical_Effect:
     '''
     classdocs
@@ -179,6 +177,8 @@ class Physical_Effect:
     
 
     def secondarySputtering(self,Beam_Position_X,Beam_Position_Y):
+        
+        
         
         
         Secondary_Sputtering_Depth = {}

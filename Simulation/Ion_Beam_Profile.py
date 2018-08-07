@@ -45,12 +45,14 @@ class Ion_Beam_Profile:
 
         Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile}
         
+        print (Re_Deposition_Profile)
+        
         return Re_Deposition_Profile
     
     
     def secondaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
         
-        
+        Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(Beam_Position_X, Beam_Position_Y)['Primary_Sputtering_Depth_Total']
         
         Secondary_Ion_Beam_Profile = {}
         

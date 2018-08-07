@@ -121,15 +121,15 @@ class FIB:
 if __name__ == "__main__":
     
     
-    import pyximport
+    #import pyximport
 
-    pyximport.install()
+    #pyximport.install()
 
     ######
 
-    import Cython_Loop
+    #import Cython_Loop
     
-    Cython_Loop._Simulation()
+    #Cython_Loop._Simulation()
 
     Profile = FIB().Simulation()
 

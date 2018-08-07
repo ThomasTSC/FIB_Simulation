@@ -13,8 +13,8 @@ import Post_Process
 cimport cython
 import timeit
 
-cdef float _Parameters_Step = Parameters.Parameters()['Step']
-cdef float _Parameters_GridPoint = Parameters.Parameters()['Grid_Point']
+cdef dict _Parameters = Parameters.Parameters()
+
 
 cdef dict _Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
 
@@ -26,7 +26,7 @@ def initGrid():
         
         
         
-        Grid_Point = _Parameters_GridPoint*_Parameters_Step
+        Grid_Point = _Parameters['Grid_Point']*_Parameters['Step']
         
         Grid_xlim_max = _Parameters['Full_Pixel_Length']*_Parameters['Step']
         
