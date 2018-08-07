@@ -40,8 +40,7 @@ class FIB:
         Grid_Y = self.Parameters['Beam_Radius']*numpy.ones_like(Grid_X)
         
         Grid_Z = numpy.zeros_like(Grid_X)
-        
-
+    
         
         initGrid_Structure = {'Grid_X': Grid_X, 
                                  'Grid_Y': Grid_Y,

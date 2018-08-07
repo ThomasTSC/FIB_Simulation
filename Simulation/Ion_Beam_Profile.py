@@ -28,9 +28,9 @@ class Ion_Beam_Profile:
         
         Primary_Ion_Beam_Profile = self.Parameters['Ion_Flux']*numpy.exp(-(((self.Profile['Grid_X']-self.Beam_Position_X)**2+(self.Profile['Grid_Y']-self.Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
         
-        Normalized_Factor = 1/(numpy.sum(Primary_Ion_Beam_Profile)/self.Parameters['Ion_Flux'])
+        Pr_Normalized_Factor = 1/(numpy.sum(Primary_Ion_Beam_Profile)/self.Parameters['Ion_Flux'])
     
-        Primary_Ion_Beam_Profile = {'Primary_Ion_Beam_Profile':Primary_Ion_Beam_Profile*Normalized_Factor}
+        Primary_Ion_Beam_Profile = {'Primary_Ion_Beam_Profile':Primary_Ion_Beam_Profile*Pr_Normalized_Factor}
     
         #print (Primary_Ion_Beam_Profile)
     
@@ -39,9 +39,18 @@ class Ion_Beam_Profile:
     
     def reDepositionTrajectury(self):
         
+        Surface_Normal_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceNormalVector()
+        
+        print (Surface_Normal_Vector['Surface_Normal_Vector'])
+        
+        Trajectury_Vector = [self.Profile['Grid_X']-self.Beam_Position_X, self.Profile['Grid_Z']-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], self.Profile['Grid_Z'])]
+        
+        print (Trajectury_Vector)
         
         
+        Trajectury_Cosine = (Surface_Normal_Vector['Surface_Normal_Vector'][0]*Trajectury_Vector[0]+Surface_Normal_Vector['Surface_Normal_Vector'][1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(Surface_Normal_Vector['Surface_Normal_Vector'][0],2)+numpy.power(Surface_Normal_Vector['Surface_Normal_Vector'][1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
         
+        print ((180/numpy.pi)*numpy.arccos(Trajectury_Cosine))
         
         return None
     
@@ -94,11 +103,12 @@ if __name__ == "__main__":
     
     Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
     
-    Pr = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).primaryIonBeamProfile()
+    #Pr = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).primaryIonBeamProfile()
     
-    Re = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionProfile()
+    #Re = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionProfile()
     
     
+    Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionTrajectury()
 
     
     print ('done')

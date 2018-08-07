@@ -162,23 +162,23 @@ class Grid_Structure:
     
 
     
-    def findSingularPoint(self):
+    #def findSingularPoint(self):
         
-        Surface_Slope = Grid_Structure.surfaceSlope(self)
+    #    Surface_Slope = Grid_Structure.surfaceSlope(self)
   
-        Singular_Point = []
+    #    Singular_Point = []
     
-        for i in range(1,len(Surface_Slope['Surface_Slope'])-1):
+    #    for i in range(1,len(Surface_Slope['Surface_Slope'])-1):
             
             
-            if Surface_Slope['Surface_Slope'][i]>0 and Surface_Slope['Surface_Slope'][i+1]<0:
+    #        if Surface_Slope['Surface_Slope'][i]>0 and Surface_Slope['Surface_Slope'][i+1]<0:
                 
-                Singular_Point.append(i)
+    #            Singular_Point.append(i)
         
         
-        Singular_Point = {'Singular_Point':Singular_Point}
+    #    Singular_Point = {'Singular_Point':Singular_Point}
 
-        return Singular_Point
+    #    return Singular_Point
     
     
     def smoothingTrench(self, Profile_Z, box_pts= 7 ):
