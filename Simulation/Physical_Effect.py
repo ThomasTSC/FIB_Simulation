@@ -7,9 +7,8 @@ Created on May 15, 2018
 import Parameters
 import numpy
 import Grid_Structure
-import Simulator
 import Ion_Beam_Profile
-import scipy
+
 
 
 
@@ -22,7 +21,6 @@ class Physical_Effect:
     def __init__(self, Profile):
         
         self.Parameters = Parameters.Parameters()
-        
         self.Profile = Profile
         
         
@@ -179,16 +177,13 @@ class Physical_Effect:
         return  Redeposition
     
     
-    
-    
-    
+
     def secondarySputtering(self,Beam_Position_X,Beam_Position_Y):
         
         
         Secondary_Sputtering_Depth = {}
         
         return Secondary_Sputtering_Depth
-    
     
     
 
@@ -202,16 +197,6 @@ class Physical_Effect:
     
 if __name__ == "__main__":
     
-    import Scanning_Strategy
-
-    import Simulator
-    
-    Profile = Simulator.FIB().Simulation()
-    
-    
-    #Physical_Effect(Profile).dwellTimeMatrix()
-    Physical_Effect(Profile).dilutedIonBeamEffect()
-
     
     print ('done')
     

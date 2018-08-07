@@ -6,12 +6,9 @@ Created on Tue Apr 17 22:32:27 2018
 """
 import Parameters
 import numpy
-import matplotlib.pyplot as plt
 import Simulator
-from scipy import interpolate
 import math
-import re
-import matplotlib.pyplot as plt
+
 
 
 
@@ -196,12 +193,6 @@ class Grid_Structure:
     
      
 if __name__ == "__main__":
-    
-    import Simulator
-    
-    Profile = Simulator.FIB().Simulation()
-
-    Surface_Slope = Grid_Structure(Profile).surfaceSlope()
     
 
     print ('done')

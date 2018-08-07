@@ -8,10 +8,7 @@ Created on Mon Apr 16 23:40:03 2018
 import Parameters
 import numpy
 import Grid_Structure
-import Simulator
-import scipy
 import Physical_Effect
-
 
 
 class Ion_Beam_Profile:
@@ -23,7 +20,6 @@ class Ion_Beam_Profile:
 
     def primaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
         
-        Primary_Ion_Beam_Profile = {}
         
         Primary_Ion_Beam_Profile = self.Parameters['Ion_Flux']*numpy.exp(-(((self.Profile['Grid_X']-Beam_Position_X)**2+(self.Profile['Grid_Y']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
         
@@ -41,7 +37,7 @@ class Ion_Beam_Profile:
         
         Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
         
-        Primary_Sputtering_Depth = Primary_Sputtering['Primary_Sputtering_Depth_Total']
+        Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(Beam_Position_X, Beam_Position_Y)['Primary_Sputtering_Depth_Total']
         
         Redeposition_Amout = Primary_Sputtering_Depth*Grid_Area['Grid_Area']
         
@@ -54,8 +50,6 @@ class Ion_Beam_Profile:
     
     def secondaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
         
-        
-        Primary_Sputtering_Depth = Primary_Sputtering['Primary_Sputtering_Depth_Total']
         
         
         Secondary_Ion_Beam_Profile = {}

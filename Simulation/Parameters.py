@@ -43,7 +43,7 @@ def Parameters():
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
     Pass = 10
-    Step = 55
+    Step = 1
     Scan_Line = 1
     
     Grid_Point = 25

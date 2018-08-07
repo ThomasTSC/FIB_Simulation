@@ -11,22 +11,22 @@ import numpy
 import Grid_Structure
 import Post_Process
 cimport cython
+import timeit
 
+cdef float _Parameters_Step = Parameters.Parameters()['Step']
+cdef float _Parameters_GridPoint = Parameters.Parameters()['Grid_Point']
 
-cdef dict _Parameters = Parameters.Parameters()
 cdef dict _Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
-cdef float Time_Interval
-cdef int Pass, Step
-cdef dict Profile
-cdef list Beam_Position
-cdef dict Primary_Sputtering
+
 
 
 
 
 def initGrid():
         
-        Grid_Point = _Parameters['Grid_Point']*_Parameters['Step']
+        
+        
+        Grid_Point = _Parameters_GridPoint*_Parameters_Step
         
         Grid_xlim_max = _Parameters['Full_Pixel_Length']*_Parameters['Step']
         
@@ -53,14 +53,23 @@ def initGrid():
 
 def _Simulation():
     
-    Profile = initGrid()
     
-    for Pass in numpy.nditer(_Parameters['Pass']):
+    cdef dict Profile= initGrid()
+    
+    start = timeit.default_timer()
+    
+    cdef int Pass, Step
+    cdef float Time_Interval
+    
+    cdef list Beam_Position
+    cdef dict Primary_Sputtering
+    
+    for Pass in range(_Parameters['Pass']):
+        
         
         for Step in range(len(_Scanning_Path['Scanning_Path_X'])):
             
             Time_Interval  = 0
-            
             
             Profile['Grid_X'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_X_Resampling']
             Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_Z_Resampling']
@@ -83,6 +92,9 @@ def _Simulation():
     Profile['Grid_X'] = Profile['Grid_X']
     Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']           
     
+    stop = timeit.default_timer()
+
+    print (stop - start) 
     
     Post_Process.Post_Process().ionDoseAmount()
     Post_Process.Post_Process().plotTrench(Profile) 
