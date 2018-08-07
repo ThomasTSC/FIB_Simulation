@@ -13,22 +13,20 @@ import Physical_Effect
 
 class Ion_Beam_Profile:
     
-    def __init__(self, Profile):
+    def __init__(self, Profile, Beam_Position_X, Beam_Position_Y):
         self.Parameters = Parameters.Parameters()
         self.Profile = Profile
+        self.Beam_Position_X = Beam_Position_X
+        self.Beam_Position_Y = Beam_Position_Y 
     
-    
-    
-    
-        
-  
+
         
         
 
-    def primaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
+    def primaryIonBeamProfile(self):
         
         
-        Primary_Ion_Beam_Profile = self.Parameters['Ion_Flux']*numpy.exp(-(((self.Profile['Grid_X']-Beam_Position_X)**2+(self.Profile['Grid_Y']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+        Primary_Ion_Beam_Profile = self.Parameters['Ion_Flux']*numpy.exp(-(((self.Profile['Grid_X']-self.Beam_Position_X)**2+(self.Profile['Grid_Y']-self.Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
         
         Normalized_Factor = 1/(numpy.sum(Primary_Ion_Beam_Profile)/self.Parameters['Ion_Flux'])
     
@@ -39,22 +37,32 @@ class Ion_Beam_Profile:
         return Primary_Ion_Beam_Profile
         
     
+    def reDepositionTrajectury(self):
+        
+        
+        
+        
+        
+        return None
     
     
-    def reDepositionProfile(self, Beam_Position_X, Beam_Position_Y):
+    
+    
+    
+    def reDepositionProfile(self):
         
         Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
         
-        Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(Beam_Position_X, Beam_Position_Y)['Primary_Sputtering_Depth_Total']
+        Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(self.Beam_Position_X, self.Beam_Position_Y)['Primary_Sputtering_Depth_Total']
         
         Redeposition_Amount_per_GridPoint = numpy.max(numpy.abs(Primary_Sputtering_Depth))*numpy.sum(Grid_Area['Grid_Area'])*self.Parameters['Atomic_density_Sub']
         
         #This is an overestimated amount#
-        Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*(self.Parameters['Pixel_Area']/numpy.sum(Grid_Area['Grid_Area']))
+        Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*((2*numpy.pi*self.Parameters['Beam_Radius'])/self.Parameters['Grid_Space_Y'])
         
         print (Redeposition_Amount_per_BeamPosition)
         
-        Re_Deposition_Profile = Redeposition_Amount_per_BeamPosition*numpy.exp(-(((self.Profile['Grid_X']-Beam_Position_X)**2+(self.Profile['Grid_Y']-Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
+        Re_Deposition_Profile = Redeposition_Amount_per_BeamPosition*numpy.exp(-(((self.Profile['Grid_X']-self.Beam_Position_X)**2+(self.Profile['Grid_Y']-self.Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
 
         Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile}
         
@@ -63,9 +71,9 @@ class Ion_Beam_Profile:
         return Re_Deposition_Profile
     
     
-    def secondaryIonBeamProfile(self, Beam_Position_X, Beam_Position_Y):
+    def secondaryIonBeamProfile(self):
         
-        Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(Beam_Position_X, Beam_Position_Y)['Primary_Sputtering_Depth_Total']
+        Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering()['Primary_Sputtering_Depth_Total']
         
         Secondary_Ion_Beam_Profile = Primary_Sputtering_Depth
         
@@ -86,9 +94,9 @@ if __name__ == "__main__":
     
     Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
     
-    Pr = Ion_Beam_Profile(Profile).primaryIonBeamProfile(Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0])
+    Pr = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).primaryIonBeamProfile()
     
-    #Re = Ion_Beam_Profile(Profile).reDepositionProfile(Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0])
+    Re = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionProfile()
     
     
 

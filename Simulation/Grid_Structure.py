@@ -192,13 +192,7 @@ class Grid_Structure:
     
     
     
-    def reDepositionTrajectury(self):
-        
-        
-        
-        
-        
-        return None
+
     
     
     
