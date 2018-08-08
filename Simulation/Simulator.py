@@ -7,12 +7,12 @@ Created on 15.05.2018
 import Grid_Structure
 import Physical_Effect
 import Scanning_Strategy
-
+import Ion_Beam_Profile
 import Parameters
 import Post_Process
 import numpy
 import timeit
-
+import matplotlib.pyplot as plt
 
 class FIB:
     '''
@@ -75,7 +75,15 @@ class FIB:
                     Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
                     
                     Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
-                
+                    
+                    #Ion_Beam_Profile.Ion_Beam_Profile(Profile, Beam_Position[0], Beam_Position[1]).reDepositionAngularDistribution()
+                    
+                    
+                    #plt.figure()
+                    #plt.plot(Profile['Grid_X'],Profile['Grid_Z'])
+                    #plt.show()
+        
+                    
                 
                     Profile['Grid_X'] = Profile['Grid_X'] + Primary_Sputtering['Primary_Sputtering_Depth_X']
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 

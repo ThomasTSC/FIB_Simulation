@@ -105,9 +105,6 @@ class Physical_Effect:
         return Diluted_Ion_Beam_Effect
     
     
-
-    
-    
     
     def primarySputtering(self,Beam_Position_X,Beam_Position_Y):
     
@@ -141,17 +138,7 @@ class Physical_Effect:
         #print (Primary_Sputtering_Depth)
       
         return Primary_Sputtering_Depth
-    
-    
-    
-    def reDepositionTrajectury(self):
-        
-        
-        
-        
-        
-        return None
-    
+
     
     
     def reDeposition(self,Beam_Position_X,Beam_Position_Y):

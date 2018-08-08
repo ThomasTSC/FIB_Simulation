@@ -9,7 +9,7 @@ import Parameters
 import numpy
 import Grid_Structure
 import Physical_Effect
-
+import matplotlib.pyplot as plt
 
 class Ion_Beam_Profile:
     
@@ -19,9 +19,6 @@ class Ion_Beam_Profile:
         self.Beam_Position_X = Beam_Position_X
         self.Beam_Position_Y = Beam_Position_Y 
     
-
-        
-        
 
     def primaryIonBeamProfile(self):
         
@@ -63,10 +60,21 @@ class Ion_Beam_Profile:
         Redeposition_Trajectury = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).reDepositionTrajectury()
     
         Cosine_to_Normal_Distribution = (1/(2*numpy.pi))*(1+Redeposition_Trajectury['Trajectury_Cosine'])
-    
+        
+        #print (Cosine_to_Normal_Distribution)
+        
         Redeposition_Angular_Distribution = Cosine_to_Normal_Distribution
-    
+        
         Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution}
+        
+        #print (Redeposition_Angular_Distribution)
+        
+        
+        plt.figure()
+        plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
+        plt.show()
+        
+        
         
         return Redeposition_Angular_Distribution
     
@@ -85,13 +93,13 @@ class Ion_Beam_Profile:
         #This is an overestimated amount#
         Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*((2*numpy.pi*self.Parameters['Beam_Radius'])/self.Parameters['Grid_Space_Y'])
         
-        print (Redeposition_Amount_per_BeamPosition)
+        #print (Redeposition_Amount_per_BeamPosition)
         
         Re_Deposition_Profile = Redeposition_Amount_per_BeamPosition*numpy.exp(-(((self.Profile['Grid_X']-self.Beam_Position_X)**2+(self.Profile['Grid_Y']-self.Beam_Position_Y)**2)/(2*self.Parameters['Beam_Standard_Deviation']**2)))
 
         Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile}
         
-        print (Re_Deposition_Profile)
+        #print (Re_Deposition_Profile)
         
         return Re_Deposition_Profile
     
@@ -103,7 +111,6 @@ class Ion_Beam_Profile:
         Secondary_Ion_Beam_Profile = Primary_Sputtering_Depth
         
         Secondary_Ion_Beam_Profile = {'Secondary_Ion_Beam_Profile':Secondary_Ion_Beam_Profile}
-        
         
         return Secondary_Ion_Beam_Profile
     
@@ -124,7 +131,7 @@ if __name__ == "__main__":
     #Re = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionProfile()
     
     
-    Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionTrajectury()
+    #Re_Angular = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionAngularDistribution()
 
     
     print ('done')

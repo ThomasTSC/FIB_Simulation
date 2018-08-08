@@ -37,20 +37,20 @@ def Parameters():
     #Process Parameters
     #Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
     
-    Pixel_Area = (numpy.pi)*((3.75*Beam_Standard_Deviation)**2)
+    Pixel_Area = (numpy.pi)*((6.25*Beam_Standard_Deviation)**2)
     
     Pixel_Distance = 0.25*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    Pass = 10
-    Step = 20
+    Pass = 1
+    Step = 55
     Scan_Line = 1
     
     Grid_Point = 25
     Grid_Space_Y = 5e-8
     
     Dwell_Time = 1e-6
-    Integration_Time = 1e-7
+    Integration_Time = 1e-6
 
 
     #The properties of Si/Ga system#
