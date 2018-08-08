@@ -39,23 +39,20 @@ class Ion_Beam_Profile:
     
     def reDepositionTrajectury(self):
         
-        Surface_Normal_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceNormalVector()
+        Surface_Slope = Grid_Structure.Grid_Structure(self.Profile).surfaceSlope()
         
-        print (Surface_Normal_Vector['Surface_Normal_Vector'])
+        Surface_Normal_Vector = [-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], Surface_Slope['Surface_Slope']),1]
         
         Trajectury_Vector = [self.Profile['Grid_X']-self.Beam_Position_X, self.Profile['Grid_Z']-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], self.Profile['Grid_Z'])]
         
-        print (Trajectury_Vector)
         
+        Trajectury_Cosine = (Surface_Normal_Vector[0]*Trajectury_Vector[0]+Surface_Normal_Vector[1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(Surface_Normal_Vector[0],2)+numpy.power(Surface_Normal_Vector[1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
         
-        Trajectury_Cosine = (Surface_Normal_Vector['Surface_Normal_Vector'][0]*Trajectury_Vector[0]+Surface_Normal_Vector['Surface_Normal_Vector'][1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(Surface_Normal_Vector['Surface_Normal_Vector'][0],2)+numpy.power(Surface_Normal_Vector['Surface_Normal_Vector'][1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
+        Trajectury_Angle = (180/numpy.pi)*numpy.arccos(Trajectury_Cosine)
         
-        print ((180/numpy.pi)*numpy.arccos(Trajectury_Cosine))
+        Redeposition_Trajectury = {'Trajectury_Cosine': Trajectury_Cosine, 'Trajectury_Angle':Trajectury_Angle}
         
-        return None
-    
-    
-    
+        return Redeposition_Trajectury
     
     
     def reDepositionProfile(self):

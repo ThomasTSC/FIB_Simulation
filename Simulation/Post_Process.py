@@ -42,7 +42,7 @@ class Post_Process:
 
         Square_to_Circle = 1.27
 
-        Dosed_Area = m2_to_cm2*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+(self.Parameters['Beam_Diameter']))*self.Parameters['Beam_Diameter']
+        Dosed_Area = m2_to_cm2*Square_to_Circle*(self.Parameters['Pixel_Distance']*(self.Parameters['Step']-1)+(self.Parameters['Full_Pixel_Length']))*self.Parameters['Full_Pixel_Length']
 
         Ion_per_Beam =  self.Parameters['Ion_Flux']*self.Parameters['Dwell_Time']*self.Parameters['Pixel_Area'] #per second
         
