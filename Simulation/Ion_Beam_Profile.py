@@ -37,6 +37,8 @@ class Ion_Beam_Profile:
         return Primary_Ion_Beam_Profile
         
     
+    
+    
     def reDepositionTrajectury(self):
         
         Surface_Slope = Grid_Structure.Grid_Structure(self.Profile).surfaceSlope()
@@ -44,7 +46,6 @@ class Ion_Beam_Profile:
         Surface_Normal_Vector = [-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], Surface_Slope['Surface_Slope']),1]
         
         Trajectury_Vector = [self.Profile['Grid_X']-self.Beam_Position_X, self.Profile['Grid_Z']-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], self.Profile['Grid_Z'])]
-        
         
         Trajectury_Cosine = (Surface_Normal_Vector[0]*Trajectury_Vector[0]+Surface_Normal_Vector[1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(Surface_Normal_Vector[0],2)+numpy.power(Surface_Normal_Vector[1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
         
@@ -55,11 +56,29 @@ class Ion_Beam_Profile:
         return Redeposition_Trajectury
     
     
+    
+    
+    def reDepositionAngularDistribution(self):
+    
+        Redeposition_Trajectury = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).reDepositionTrajectury()
+    
+        Cosine_to_Normal_Distribution = (1/(2*numpy.pi))*(1+Redeposition_Trajectury['Trajectury_Cosine'])
+    
+        Redeposition_Angular_Distribution = Cosine_to_Normal_Distribution
+    
+        Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution}
+        
+        return Redeposition_Angular_Distribution
+    
+    
+    
     def reDepositionProfile(self):
         
         Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
         
         Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(self.Beam_Position_X, self.Beam_Position_Y)['Primary_Sputtering_Depth_Total']
+        
+        
         
         Redeposition_Amount_per_GridPoint = numpy.max(numpy.abs(Primary_Sputtering_Depth))*numpy.sum(Grid_Area['Grid_Area'])*self.Parameters['Atomic_density_Sub']
         

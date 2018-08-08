@@ -14,8 +14,6 @@ class Physical_Effect:
     '''
     classdocs
     '''
-
-
     def __init__(self, Profile):
         
         self.Parameters = Parameters.Parameters()
