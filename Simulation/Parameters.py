@@ -39,11 +39,11 @@ def Parameters():
     
     Pixel_Area = (numpy.pi)*((6.25*Beam_Standard_Deviation)**2)
     
-    Pixel_Distance = 0.25*Beam_Diameter   
+    Pixel_Distance = 0.2*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
-    Pass = 2
-    Step = 10
+    Pass = 1
+    Step = 1
     Scan_Line = 1
     
     Grid_Point = 25
