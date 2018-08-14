@@ -44,9 +44,15 @@ class Ion_Beam_Profile:
         
         Trajectury_Cosine = (Surface_Normal_Vector[0]*Trajectury_Vector[0]+Surface_Normal_Vector[1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(Surface_Normal_Vector[0],2)+numpy.power(Surface_Normal_Vector[1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
         
+        Trajectury_Cosine[Trajectury_Cosine < 0] = 0
+        
         Trajectury_Angle = (180/numpy.pi)*numpy.arccos(Trajectury_Cosine)
         
-        Redeposition_Trajectury = {'Trajectury_Cosine': Trajectury_Cosine, 'Trajectury_Angle':Trajectury_Angle}
+        Trajectury_Radian = numpy.arccos(Trajectury_Cosine)
+        
+        Redeposition_Trajectury = {'Trajectury_Cosine': Trajectury_Cosine, 'Trajectury_Angle':Trajectury_Angle, 'Trajectury_Radian':Trajectury_Radian}
+        
+        print (Redeposition_Trajectury)
         
         return Redeposition_Trajectury
 
@@ -55,17 +61,22 @@ class Ion_Beam_Profile:
     
         Redeposition_Trajectury = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).reDepositionTrajectury()
         
-        Redeposition_Angular_Distribution = (1/(2*numpy.pi))*(1+Redeposition_Trajectury['Trajectury_Cosine'])
+        Redeposition_Angular_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Redeposition_Trajectury['Trajectury_Radian']))
         
-        Redeposition_Angular_Distribution_Normalized_Factor = 1/(numpy.max(Redeposition_Angular_Distribution))
         
-        Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution*Redeposition_Angular_Distribution_Normalized_Factor}
         
         print (Redeposition_Angular_Distribution)
         
-        #plt.figure()
-        #plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
-        #plt.show()
+        #Redeposition_Angular_Distribution_Normalized_Factor = 1/(numpy.max(Redeposition_Angular_Distribution))
+        
+        Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution}
+        
+        #print (Redeposition_Angular_Distribution)
+        
+        plt.figure()
+        #plt.plot(self.Profile['Grid_X'],Redeposition_Trajectury['Trajectury_Cosine'])
+        plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
+        plt.show()
         
         
         return Redeposition_Angular_Distribution
@@ -92,23 +103,22 @@ class Ion_Beam_Profile:
         Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*((2*numpy.pi*self.Parameters['Beam_Radius'])/self.Parameters['Grid_Space_Y'])
         
         
-    
-        
         Re_Angular_Distribution =  Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).reDepositionAngularDistribution()
-        
-       
         
         Re_Deposition_Profile =  Redeposition_Amount_per_BeamPosition*Re_Angular_Distribution['Redeposition_Angular_Distribution']
         
-
+        #print (Re_Deposition_Profile)
         
-        Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile}
+        Pr_Normalized_Factor = 1/(numpy.sum(Re_Deposition_Profile)/Redeposition_Amount_per_BeamPosition)
         
-        print (Re_Deposition_Profile)
         
-        plt.figure()
-        plt.plot(self.Profile['Grid_X'],Re_Deposition_Profile['Re_Deposition_Profile'])
-        plt.show()
+        Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile*Pr_Normalized_Factor}
+        
+        
+        
+        #plt.figure()
+        #plt.plot(self.Profile['Grid_X'],Re_Deposition_Profile['Re_Deposition_Profile'])
+        #plt.show()
         
         #print (Re_Deposition_Profile)
         
@@ -140,9 +150,9 @@ if __name__ == "__main__":
     #Pr = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).primaryIonBeamProfile()
     
     
+    Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionTrajectury()
     
-    
-    Re = Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionProfile()
+    Ion_Beam_Profile(Profile, Scanning_Path['Scanning_Path_X'][0], Scanning_Path['Scanning_Path_Y'][0]).reDepositionProfile()
 
     
     print ('done')

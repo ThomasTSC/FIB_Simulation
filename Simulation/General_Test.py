@@ -7,14 +7,20 @@ Created on 07.08.2018
 import numpy
 import matplotlib.pyplot as plt
 
+def referenceCosineDistribution():
 
-x = numpy.linspace(-numpy.pi,numpy.pi,1000)
+    Ref_Radian_Range = numpy.linspace(-numpy.pi,numpy.pi,1000)
 
-A = (180/numpy.pi)*numpy.arccos(x)
 
-f = (1/(2*numpy.pi))*(1+numpy.cos(x))
-print (f)
+    #print (numpy.cos(x))
 
-plt.figure()
-plt.plot(A,f)
-plt.show()
+    Ref_Cosine_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Ref_Radian_Range))
+    print (Ref_Cosine_Distribution )
+
+    plt.figure()
+    plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution )
+    plt.show()
+    
+    
+
+referenceCosineDistribution()

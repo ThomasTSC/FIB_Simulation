@@ -76,12 +76,12 @@ class FIB:
                     
                     Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                     
-                    #Ion_Beam_Profile.Ion_Beam_Profile(Profile, Beam_Position[0], Beam_Position[1]).reDepositionAngularDistribution()
+                    Ion_Beam_Profile.Ion_Beam_Profile(Profile, Beam_Position[0], Beam_Position[1]).reDepositionAngularDistribution()
                     
                     
-                    #plt.figure()
-                    #plt.plot(Profile['Grid_X'],Profile['Grid_Z'])
-                    #plt.show()
+                    plt.figure()
+                    plt.plot(Profile['Grid_X'],Profile['Grid_Z'])
+                    plt.show()
         
                     
                 
