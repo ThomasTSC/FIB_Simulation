@@ -11,14 +11,14 @@ def referenceCosineDistribution():
 
     Ref_Radian_Range = numpy.linspace(-numpy.pi,numpy.pi,1000)
 
-
-    #print (numpy.cos(x))
-
     Ref_Cosine_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Ref_Radian_Range))
     print (Ref_Cosine_Distribution )
 
+
+    Ref_Cosine_Distribution = {'Ref_Cosine_Distribution': Ref_Cosine_Distribution}
+
     plt.figure()
-    plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution )
+    plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
     plt.show()
     
     

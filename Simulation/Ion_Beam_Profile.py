@@ -32,7 +32,23 @@ class Ion_Beam_Profile:
         #print (Primary_Ion_Beam_Profile)
     
         return Primary_Ion_Beam_Profile
-        
+    
+    def referenceCosineDistribution(self):
+
+        Ref_Radian_Range = numpy.linspace(-numpy.pi,numpy.pi,1000)
+    
+        Ref_Cosine_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Ref_Radian_Range))
+        print (Ref_Cosine_Distribution )
+    
+    
+        Ref_Cosine_Distribution = {'Ref_Cosine_Distribution': Ref_Cosine_Distribution}
+    
+        plt.figure()
+        plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
+        plt.show()
+    
+        return Ref_Cosine_Distribution
+    
     
     def reDepositionTrajectury(self):
         
