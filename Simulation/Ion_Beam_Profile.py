@@ -35,17 +35,19 @@ class Ion_Beam_Profile:
     
     def referenceCosineDistribution(self):
 
-        Ref_Radian_Range = numpy.linspace(-numpy.pi,numpy.pi,1000)
+        Ref_Radian_Range = numpy.linspace(-numpy.pi,numpy.pi,len(self.Profile['Grid_X']))
     
         Ref_Cosine_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Ref_Radian_Range))
-        print (Ref_Cosine_Distribution )
+        
     
     
         Ref_Cosine_Distribution = {'Ref_Cosine_Distribution': Ref_Cosine_Distribution}
     
-        plt.figure()
-        plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
-        plt.show()
+        print (Ref_Cosine_Distribution )
+    
+        #plt.figure()
+        #plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
+        #plt.show()
     
         return Ref_Cosine_Distribution
     
@@ -62,13 +64,13 @@ class Ion_Beam_Profile:
         
         Trajectury_Cosine[Trajectury_Cosine < 0] = 0
         
-        Trajectury_Angle = (180/numpy.pi)*numpy.arccos(Trajectury_Cosine)
+        Trajectury_Angle = (180/numpy.pi)*numpy.arccos(Trajectury_Cosine)+90
         
-        Trajectury_Radian = numpy.arccos(Trajectury_Cosine)
+        Trajectury_Radian = (numpy.pi/180)*Trajectury_Angle
         
         Redeposition_Trajectury = {'Trajectury_Cosine': Trajectury_Cosine, 'Trajectury_Angle':Trajectury_Angle, 'Trajectury_Radian':Trajectury_Radian}
         
-        print (Redeposition_Trajectury)
+        #print (Redeposition_Trajectury)
         
         return Redeposition_Trajectury
 
@@ -79,18 +81,17 @@ class Ion_Beam_Profile:
         
         Redeposition_Angular_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Redeposition_Trajectury['Trajectury_Radian']))
         
-        
-        
-        print (Redeposition_Angular_Distribution)
-        
         #Redeposition_Angular_Distribution_Normalized_Factor = 1/(numpy.max(Redeposition_Angular_Distribution))
         
+        Ref_Cosine_Distribution = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).referenceCosineDistribution()
+        
+
         Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution}
         
         #print (Redeposition_Angular_Distribution)
         
         plt.figure()
-        #plt.plot(self.Profile['Grid_X'],Redeposition_Trajectury['Trajectury_Cosine'])
+        plt.plot(self.Profile['Grid_X'],Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
         plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
         plt.show()
         
@@ -123,7 +124,6 @@ class Ion_Beam_Profile:
         
         Re_Deposition_Profile =  Redeposition_Amount_per_BeamPosition*Re_Angular_Distribution['Redeposition_Angular_Distribution']
         
-        #print (Re_Deposition_Profile)
         
         Pr_Normalized_Factor = 1/(numpy.sum(Re_Deposition_Profile)/Redeposition_Amount_per_BeamPosition)
         
