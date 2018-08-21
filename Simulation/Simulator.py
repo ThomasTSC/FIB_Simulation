@@ -77,17 +77,26 @@ class FIB:
                     Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
                     
                   
-                    plt.figure()
-                    plt.plot(Profile['Grid_X'],Profile['Grid_Z'])
-                    plt.show()
+           
         
-                    
+                    print (Primary_Sputtering)
                 
                     Profile['Grid_X'] = Profile['Grid_X'] + Primary_Sputtering['Primary_Sputtering_Depth_X']
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                     
                 
-                    #Redeposition = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
+                    Redeposition = Physical_Effect.Physical_Effect(Profile).reDeposition(Beam_Position[0], Beam_Position[1])
+                    
+                    Profile['Grid_X'] = Profile['Grid_X'] + Redeposition['Redeposition_X']
+                    Profile['Grid_Z'] = Profile['Grid_Z'] + Redeposition['Redeposition_Z'] 
+                    
+                    print (Redeposition)
+                    
+                    
+                    plt.figure()
+                    plt.plot(Profile['Grid_X'],Redeposition['Redeposition_Total'])
+                    #plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
+                    plt.show()
                     
                     #Secondary_Sputtering = Physical_Effect.Physical_Effect(Profile).secondarySputtering(Beam_Position[0], Beam_Position[1])
                      

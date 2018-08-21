@@ -39,15 +39,10 @@ class Ion_Beam_Profile:
     
         Ref_Cosine_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Ref_Radian_Range))
         
-    
-    
+
         Ref_Cosine_Distribution = {'Ref_Cosine_Distribution': Ref_Cosine_Distribution}
     
-        print (Ref_Cosine_Distribution )
-    
-        #plt.figure()
-        #plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
-        #plt.show()
+        #print (Ref_Cosine_Distribution )
     
         return Ref_Cosine_Distribution
     
@@ -80,20 +75,17 @@ class Ion_Beam_Profile:
         Redeposition_Trajectury = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).reDepositionTrajectury()
         
         Redeposition_Angular_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Redeposition_Trajectury['Trajectury_Radian']))
-        
-        #Redeposition_Angular_Distribution_Normalized_Factor = 1/(numpy.max(Redeposition_Angular_Distribution))
-        
-        Ref_Cosine_Distribution = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).referenceCosineDistribution()
-        
 
+        #Ref_Cosine_Distribution = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).referenceCosineDistribution()
+        
         Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution}
         
         #print (Redeposition_Angular_Distribution)
         
-        plt.figure()
-        plt.plot(self.Profile['Grid_X'],Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
-        plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
-        plt.show()
+        #plt.figure()
+        #plt.plot(self.Profile['Grid_X'],Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
+        #plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
+        #plt.show()
         
         
         return Redeposition_Angular_Distribution
@@ -136,7 +128,7 @@ class Ion_Beam_Profile:
         #plt.plot(self.Profile['Grid_X'],Re_Deposition_Profile['Re_Deposition_Profile'])
         #plt.show()
         
-        #print (Re_Deposition_Profile)
+        print (Re_Deposition_Profile)
         
         return Re_Deposition_Profile
     

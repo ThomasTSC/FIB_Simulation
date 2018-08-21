@@ -143,13 +143,23 @@ class Physical_Effect:
     
     def reDeposition(self,Beam_Position_X,Beam_Position_Y):
         
+        Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
         
-        Redeposition_Total = []
-
+        Redeposition_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile, Beam_Position_X,Beam_Position_Y).reDepositionProfile()
         
-        Redeposition_X = Redeposition_Total
+        Surface_Moving_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceMovingVector()
         
-        Redeposition_Z = Redeposition_Total
+        
+        Surface_Moving_Vector_X = (Surface_Moving_Vector['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
+        Surface_Moving_Vector_Z = (Surface_Moving_Vector['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
+        
+        
+        Redeposition_Total = -(1/self.Parameters['Atomic_density_Sub'])*(Redeposition_Ion_Beam['Re_Deposition_Profile']/Grid_Area['Grid_Area'])*((self.Parameters['Grid_Space_Y']/(2*numpy.pi*self.Parameters['Beam_Radius'])))
+        
+        
+        Redeposition_X = Redeposition_Total*Surface_Moving_Vector_X
+        
+        Redeposition_Z = Redeposition_Total*Surface_Moving_Vector_Z
         
         
         Redeposition = {'Redeposition_X':Redeposition_X, 
@@ -158,6 +168,9 @@ class Physical_Effect:
                         }
         
         
+        
+        
+        print (Redeposition)
         
         return  Redeposition
     
@@ -183,6 +196,9 @@ class Physical_Effect:
     
     
 if __name__ == "__main__":
+    
+    
+    
     
     
     print ('done')
