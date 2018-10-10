@@ -18,6 +18,7 @@ class Physical_Effect:
         
         self.Parameters = Parameters.Parameters()
         self.Profile = Profile
+        self.Grid_Structure = Grid_Structure.Grid_Structure(self.Profile).grid()
         
         
         #Primary sputtering yield
@@ -57,11 +58,9 @@ class Physical_Effect:
     
         
     def sputteringYield(self):
+    
         
-
-        Incident_Cos = Grid_Structure.Grid_Structure(self.Profile).incidentCosine()
-        
-        Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/Incident_Cos['Incident_Cos'].astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/Incident_Cos['Incident_Cos'].astype(float))-1)))
+        Sputtering_Yield = self.Sputtering_Yield_1*(numpy.power((1/self.Grid_Structure['Incident_Cos'].astype(float)),(self.Sputtering_Yield_2)))*(numpy.exp(-self.Sputtering_Yield_3*((1/self.Grid_Structure['Incident_Cos'].astype(float))-1)))
         
         
         Sputtering_Yield = {'Sputtering_Yield': Sputtering_Yield}
@@ -71,16 +70,6 @@ class Physical_Effect:
         return Sputtering_Yield
     
 
-    
-    def dwellTimeMatrix(self):
-        
-        Dwell_Time_Matrix = self.Parameters['Integration_Time']*numpy.ones_like(self.Profile['Grid_X'])
-        
-        Dwell_Time_Matrix = {'Dwell_Time_Matrix': Dwell_Time_Matrix}
-    
-        
-        return Dwell_Time_Matrix
-    
     
     def dilutedIonBeamEffect(self):
         
@@ -114,16 +103,13 @@ class Physical_Effect:
         
         Sputtering_Yield = Physical_Effect(self.Profile).sputteringYield()
                 
-        Dwell_Time_Matrix = Physical_Effect(self.Profile).dwellTimeMatrix()
-
-        Surface_Moving_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceMovingVector()
         
         
-        Surface_Moving_Vector_X = -(Surface_Moving_Vector['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
-        Surface_Moving_Vector_Z = -(Surface_Moving_Vector['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
+        Surface_Moving_Vector_X = -(self.Grid_Structure['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(self.Grid_Structure['Surface_Moving_Vector'][0],2) + numpy.power(self.Grid_Structure['Surface_Moving_Vector'][1],2)))
+        Surface_Moving_Vector_Z = -(self.Grid_Structure['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(self.Grid_Structure['Surface_Moving_Vector'][0],2) + numpy.power(self.Grid_Structure['Surface_Moving_Vector'][1],2)))
         
         
-        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*Dwell_Time_Matrix['Dwell_Time_Matrix']*Diluted_Ion_Beam_Effect['Diluted_Ion_Beam_Effect']
+        Primary_Sputtering_Depth_Total = -(1/self.Parameters['Atomic_density_Sub'])*Primary_Ion_Beam['Primary_Ion_Beam_Profile']*(Sputtering_Yield['Sputtering_Yield'])*self.Parameters['Dwell_Time_Matrix']*Diluted_Ion_Beam_Effect['Diluted_Ion_Beam_Effect']
      
         
         Primary_Sputtering_Depth_X = Primary_Sputtering_Depth_Total*Surface_Moving_Vector_X
@@ -142,19 +128,18 @@ class Physical_Effect:
     
     
     def reDeposition(self,Beam_Position_X,Beam_Position_Y):
-        
-        Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
+
         
         Redeposition_Ion_Beam = Ion_Beam_Profile.Ion_Beam_Profile(self.Profile, Beam_Position_X,Beam_Position_Y).reDepositionProfile()
         
-        Surface_Moving_Vector = Grid_Structure.Grid_Structure(self.Profile).surfaceMovingVector()
+
         
         
-        Surface_Moving_Vector_X = (Surface_Moving_Vector['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
-        Surface_Moving_Vector_Z = (Surface_Moving_Vector['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][0],2) + numpy.power(Surface_Moving_Vector['Surface_Moving_Vector'][1],2)))
+        Surface_Moving_Vector_X = (self.Grid_Structure['Surface_Moving_Vector'][0]/numpy.sqrt(numpy.power(self.Grid_Structure['Surface_Moving_Vector'][0],2) + numpy.power(self.Grid_Structure['Surface_Moving_Vector'][1],2)))
+        Surface_Moving_Vector_Z = (self.Grid_Structure['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(self.Grid_Structure['Surface_Moving_Vector'][0],2) + numpy.power(self.Grid_Structure['Surface_Moving_Vector'][1],2)))
         
         
-        Redeposition_Total = -(1/self.Parameters['Atomic_density_Sub'])*(Redeposition_Ion_Beam['Re_Deposition_Profile']/Grid_Area['Grid_Area'])*((self.Parameters['Grid_Space_Y']/(2*numpy.pi*self.Parameters['Beam_Radius'])))
+        Redeposition_Total = -(1/self.Parameters['Atomic_density_Sub'])*(Redeposition_Ion_Beam['Re_Deposition_Profile']/self.Grid_Structure['Grid_Area'])*((self.Parameters['Grid_Space_Y']/(2*numpy.pi*self.Parameters['Beam_Radius'])))
         
         
         Redeposition_X = Redeposition_Total*Surface_Moving_Vector_X

@@ -7,7 +7,7 @@ Created on 15.05.2018
 import Grid_Structure
 import Physical_Effect
 import Scanning_Strategy
-import Ion_Beam_Profile
+import Surface_Smoothing
 import Parameters
 import Post_Process
 import numpy
@@ -66,8 +66,8 @@ class FIB:
                 Time_Interval = 0
                 
 
-                Profile['Grid_X'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_X_Resampling']
-                Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_Z_Resampling']
+                Profile['Grid_X'] = Surface_Smoothing.Surface_Smoothing(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_X_Resampling']
+                Profile['Grid_Z'] = Surface_Smoothing.Surface_Smoothing(Profile).surfaceResampling(Profile['Grid_X'],Profile['Grid_Z'])['Grid_Z_Resampling']
                                 
                 
                 while Time_Interval <= self.Parameters['Dwell_Time']:
@@ -109,7 +109,7 @@ class FIB:
             
         
         Profile['Grid_X'] = Profile['Grid_X']
-        Profile['Grid_Z'] = Grid_Structure.Grid_Structure(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
+        Profile['Grid_Z'] = Surface_Smoothing.Surface_Smoothing(Profile).smoothingTrench(Profile['Grid_Z'])['Smoothing_Grid_Z']
         
         
         

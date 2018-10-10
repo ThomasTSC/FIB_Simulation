@@ -37,12 +37,6 @@ class Grid_Structure:
             if math.isnan(Surface_Slope[element]) is True:
                 Surface_Slope[element] = 0
         
-
-
-        #Surface_Slope = {'Surface_Slope': Surface_Slope}
-        
-        #print(Surface_Slope)
-        
         
         return Surface_Slope 
     
@@ -54,9 +48,8 @@ class Grid_Structure:
         Surface_Slope = Grid_Structure.surfaceSlope(self)
         
         
-        Surface_Normal_Vector = [-Surface_Slope['Surface_Slope'], numpy.ones_like(Surface_Slope['Surface_Slope'])]
+        Surface_Normal_Vector = [-Surface_Slope, numpy.ones_like(Surface_Slope)]
         
-        Surface_Normal_Vector = {'Surface_Normal_Vector':Surface_Normal_Vector}
         
         #print (Surface_Normal_Vector)
         
@@ -67,9 +60,8 @@ class Grid_Structure:
         
         Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
         
-        Surface_Moving_Vector = [ -x for x in Surface_Normal_Vector['Surface_Normal_Vector']]
+        Surface_Moving_Vector = [ -x for x in Surface_Normal_Vector]
           
-        Surface_Moving_Vector = {'Surface_Moving_Vector':Surface_Moving_Vector}
         
         return Surface_Moving_Vector            
                 
@@ -78,9 +70,8 @@ class Grid_Structure:
         
         Surface_Slope = Grid_Structure.surfaceSlope(self)
         
-        Incident_Vector = [numpy.zeros_like(Surface_Slope['Surface_Slope']), numpy.ones_like(Surface_Slope['Surface_Slope'])]
+        Incident_Vector = [numpy.zeros_like(Surface_Slope), numpy.ones_like(Surface_Slope)]
         
-        Incident_Vector = {'Incident_Vector':Incident_Vector}
         
         #print (Incident_Vector)
         
@@ -93,9 +84,8 @@ class Grid_Structure:
         
         Surface_Normal_Vector = Grid_Structure.surfaceNormalVector(self)
         
-        Incident_Cos = (Incident_Vector['Incident_Vector'][0]*Surface_Normal_Vector['Surface_Normal_Vector'][0]+Incident_Vector['Incident_Vector'][1]*Surface_Normal_Vector['Surface_Normal_Vector'][1])/(numpy.sqrt(numpy.square(Incident_Vector['Incident_Vector'][0])+numpy.square(Incident_Vector['Incident_Vector'][1]))*numpy.sqrt(numpy.square(Surface_Normal_Vector['Surface_Normal_Vector'][0])+numpy.square(Surface_Normal_Vector['Surface_Normal_Vector'][1])))
+        Incident_Cos = (Incident_Vector[0]*Surface_Normal_Vector[0]+Incident_Vector[1]*Surface_Normal_Vector[1])/(numpy.sqrt(numpy.square(Incident_Vector[0])+numpy.square(Incident_Vector[1]))*numpy.sqrt(numpy.square(Surface_Normal_Vector[0])+numpy.square(Surface_Normal_Vector[1])))
         
-        Incident_Cos = {'Incident_Cos':Incident_Cos}
         
         #print (Incident_Cos)
         
@@ -106,10 +96,8 @@ class Grid_Structure:
         
         Incident_Cos = Grid_Structure.incidentCosine(self)
         
-        Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos['Incident_Cos'].astype(float)))
+        Incident_Angle = (180/numpy.pi)*(numpy.arccos(Incident_Cos.astype(float)))
         
-        
-        Incident_Angle ={'Incident_Angle':Incident_Angle}
         
         #print (Incident_Angle)
         
@@ -134,46 +122,15 @@ class Grid_Structure:
         
         Grid_Area = Grid_Length*Grid_Width
         
-        Grid_Area ={'Grid_Area': Grid_Area}
         
         #print((Grid_Area))
 
         return Grid_Area
-    
-
-    
-    def surfaceResampling(self, Profile_X, Profile_Z):
-    
-        Initial_Grid = Simulator.FIB().initGrid()
-    
-        
-        Grid_Z_Resampling = numpy.interp(Initial_Grid['Grid_X'],Profile_X, Profile_Z)
-        Grid_X_Resampling = Initial_Grid['Grid_X']
-   
-    
-        Surface_Resampling = {'Grid_Z_Resampling': Grid_Z_Resampling,
-                              'Grid_X_Resampling': Grid_X_Resampling,
-                              
-                 }  
-        
-        return Surface_Resampling
-    
 
     
     
-    def smoothingTrench(self, Profile_Z, box_pts= 7 ):
-        
-        box = numpy.ones(box_pts)/box_pts
-        Smoothing_Grid_Z = numpy.convolve(Profile_Z, box, mode='same')
-  
-        Smoothing_Trench = {'Smoothing_Grid_Z':Smoothing_Grid_Z}
-        
-        return Smoothing_Trench
-    
-    
-    
 
-    def gridStructure(self):
+    def grid(self):
         
         Surface_Slope = Grid_Structure.surfaceSlope(self)
         
@@ -189,23 +146,30 @@ class Grid_Structure:
         
         Grid_Area = Grid_Structure.gridArea(self)
         
-        Grid_Structure = {'Surface_Slope': Surface_Slope,
+        Grid = {'Surface_Slope': Surface_Slope,
                           'Surface_Normal_Vector': Surface_Normal_Vector,
                           'Surface_Moving_Vector': Surface_Moving_Vector,
                           'Incident_Vector': Incident_Vector,
-                          'Incident_Cosine': Incident_Cosine,
+                          'Incident_Cos': Incident_Cosine,
                           'Incident_Angle': Incident_Angle,
                           'Grid_Area': Grid_Area
                           
                           }
         
-        return Grid_Structure
+        print (Grid)
+        
+        return Grid
     
     
 
      
 if __name__ == "__main__":
     
+    
+    import Simulator
+    
+    Profile = Simulator.FIB().Simulation()
+    Grid_Structure(Profile).gridStructure()
 
     print ('done')
     

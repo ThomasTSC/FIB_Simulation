@@ -8,7 +8,6 @@ Created on Oct 10, 2018
 import Parameters
 import numpy
 import Simulator
-import math
 
 
 
@@ -21,7 +20,6 @@ class Surface_Smoothing:
     def __init__(self,Profile):
         self.Parameters = Parameters.Parameters()
         self.Profile = Profile
-     
      
         
     def surfaceResampling(self, Profile_X, Profile_Z):

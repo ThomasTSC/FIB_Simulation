@@ -38,7 +38,6 @@ def Parameters():
     #Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
     
     Pixel_Area = (numpy.pi)*((6.25*Beam_Standard_Deviation)**2)
-    
     Pixel_Distance = 0.2*Beam_Diameter   
     Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
   
@@ -49,8 +48,10 @@ def Parameters():
     Grid_Point = 25
     Grid_Space_Y = 5e-8
     
-    Dwell_Time = 1e-6
+    Dwell_Time = 1e-6    
     Integration_Time = 1e-6
+    Dwell_Time_Matrix = Integration_Time*numpy.ones_like(Grid_Point)
+
 
 
     #The properties of Si/Ga system#
@@ -61,6 +62,12 @@ def Parameters():
     AtomicDensity_Substrate = 5e28
     
     Ion_Flux = ((Beam_Current)/Unit_Charge)/Pixel_Area #Ion/(m2 per second)
+    
+    
+    
+    
+    
+    
     
     
     
@@ -86,6 +93,7 @@ def Parameters():
                   'Grid_Point':Grid_Point,
                   'Grid_Space_Y':Grid_Space_Y,
                   'Dwell_Time':Dwell_Time,
+                  'Dwell_Time_Matrix':Dwell_Time_Matrix,
                   'Integration_Time': Integration_Time,
                   'Mass_Ion':Mass_Ion,
                   'Mass_Sub':Mass_Substrate,
