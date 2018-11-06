@@ -7,15 +7,16 @@ Created on Mon Apr 16 23:40:03 2018
 
 import Parameters
 import numpy
-import Grid_Structure
 import Physical_Effect
-import matplotlib.pyplot as plt
+import Grid_Structure
+
 
 class Ion_Beam_Profile:
     
     def __init__(self, Profile, Beam_Position_X, Beam_Position_Y):
         self.Parameters = Parameters.Parameters()
         self.Profile = Profile
+        self.Grid_Structure = Grid_Structure.Grid_Structure(self.Profile).grid()
         self.Beam_Position_X = Beam_Position_X
         self.Beam_Position_Y = Beam_Position_Y 
     
@@ -49,13 +50,10 @@ class Ion_Beam_Profile:
     
     def reDepositionTrajectury(self):
         
-        Surface_Slope = Grid_Structure.Grid_Structure(self.Profile).surfaceSlope()
-        
-        Surface_Normal_Vector = [-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], Surface_Slope['Surface_Slope']),1]
         
         Trajectury_Vector = [self.Profile['Grid_X']-self.Beam_Position_X, self.Profile['Grid_Z']-numpy.interp(self.Beam_Position_X,self.Profile['Grid_X'], self.Profile['Grid_Z'])]
         
-        Trajectury_Cosine = (Surface_Normal_Vector[0]*Trajectury_Vector[0]+Surface_Normal_Vector[1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(Surface_Normal_Vector[0],2)+numpy.power(Surface_Normal_Vector[1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
+        Trajectury_Cosine = (self.Grid_Structure['Surface_Normal_Vector'][0]*Trajectury_Vector[0]+self.Grid_Structure['Surface_Normal_Vector'][1]*Trajectury_Vector[1])/numpy.sqrt((numpy.power(self.Grid_Structure['Surface_Normal_Vector'][0],2)+numpy.power(self.Grid_Structure['Surface_Normal_Vector'][1],2))*(numpy.power(Trajectury_Vector[0],2)+numpy.power(Trajectury_Vector[1],2)))
         
         Trajectury_Cosine[Trajectury_Cosine < 0] = 0
         
@@ -102,11 +100,10 @@ class Ion_Beam_Profile:
     
     def reDepositionProfile(self):
         
-        Grid_Area = Grid_Structure.Grid_Structure(self.Profile).gridArea()
         
         Primary_Sputtering_Depth = Physical_Effect.Physical_Effect(self.Profile).primarySputtering(self.Beam_Position_X, self.Beam_Position_Y)['Primary_Sputtering_Depth_Total']
         
-        Redeposition_Amount_per_GridPoint = numpy.max(numpy.abs(Primary_Sputtering_Depth))*numpy.sum(Grid_Area['Grid_Area'])*self.Parameters['Atomic_density_Sub']
+        Redeposition_Amount_per_GridPoint = numpy.max(numpy.abs(Primary_Sputtering_Depth))*numpy.sum(self.Grid_Structure['Grid_Area'])*self.Parameters['Atomic_density_Sub']
         
         #This is an overestimated amount#
         Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*((2*numpy.pi*self.Parameters['Beam_Radius'])/self.Parameters['Grid_Space_Y'])

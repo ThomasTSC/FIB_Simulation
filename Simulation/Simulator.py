@@ -118,8 +118,8 @@ class FIB:
         print (stop - start) 
         
         
-        Post_Process.Post_Process().ionDoseAmount()
-        Post_Process.Post_Process().plotTrench(Profile) 
+        Post_Process.Post_Process(Profile).ionDoseAmount()
+        Post_Process.Post_Process(Profile).plotTrench(Profile) 
         
         
         return Profile

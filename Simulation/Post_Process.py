@@ -20,10 +20,11 @@ class Post_Process:
     '''
 
 
-    def __init__(self):
+    def __init__(self, Profile):
         
         self.Parameters = Parameters.Parameters()
-    
+        self.Profile = Profile
+        self.Grid_Structure = Grid_Structure.Grid_Structure(self.Profile).grid()
     
     
     def sputteringYieldPlot(self):
@@ -67,7 +68,7 @@ class Post_Process:
         plt.scatter(Profile['Grid_X']*m_to_nm,Profile['Grid_Z']*m_to_nm)
         
         Surface_Slope = Grid_Structure.Grid_Structure(Profile).surfaceSlope()
-        plt.scatter(Profile['Grid_X']*m_to_nm,Surface_Slope['Surface_Slope'])
+        plt.scatter(Profile['Grid_X']*m_to_nm,self.Grid_Structure['Surface_Slope'])
         plt.show()
         
         
