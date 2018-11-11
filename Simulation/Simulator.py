@@ -13,6 +13,9 @@ import Post_Process
 import numpy
 import timeit
 import matplotlib.pyplot as plt
+import Sputtering_Primary
+import Redeposition_Effect
+
 
 class FIB:
     '''
@@ -21,7 +24,7 @@ class FIB:
 
     def __init__(self):
         
-        self.Parameters = Parameters.Parameters()
+        self.Parameters = Parameters.Physical_Parameters()
         
         self.Scanning_Path = Scanning_Strategy.Scanning_Strategy().rasterScan()
         
@@ -74,29 +77,29 @@ class FIB:
                 
                     Beam_Position = [self.Scanning_Path['Scanning_Path_X'][Step], self.Scanning_Path['Scanning_Path_Y'][Step]]
                     
-                    Primary_Sputtering = Physical_Effect.Physical_Effect(Profile).primarySputtering(Beam_Position[0], Beam_Position[1])
+                    Primary_Sputtering = Sputtering_Primary.PrimarySputtering(Profile,Beam_Position[0], Beam_Position[1]).primarySputtering()
                     
                   
            
         
-                    print (Primary_Sputtering)
+                    print (Sputtering_Primary)
                 
                     Profile['Grid_X'] = Profile['Grid_X'] + Primary_Sputtering['Primary_Sputtering_Depth_X']
                     Profile['Grid_Z'] = Profile['Grid_Z'] + Primary_Sputtering['Primary_Sputtering_Depth_Z'] 
                     
                 
-                    Redeposition = Physical_Effect.Physical_Effect(Profile).reDeposition(Beam_Position[0], Beam_Position[1])
+                    Secondary_Redeposition = Redeposition_Effect.Redeposition(Primary_Sputtering, Profile, Beam_Position[0], Beam_Position[1]).reDeposition()
                     
-                    Profile['Grid_X'] = Profile['Grid_X'] + Redeposition['Redeposition_X']
-                    Profile['Grid_Z'] = Profile['Grid_Z'] + Redeposition['Redeposition_Z'] 
+                    #Profile['Grid_X'] = Profile['Grid_X'] + Redeposition['Redeposition_X']
+                    #Profile['Grid_Z'] = Profile['Grid_Z'] + Redeposition['Redeposition_Z'] 
                     
-                    print (Redeposition)
+                    #print (Redeposition)
                     
                     
-                    plt.figure()
-                    plt.plot(Profile['Grid_X'],Redeposition['Redeposition_Total'])
+                    #plt.figure()
+                    #plt.plot(Profile['Grid_X'],Redeposition['Redeposition_Total'])
                     #plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
-                    plt.show()
+                    #plt.show()
                     
                     #Secondary_Sputtering = Physical_Effect.Physical_Effect(Profile).secondarySputtering(Beam_Position[0], Beam_Position[1])
                      

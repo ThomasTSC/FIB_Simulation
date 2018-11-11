@@ -18,7 +18,7 @@ class Surface_Smoothing:
 
 
     def __init__(self,Profile):
-        self.Parameters = Parameters.Parameters()
+        self.Parameters = Parameters.Physical_Parameters()
         self.Profile = Profile
      
         

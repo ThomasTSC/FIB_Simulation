@@ -13,7 +13,7 @@ import Parameters
 class Scanning_Strategy:
     
     def __init__(self):
-        self.Parameters = Parameters.Parameters()
+        self.Parameters = Parameters.Physical_Parameters()
         self.Start_X = 6*self.Parameters['Beam_Radius']
         self.Start_Y = self.Parameters['Beam_Radius']
 

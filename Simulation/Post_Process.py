@@ -22,7 +22,7 @@ class Post_Process:
 
     def __init__(self, Profile):
         
-        self.Parameters = Parameters.Parameters()
+        self.Parameters = Parameters.Physical_Parameters()
         self.Profile = Profile
         self.Grid_Structure = Grid_Structure.Grid_Structure(self.Profile).grid()
     
