@@ -7,7 +7,6 @@ Created on Oct 12, 2018
 
 import Parameters
 import Grid_Structure
-import Sputtering_Parameters
 import numpy
 
 
@@ -19,10 +18,10 @@ class Redeposition:
 
     def __init__(self,  Primary_Sputtering, Profile, Beam_Position_X, Beam_Position_Y):
         
-        self.Parameters = Parameters.Physical_Parameters()
+        self.Physical_Parameters = Parameters.Physical_Parameters()
         self.Profile = Profile
         self.Grid_Structure = Grid_Structure.Grid_Structure(self.Profile).grid()
-        self.Sputtering_Parameters = Sputtering_Parameters.Sputtering_Parameters()
+        self.Sputtering_Parameters = Parameters.Sputtering_Parameters()
         self.Beam_Position_X = Beam_Position_X
         self.Beam_Position_Y = Beam_Position_Y 
         self.Primary_Sputtering = Primary_Sputtering
@@ -98,10 +97,10 @@ class Redeposition:
         
         Primary_Sputtering_Depth = self.Primary_Sputtering['Primary_Sputtering_Depth_Total']
         
-        Redeposition_Amount_per_GridPoint = numpy.max(numpy.abs(Primary_Sputtering_Depth))*numpy.sum(self.Grid_Structure['Grid_Area'])*self.Parameters['Atomic_density_Sub']
+        Redeposition_Amount_per_GridPoint = numpy.max(numpy.abs(Primary_Sputtering_Depth))*numpy.sum(self.Grid_Structure['Grid_Area'])*self.Physical_Parameters['Atomic_density_Sub']
         
         #This is an overestimated amount#
-        Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*((2*numpy.pi*self.Parameters['Beam_Radius'])/self.Parameters['Grid_Space_Y'])
+        Redeposition_Amount_per_BeamPosition = Redeposition_Amount_per_GridPoint*((2*numpy.pi*self.Physical_Parameters['Beam_Radius'])/self.Physical_Parameters['Grid_Space_Y'])
         
         
         Re_Angular_Distribution =  Redeposition.reDepositionAngularDistribution(self)
@@ -139,7 +138,7 @@ class Redeposition:
         Surface_Moving_Vector_Z = (self.Grid_Structure['Surface_Moving_Vector'][1]/numpy.sqrt(numpy.power(self.Grid_Structure['Surface_Moving_Vector'][0],2) + numpy.power(self.Grid_Structure['Surface_Moving_Vector'][1],2)))
         
         
-        Redeposition_Total = -(1/self.Parameters['Atomic_density_Sub'])*(Redeposition_Ion_Beam['Re_Deposition_Profile']/self.Grid_Structure['Grid_Area'])*((self.Parameters['Grid_Space_Y']/(2*numpy.pi*self.Parameters['Beam_Radius'])))
+        Redeposition_Total = -(1/self.Physical_Parameters['Atomic_density_Sub'])*(Redeposition_Ion_Beam['Re_Deposition_Profile']/self.Grid_Structure['Grid_Area'])*((self.Physical_Parameters['Grid_Space_Y']/(2*numpy.pi*self.Physical_Parameters['Beam_Radius'])))
         
         
         Redeposition_X = Redeposition_Total*Surface_Moving_Vector_X
@@ -158,3 +157,14 @@ class Redeposition:
         print (Redeposition_Depth)
         
         return Redeposition_Depth
+    
+    
+
+if __name__ == "__main__":
+    
+
+    print ('done')    
+        
+        
+        
+        
