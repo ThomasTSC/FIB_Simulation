@@ -9,6 +9,8 @@ import Parameters
 import Grid_Structure
 import numpy
 
+import matplotlib.pyplot as plt
+
 
 
 class Redeposition:
@@ -68,16 +70,26 @@ class Redeposition:
         
         Redeposition_Angular_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Redeposition_Trajectury['Trajectury_Radian']))
 
-        #Ref_Cosine_Distribution = Ion_Beam_Profile(self.Profile, self.Beam_Position_X, self.Beam_Position_Y).referenceCosineDistribution()
+        Ref_Cosine_Distribution = Redeposition.referenceCosineDistribution(self)
+    
         
-        Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution': Redeposition_Angular_Distribution}
         
-        #print (Redeposition_Angular_Distribution)
+        Area_Redeposition_Angular = numpy.trapz(Redeposition_Angular_Distribution, dx=self.Physical_Parameters['Grid_Space_Y'])
+        Area_Redeposition_Reference = numpy.trapz(Ref_Cosine_Distribution['Ref_Cosine_Distribution'] , dx=self.Physical_Parameters['Grid_Space_Y'])
+        
+        print("Angualr =", Area_Redeposition_Angular)
+        
+        print ("Ref =", Area_Redeposition_Reference)
+        
         
         #plt.figure()
-        #plt.plot(self.Profile['Grid_X'],Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
-        #plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution['Redeposition_Angular_Distribution'])
+        #plt.plot(self.Profile['Grid_X'],Ref_Cosine_Distribution['Ref_Cosine_Distribution']/(max(Ref_Cosine_Distribution['Ref_Cosine_Distribution'])))
+        #plt.plot(self.Profile['Grid_X'],Redeposition_Angular_Distribution/max(Redeposition_Angular_Distribution))
         #plt.show()
+        
+        
+        Redeposition_Angular_Distribution = {'Redeposition_Angular_Distribution':Redeposition_Angular_Distribution,
+                                             'Normalized': Area_Redeposition_Angular/Area_Redeposition_Reference}
         
         
         return Redeposition_Angular_Distribution
@@ -106,12 +118,10 @@ class Redeposition:
         Re_Angular_Distribution =  Redeposition.reDepositionAngularDistribution(self)
         
         Re_Deposition_Profile =  Redeposition_Amount_per_BeamPosition*Re_Angular_Distribution['Redeposition_Angular_Distribution']
+
         
         
-        Pr_Normalized_Factor = 1/(numpy.sum(Re_Deposition_Profile)/Redeposition_Amount_per_BeamPosition)
-        
-        
-        Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile*Pr_Normalized_Factor}
+        Re_Deposition_Profile = {'Re_Deposition_Profile':Re_Deposition_Profile*Re_Angular_Distribution['Normalized']}
         
         
         
@@ -162,6 +172,8 @@ class Redeposition:
 
 if __name__ == "__main__":
     
+    
+
 
     print ('done')    
         

@@ -4,23 +4,20 @@ Created on 07.08.2018
 @author: chou
 '''
 
-import numpy
-import matplotlib.pyplot as plt
 
-def referenceCosineDistribution():
-
-    Ref_Radian_Range = numpy.linspace(-numpy.pi,numpy.pi,1000)
-
-    Ref_Cosine_Distribution = (1/(2*numpy.pi))*(1+numpy.cos(Ref_Radian_Range))
-    print (Ref_Cosine_Distribution )
+import numpy as np
+from scipy.integrate import simps
+from numpy import trapz
 
 
-    Ref_Cosine_Distribution = {'Ref_Cosine_Distribution': Ref_Cosine_Distribution}
+# The y values.  A numpy array is used here,
+# but a python list could also be used.
+y = np.array([5, 20, 4, 18, 19, 18, 7, 4])
 
-    plt.figure()
-    plt.plot(Ref_Radian_Range,Ref_Cosine_Distribution['Ref_Cosine_Distribution'])
-    plt.show()
-    
-    
+# Compute the area using the composite trapezoidal rule.
+area = trapz(y, dx=5)
+print("area =", area)
 
-referenceCosineDistribution()
+# Compute the area using the composite Simpson's rule.
+area = simps(y, dx=5)
+print("area =", area)

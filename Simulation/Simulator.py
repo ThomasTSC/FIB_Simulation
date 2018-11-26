@@ -90,10 +90,9 @@ class FIB:
                 
                     Secondary_Redeposition = Redeposition_Effect.Redeposition(Primary_Sputtering, Profile, Beam_Position[0], Beam_Position[1]).reDeposition()
                     
-                    #Profile['Grid_X'] = Profile['Grid_X'] + Redeposition['Redeposition_X']
-                    #Profile['Grid_Z'] = Profile['Grid_Z'] + Redeposition['Redeposition_Z'] 
+                    Profile['Grid_X'] = Profile['Grid_X'] + Secondary_Redeposition['Redeposition_X']
+                    Profile['Grid_Z'] = Profile['Grid_Z'] + Secondary_Redeposition['Redeposition_Z'] 
                     
-                    #print (Redeposition)
                     
                     
                     #plt.figure()

@@ -41,8 +41,8 @@ def Physical_Parameters():
         Pixel_Distance = 0.2*Beam_Diameter   
         Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
       
-        Pass = 1
-        Step = 1
+        Pass = 50
+        Step = 2
         Scan_Line = 1
         
         Grid_Point = 25
