@@ -4,8 +4,6 @@ Created on 15.05.2018
 @author: chou
 '''
 
-import Grid_Structure
-import Physical_Effect
 import Scanning_Strategy
 import Surface_Smoothing
 import Parameters
@@ -132,15 +130,6 @@ class FIB:
 if __name__ == "__main__":
     
     
-    #import pyximport
-
-    #pyximport.install()
-
-    ######
-
-    #import Cython_Loop
-    
-    #Cython_Loop._Simulation()
 
     Profile = FIB().Simulation()
 

@@ -117,7 +117,7 @@ class Redeposition:
         
         Re_Angular_Distribution =  Redeposition.reDepositionAngularDistribution(self)
         
-        Re_Deposition_Profile =  Redeposition_Amount_per_BeamPosition*Re_Angular_Distribution['Redeposition_Angular_Distribution']
+        Re_Deposition_Profile =  Redeposition_Amount_per_BeamPosition*(Re_Angular_Distribution['Redeposition_Angular_Distribution']/max(Re_Angular_Distribution['Redeposition_Angular_Distribution']))
 
         
         
