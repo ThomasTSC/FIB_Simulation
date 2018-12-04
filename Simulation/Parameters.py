@@ -38,17 +38,17 @@ def Physical_Parameters():
         #Pixel_Area = (numpy.pi)*((Beam_Radius)**2)
         
         Pixel_Area = (numpy.pi)*((6.25*Beam_Standard_Deviation)**2)
-        Pixel_Distance = 0.2*Beam_Diameter   
+        Pixel_Distance = 0.1*Beam_Diameter   
         Full_Pixel_Length = 13*(Beam_Standard_Deviation)    
       
-        Pass = 50
-        Step = 2
+        Pass = 1
+        Step = 15
         Scan_Line = 1
         
         Grid_Point = 25
         Grid_Space_Y = 5e-8
         
-        Dwell_Time = 1e-6    
+        Dwell_Time = 1e-4    
         Integration_Time = 1e-6
         Dwell_Time_Matrix = Integration_Time*numpy.ones_like(Grid_Point)
     
